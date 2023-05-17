@@ -1,6 +1,7 @@
 <template>
   <div class="header">
     <img src="@/assets/LeftArrow.png" alt="back icon" @click="moveBack" />
+    <div v-if="title" class="title-text">{{ title }}</div>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ export default {
       this.$router.go(-1);
     },
   },
+  props: ["title"],
 };
 </script>
 
@@ -23,5 +25,10 @@ export default {
 }
 .header > img {
   cursor: pointer;
+}
+.title-text {
+  font-weight: bold;
+  font-size: 18px;
+  margin-left: 20px;
 }
 </style>
