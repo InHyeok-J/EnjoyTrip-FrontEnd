@@ -1,7 +1,11 @@
 <template>
   <div>
-    <!-- <input placeholder="비밀번호" :type="`${isViewPassword ? 'text' : 'password'}`" class="common-input" /> -->
-    <common-input placeholder="비밀번호" :type="`${isViewPassword ? 'text' : 'password'}`"></common-input>
+    <common-input
+      :placeholder="placeholder"
+      :inputvalue="inputvalue"
+      :type="`${isViewPassword ? 'text' : 'password'}`"
+      @onChange="onChangeFun"
+    ></common-input>
     <div class="view-block">
       <img
         :src="require(`@/assets/${isViewPassword ? 'ViewOn.png' : 'ViewOff.png'}`)"
@@ -17,6 +21,7 @@ import CommonInput from "./CommonInput.vue";
 export default {
   name: "CommonPassword",
   components: { CommonInput },
+  props: ["placeholder", "inputvalue", "onChangeFun"],
   data() {
     return {
       isViewPassword: false,
@@ -37,7 +42,7 @@ export default {
 .pass-view {
   position: relative;
   margin-right: 15px;
-  margin-top: -85px;
+  margin-top: -70px;
   z-index: 1;
   cursor: pointer;
 }

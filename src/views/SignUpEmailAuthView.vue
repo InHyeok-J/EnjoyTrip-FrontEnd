@@ -1,6 +1,6 @@
 <template>
   <div>
-    <not-logo-header title="회원가입"></not-logo-header>
+    <not-logo-header title="회원가입" shadow="is-shadow"></not-logo-header>
   </div>
 </template>
 
