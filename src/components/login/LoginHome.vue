@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-container">
     <div class="logo-block">
       <div class="logo-block-text">
         <img src="@/assets/Logo.png" class="logo-image" alt="Logo image" />
@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style scoped>
+.main-container {
+  margin: 0px 5px;
+}
 .logo-image {
   width: 58px;
   display: inline-block;

@@ -66,7 +66,7 @@ input {
   max-width: 500px;
   height: 100vh;
   margin: 0 auto;
-  padding: 0 35px;
+  padding: 0 30px;
 }
 .common-btn {
   width: 100%;
