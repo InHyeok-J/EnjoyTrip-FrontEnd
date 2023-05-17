@@ -1,14 +1,16 @@
 <template>
   <div class="home">
-    <div>Home Page!</div>
+    <common-header></common-header>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import CommonHeader from "@/components/common/CommonHeader.vue";
 
 export default {
   name: "HomeView",
-  components: {},
+
+  components: { CommonHeader },
 };
 </script>

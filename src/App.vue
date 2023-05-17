@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/login">login</router-link>
-    </nav>
     <router-view />
   </div>
 </template>
@@ -29,11 +25,7 @@ body {
   font-family: "Noto Sans KR", sans-serif;
   overflow: auto;
 }
-#app {
-  max-width: 500px;
-  height: 100%;
-  margin: 0 auto;
-}
+
 button {
   all: unset;
   cursor: pointer;
@@ -69,5 +61,20 @@ input {
   /* caret-color: #c62917; */
   cursor: auto;
   /* caret-color: #c62917; */
+}
+#app {
+  max-width: 500px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 0 35px;
+}
+.common-btn {
+  width: 100%;
+  background-color: #6f8cf4;
+  color: #ffffff;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 10px;
+  text-align: center;
 }
 </style>
