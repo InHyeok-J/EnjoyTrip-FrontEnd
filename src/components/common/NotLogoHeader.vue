@@ -22,6 +22,7 @@ export default {
   height: 44px;
   display: flex;
   align-items: center;
+  margin: 0 30px;
 }
 .header > img {
   cursor: pointer;

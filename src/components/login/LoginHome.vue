@@ -34,7 +34,7 @@ export default {
 
 <style scoped>
 .main-container {
-  margin: 0px 5px;
+  margin: 0px 35px;
 }
 .logo-image {
   width: 58px;
