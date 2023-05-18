@@ -5,18 +5,6 @@
         <button class="search"/>
         <button class="map"/>
         <button class="mypage"/>
-        <!-- <div class="nav-btn">
-            <button class="home"/>
-        </div>
-        <div class="nav-btn">
-            <button class="search"/>
-        </div>
-        <div class="nav-btn">
-            <button class="map"/>
-        </div>
-        <div class="nav-btn">
-            <button class="mypage"/>
-        </div> -->
     </div>    
 
   </div>
