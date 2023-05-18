@@ -12,8 +12,8 @@
     <div class="sns-line">sns 로그인</div>
     <div class="oauth-block">
       <div class="oauth-block-icons">
-        <img src="@/assets/KakaoIcon.png" alt="kakao" />
-        <img src="@/assets/GoogleIcon.png" alt="google" />
+        <img src="@/assets/KakaoIcon.svg" alt="kakao" />
+        <img src="@/assets/GoogleIcon.svg" alt="google" />
       </div>
     </div>
     <div class="ask-block">

@@ -9,22 +9,12 @@ const initStore = {
 const signUpStore = {
   namespaced: true,
   state: initStore,
-  getters: {
-    [signUpConstant.GET_PROCESS]: (state) => {
-      return state.process;
-    },
-    [signUpConstant.GET_SIGNUP_IFNO]: (state) => {
-      return {
-        email: state.email,
-        password: state.password,
-        nickname: state.nickname,
-      };
-    },
-  },
+  getters: {},
   mutations: {
     [signUpConstant.MU_EMAIL_PASSWORD]: (state, payload) => {
       state.email = payload.email;
       state.password = payload.password;
+      state.process = payload.process;
     },
     [signUpConstant.INIT_SIGNUP_STORE]: (state) => {
       // eslint-disable-next-line no-unused-vars

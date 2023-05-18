@@ -43,6 +43,9 @@
 import CommonInput from "../common/CommonInput.vue";
 import CommonPassword from "../common/CommonPassword.vue";
 import { emailValidator, passwordValidator } from "../../utils/inputValidator";
+import signUpConstant from "@/store/constants/signUpConstant";
+
+const signUpStore = "signUpStore/";
 export default {
   name: "SignUpFormMain",
   components: { CommonInput, CommonPassword },
@@ -89,10 +92,12 @@ export default {
     },
     nextProcess() {
       let data = {
+        process: 2,
         email: this.email,
         password: this.password,
       };
-      console.log(data);
+      this.$store.commit(signUpStore + signUpConstant.MU_EMAIL_PASSWORD, data);
+      this.$router.push("/signup/email");
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="header" :class="`${shadow}`">
-    <img src="@/assets/LeftArrow.png" alt="back icon" @click="moveBack" />
+    <img src="@/assets/LeftArrow.svg" alt="back icon" @click="moveBack" />
     <div v-if="title" class="title-text">{{ title }}</div>
   </div>
 </template>
@@ -34,6 +34,5 @@ export default {
 .title-text {
   font-weight: bold;
   font-size: 18px;
-  margin-left: 20px;
 }
 </style>
