@@ -18,13 +18,13 @@
         </div>
 
         <div class="review">
-            <button class="review-block">
-                <div class="review-title">내가 작성한 <b>여행 코스</b></div>
-                <div class="review-count">38</div>
+            <button class="review-block" :class="{ active: isReviewSelected }" @click="toggleReviewSelection('course')">
+                <div class="title">내가 작성한 <b>여행 코스</b></div>
+                <div class="count">38</div>
             </button>
-            <button class="review-block">
-                <div class="review-title">내가 작성한 <b>여행 후기</b></div>
-                <div class="review-count">5</div>
+            <button class="course-block" :class="{ active: isCourseSelected }" @click="toggleReviewSelection('course')">
+                <div class="title">내가 작성한 <b>여행 후기</b></div>
+                <div class="count">5</div>
             </button>
         </div>
 
@@ -39,10 +39,22 @@
 
 <script>
 export default {
- data: function () {
+ data() {
     return {
-      nums: [1,2,3,4,5,6,7,8,9],
+      isReviewSelected: false,
+      isCourseSelected: true
     };
+  },
+  methods: {
+    toggleReviewSelection(reviewType) {
+      if (reviewType === 'course') {
+        this.isReviewSelected = !this.isReviewSelected;
+        this.isCourseSelected = !this.isCourseSelected;
+      } else if (reviewType === 'review') {
+        this.isReviewSelected = !this.isReviewSelected;
+        this.isCourseSelected = !this.isCourseSelected;
+      }
+    }
   }
 }
 </script>
@@ -75,14 +87,19 @@ export default {
 	height:30px;
     background-image:url("@/assets/setting_button.png");
 	background-size:cover;
-    
+}
+.logout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .common-btn{
     margin-top: 30px;
+    width: 320px;
+    height: 50px;
     background-color: #E7E7E7;
     font-family: 'Noto Sans KR';
     color: #000;
-    align-items: center;
     text-align: center;
 }
 .review { 
@@ -105,9 +122,31 @@ export default {
     height: auto;
 
     border-radius: 10px;
-
 }
-.review-title {
+.review-block.active {
+  background-color: #E7E7E7;
+  color: #FFFFFF;
+}
+.course-block { 
+	background-color:white;
+	/* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 17px 24px;
+    gap: 10px;
+
+    width: 40%;
+    height: auto;
+
+    border-radius: 10px;
+}
+.course-block.active {
+  background-color: #E7E7E7;
+  color: #FFFFFF;
+}
+.title {
     width: 87px;
     height: 44px;
 
@@ -119,7 +158,7 @@ export default {
     text-align: center;
     color: #000000;
 }
-.review-count{
+.count{
     width: 93px;
     height: 44px;
 
@@ -135,7 +174,8 @@ export default {
 .details{
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    margin: 15px;
+    padding-bottom: 80px;
 }
 .detail-title{
     font-family: 'Noto Sans KR';
