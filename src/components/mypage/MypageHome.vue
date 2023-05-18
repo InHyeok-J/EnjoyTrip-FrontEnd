@@ -152,7 +152,7 @@ export default {
     margin: 5px 5px;
 }
 .detail-img{
-    width: 25%;
+    width: 30%;
     height: 100px;
     
     border-radius: 10px;

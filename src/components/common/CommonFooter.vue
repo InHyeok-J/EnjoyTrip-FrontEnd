@@ -29,11 +29,14 @@ export default {
 </script>
 
 <style scoped>
-
 .footer {
-    transform: translatY(-100%);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     height: 70px;
     box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.15);
+    background-color: white;
     
 }
 .nav{
