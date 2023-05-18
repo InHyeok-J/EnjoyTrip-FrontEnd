@@ -20,6 +20,9 @@ const signUpStore = {
       // eslint-disable-next-line no-unused-vars
       state = initStore;
     },
+    [signUpConstant.MU_PROCESS]: (state, payload) => {
+      state.process = payload.process;
+    },
   },
 };
 

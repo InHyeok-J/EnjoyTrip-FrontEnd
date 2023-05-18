@@ -75,5 +75,10 @@ input {
   font-size: 18px;
   border-radius: 10px;
   text-align: center;
+
+  transition: all 0.9s;
+}
+.common-btn:hover {
+  box-shadow: 0 80px 0 0 rgba(0, 0, 0, 0.25) inset, 0 -80px 0 0 rgba(0, 0, 0, 0.25) inset;
 }
 </style>

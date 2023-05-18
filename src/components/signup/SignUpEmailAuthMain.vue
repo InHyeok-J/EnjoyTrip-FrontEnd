@@ -13,7 +13,7 @@
           isAuth == null
             ? "인증 코드가 발송 됐습니다. 5분 이내에 인증을 완료해주세요"
             : isAuth
-            ? "인증 코드가 일치합니다"
+            ? "인증 코드가 일치합니다 다음 진행해주세요"
             : "인증 코드가 일치하지 않습니다."
         }}
       </div>
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="code-btn-block">
-      <button class="common-btn">인증코드확인</button>
+      <button class="common-btn" @click="checkEmailAuthCode">인증코드확인</button>
     </div>
     <hr />
     <div class="agree-block">
@@ -46,7 +46,8 @@
 import CheckBox from "../common/CheckBox.vue";
 import CommonInput from "../common/CommonInput.vue";
 import EmailTimer from "../common/EmailTimer.vue";
-// import signUpConstant from "@/store/constants/signUpConstant";
+import { postEmailCheck } from "@/api/authApi";
+import signUpConstant from "@/store/constants/signUpConstant";
 export default {
   name: "SignUpEmailAuthMain",
   data() {
@@ -58,11 +59,11 @@ export default {
   },
   components: { CommonInput, EmailTimer, CheckBox },
   created() {
-    // const curProcess = this.$store.state.signUpStore.process;
-    // if (curProcess !== 2) {
-    //   alert("비정상 접근입니다.");
-    //   this.$router.push("/login");
-    // }
+    const curProcess = this.$store.state.signUpStore.process;
+    if (curProcess !== 2) {
+      alert("비정상 접근입니다.");
+      this.$router.push("/login");
+    }
     this.email = this.$store.state.signUpStore.email;
   },
   methods: {
@@ -70,8 +71,24 @@ export default {
       this.code = inputValue;
     },
     nextProcess() {
-      console.log("next");
+      if (!this.isAuth) {
+        alert("이메일 인증이 필요합니다!");
+        return;
+      }
+      this.$store.commit(signUpConstant.CALL_MU_PROCESS, { process: 3 });
       this.$router.push("/signup/nickname");
+    },
+    async checkEmailAuthCode() {
+      try {
+        await postEmailCheck(this.email, this.code);
+        this.isAuth = true;
+      } catch (e) {
+        if (e.response.data.statusCode === 409) {
+          this.isAuth = false;
+          return;
+        }
+        alert("에러 발생!");
+      }
     },
   },
 };

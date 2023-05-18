@@ -11,13 +11,16 @@
     </div>
     <div class="message-block nomal">닉네임은 한글 2~7자만 가능합니다</div>
     <div class="signup-btn-block">
-      <button class="common-btn">회원가입</button>
+      <button class="common-btn" @click="signUp">회원가입</button>
     </div>
   </div>
 </template>
 
 <script>
 import CommonInput from "../common/CommonInput.vue";
+import { postSignUp } from "@/api/userApi.js";
+import signUpConstant from "@/store/constants/signUpConstant";
+import { nicknameValidator } from "@/utils/inputValidator";
 export default {
   name: "SignUpNicknameMain",
 
@@ -25,12 +28,40 @@ export default {
   data() {
     return {
       nickname: null,
-      isNicknameExp: null,
     };
+  },
+  created() {
+    const curProcess = this.$store.state.signUpStore.process;
+    if (curProcess !== 3) {
+      alert("비정상 접근입니다.");
+      this.$router.push("/login");
+    }
+  },
+  destroyed() {
+    this.$store.commit(signUpConstant.CALL_INIT_SIGNUP_STORE);
   },
   methods: {
     nicknameOnChange(inputValue) {
       this.nickname = inputValue;
+    },
+
+    async signUp() {
+      if (!nicknameValidator(this.nickname)) {
+        alert("닉네임을 정확히 입력해주세요");
+        return;
+      }
+      const data = {
+        email: this.$store.state.signUpStore.email,
+        password: this.$store.state.signUpStore.password,
+        nickname: this.nickname,
+      };
+      try {
+        await postSignUp(data);
+        alert("회원가입 성공!");
+        this.$router.push("/login");
+      } catch (e) {
+        alert("회원가입 실패");
+      }
     },
   },
 };

@@ -34,7 +34,13 @@
       </div>
     </div>
     <div class="next-btn-block">
-      <button :class="`common-btn ${isAllPass ? '' : 'btn-fail'}`" @click="nextProcess">다음</button>
+      <button
+        class="common-btn"
+        :class="`${btnBlockingCheck(isAllPass, isMailSendAndDelay) ? '' : 'btn-fail'}`"
+        @click="nextProcess"
+      >
+        다음
+      </button>
     </div>
   </div>
 </template>
@@ -44,8 +50,8 @@ import CommonInput from "../common/CommonInput.vue";
 import CommonPassword from "../common/CommonPassword.vue";
 import { emailValidator, passwordValidator } from "../../utils/inputValidator";
 import signUpConstant from "@/store/constants/signUpConstant";
+import { postEmailCode } from "@/api/authApi";
 
-const signUpStore = "signUpStore/";
 export default {
   name: "SignUpFormMain",
   components: { CommonInput, CommonPassword },
@@ -58,6 +64,7 @@ export default {
       isPasswordOk: null,
       isPasswordEqual: null,
       isAllPass: false,
+      isMailSendAndDelay: false,
     };
   },
   watch: {},
@@ -87,17 +94,36 @@ export default {
       this.isPasswordEqual = this.password === this.passwordCheck;
       this.checkAllPass();
     },
+    btnBlockingCheck(isPass, isDelay) {
+      if (isDelay) {
+        return false;
+      }
+
+      if (!isPass) {
+        return false;
+      }
+      return true;
+    },
     checkAllPass() {
       this.isAllPass = this.isEmailOk && this.isPasswordOk && this.isPasswordEqual;
     },
-    nextProcess() {
+    async nextProcess() {
       let data = {
         process: 2,
         email: this.email,
         password: this.password,
       };
-      this.$store.commit(signUpStore + signUpConstant.MU_EMAIL_PASSWORD, data);
-      this.$router.push("/signup/email");
+      try {
+        this.isMailSendAndDelay = true;
+        await postEmailCode(this.email);
+        alert("이메일 전송 성공!");
+        this.$store.commit(signUpConstant.CALL_MU_EMAIL_PASSWORD, data);
+        this.$router.push("/signup/email");
+      } catch (e) {
+        // console.log(e.response.data);
+        alert(e.response.data.message);
+        this.isMailSendAndDelay = false;
+      }
     },
   },
 };
