@@ -8,7 +8,7 @@
         :inputvalue="code"
         @onChange="codeOnChange"
       ></common-input>
-      <div :class="`message-area ${isAuth ? 'success' : 'fail'}`">
+      <div :class="`message-block ${isAuth ? 'success' : 'fail'}`">
         {{
           isAuth == null
             ? "인증 코드가 발송 됐습니다. 5분 이내에 인증을 완료해주세요"
@@ -17,7 +17,7 @@
             : "인증 코드가 일치하지 않습니다."
         }}
       </div>
-      <div class="message-area fail">
+      <div class="message-block fail">
         냠은 시간
         <email-timer class="timer"></email-timer>
       </div>
@@ -91,7 +91,7 @@ export default {
   padding-left: 5px;
   margin-bottom: 12px;
 }
-.message-area {
+.message-block {
   font-size: 12px;
   padding: 10px 0px 10px 15px;
 }

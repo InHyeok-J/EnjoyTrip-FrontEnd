@@ -10,7 +10,12 @@ export default {
   name: "NotLogoHeader",
   methods: {
     moveBack() {
-      this.$router.go(-1);
+      const path = this.$route.path;
+      if (path.includes("signup")) {
+        this.$router.push("/login");
+        return;
+      }
+      this.$router.push("/");
     },
   },
   props: ["title", "shadow"],

@@ -3,7 +3,7 @@
     <div class="email-block">
       <div class="info-text">기본정보</div>
       <common-input placeholder="이메일" type="email" :inputvalue="email" @onChange="emailOnChange"></common-input>
-      <div :class="`message-area ${isEmailOk ? 'success' : 'fail'}`">
+      <div :class="`message-block ${isEmailOk ? 'success' : 'fail'}`">
         {{ isEmailOk == null ? "" : isEmailOk ? "이메일 형식이 일치합니다" : "이메일 형식이 일치하지 않습니다." }}
       </div>
     </div>
@@ -27,7 +27,7 @@
         :inputvalue="passwordCheck"
         :onChangeFun="passwordCheckOnChange"
       ></common-password>
-      <div :class="`message-area ${isPasswordEqual ? 'success' : 'fail'}`">
+      <div :class="`message-block ${isPasswordEqual ? 'success' : 'fail'}`">
         {{
           isPasswordEqual == null ? "" : isPasswordEqual ? "패스워드가 일치합니다." : "패스워드가 일치하지 않습니다."
         }}
@@ -125,7 +125,7 @@ export default {
   color: #696969;
   font-size: 12px;
 }
-.message-area {
+.message-block {
   font-size: 12px;
   padding: 10px 0px 10px 15px;
 }
