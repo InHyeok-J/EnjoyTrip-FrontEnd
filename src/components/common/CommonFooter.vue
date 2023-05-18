@@ -1,18 +1,22 @@
 <template>
-  <div class="footer">이거왜없어짐
+  <div class="footer">
     <div class = "nav">
-        <button class="home">
-            <img src="@/assets/home_not_click.png" alt="Home">
-        </button>
-        <!-- <button class="search">
-            <img src="@/assets/search_not_click.png" alt="Home">
-        </button>
-        <button class="map">
-            <img src="@/assets/map_not_click.png" alt="Home">
-        </button>
-        <button class="mypage">
-            <img src="@/assets/mypage_clicked.png" alt="Home">
-        </button> -->
+        <button class="home"/>
+        <button class="search"/>
+        <button class="map"/>
+        <button class="mypage"/>
+        <!-- <div class="nav-btn">
+            <button class="home"/>
+        </div>
+        <div class="nav-btn">
+            <button class="search"/>
+        </div>
+        <div class="nav-btn">
+            <button class="map"/>
+        </div>
+        <div class="nav-btn">
+            <button class="mypage"/>
+        </div> -->
     </div>    
 
   </div>
@@ -27,70 +31,64 @@ export default {
 <style scoped>
 
 .footer {
-    /* position: fixed;
-    bottom: 0; left: 0;
-    height: 100px;
-    width: 100%;
-    background-color: white; */
-    position: fixed;
-    max-width:500px ;
-    height: 83px;
-    bottom: 0px;
-    padding: 0px 30px;
-
-    background: #FFFFFF;
+    transform: translatY(-100%);
+    height: 70px;
     box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.15);
-    border-radius: 0px;
+    
 }
 .nav{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px;
-
-    position: absolute;
-    width: 70%;
-    height: 43px;
-    left: 15%;
-    top: 20%;
-    border: 0.5px solid red;
-
+    justify-content: space-evenly;
+    padding: 15px;
+    
 }
+/* .nav-btn{
+    width: 31px;
+    height: 31px;
+    margin-top: 15px;
+} */
 .home{
     width: 31px;
     height: 31px;
     flex: none;
     order: 0;
     flex-grow: 0;
-}
-.home img{
-    width: 31px;
-    height: 31px;
+    
+    background-image: url("@/assets/home_not_click.png");
+    background-size: 100%;
+    background-position: center;
 }
 .search{
-    flex : none;
-    order: 1;
-    flex-grow: 0;
-}  
-.search img{
     width: 31px;
     height: 31px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    
+    background-image: url("@/assets/search_not_click.png");
+    background-size: 100%;
+    background-position: center;
+}  
+.map{
+    width: 28px;
+    height: 28px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    
+    background-image: url("@/assets/map_not_click.png");
+    background-size: 100%;
+    background-position: center;
+} 
+.mypage{
+    width: 38px;
+    height: 38px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    
+    background-image: url("@/assets/mypage_clicked.png");
+    background-size: 100%;
+    background-position: center;
 }
-/* .map{
-    padding-left:  151.8px;
-    border: 0.5px solid
-}
-.map img{
-    width: 23.25px;
-    height: 22.99px;
-} */
-/* .mypage{
-    padding-left: 227.7px;
-    border: 0.5px solid
-}
-.mypage img{
-    width: 40.3x;
-    height: 40.3px;
-} */
 </style>
