@@ -3,7 +3,9 @@ import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import MypageView from "../views/MypageView.vue";
-
+import SignUpFormView from "@/views/SignUpFormView.vue";
+import SignUpEmailAuthView from "@/views/SignUpEmailAuthView.vue";
+import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -20,7 +22,22 @@ const routes = [
   {
     path: "/mypage",
     name: "mypage",
-    component: MypageView,
+    component: MypageView
+  },
+  {
+    path: "/signup",
+    name: "signup form",
+    component: SignUpFormView,
+  },
+  {
+    path: "/signup/email",
+    name: "signup email",
+    component: SignUpEmailAuthView,
+  },
+  {
+    path: "/signup/nickname",
+    name: "signup nicknameCheck",
+    component: SignUpNicknameView
   },
 ];
 
