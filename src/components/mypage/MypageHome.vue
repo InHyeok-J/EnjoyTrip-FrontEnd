@@ -30,8 +30,11 @@
 
         <div class="details">
             <div class="detail-title">내가 작성한 <b>여행 코스</b></div>
-            <div class="detail-imgs" v-for="(num, index) in 5" :key="index">
+            <!-- <div class="detail-imgs" v-for="(num, index) in 5" :key="index">
                 <button class="detail-img" v-for="(num, index) in 3" :key="index"/>
+            </div> -->
+            <div class="detail-imgs">
+                <button class="detail-img"  v-for="(num, index) in rowSize" :key="index"/>
             </div>
         </div>
     </div>
@@ -42,7 +45,9 @@ export default {
  data() {
     return {
       isReviewSelected: false,
-      isCourseSelected: true
+      isCourseSelected: true,
+      photos:[],
+      rowSize : 8
     };
   },
   methods: {
@@ -185,18 +190,22 @@ export default {
     line-height: 29px;
     margin: 10px 5px;
 }
-.detail-imgs{
+/* .detail-imgs{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     margin: 5px 5px;
+} */
+.detail-imgs{
+    justify-content: center;
+    display: grid;
+	grid-template-columns: repeat(3, 90px);
+	grid-auto-rows: 90px;
+	column-gap: 10px;
+	row-gap: 7px;
 }
 .detail-img{
-    width: 30%;
-    height: 100px;
-    
     border-radius: 10px;
-
     background-image: url("@/assets/경복궁.jpg");
 	background-size: 300%;
     background-position: center;
