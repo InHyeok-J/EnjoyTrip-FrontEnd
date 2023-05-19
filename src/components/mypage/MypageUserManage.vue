@@ -1,11 +1,16 @@
 <template>
     <div class="main-container">
         <div class="header">
-            <div class="bcak-btn" alt="back icon" @click="moveBack" >
-                <img class="bcak-btn-img" src="@/assets/LeftArrow.svg" alt="back icon" @click="moveBack" />    
+            <div class="bcak-btn">
+                <button  @click="moveBack">
+                    <img class="bcak-btn-img" src="@/assets/LeftArrow.svg" alt="back icon" >
+                </button>
             </div>
             <div class="title-text">정보 변경</div>
-            <div class="modify" @click="modify">수정 완료
+            <div class="modify">
+                <button class="modify-btn" @click="modify">
+                    수정 완료
+                </button>
             </div>
         </div>
         <div class="profile">
@@ -165,13 +170,16 @@ export default {
   padding: 4px 10% 0px 2%;
 }
 .modify{
-  color:#496DEF;
   width: 120%;
   height: 24px;
+  padding: 4px 5% 0px 15%;
+}
+.modify-btn{
+  color:#496DEF;
   font-weight: bold;
   font-size: 18px;
-  text-align:right;
-  padding: 4px 5% 0px 15%;
+
+  float: right;
 }
 .profile { 
     margin: 0px 30px;
