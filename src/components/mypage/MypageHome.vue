@@ -6,7 +6,7 @@
                 <div  class="name">이예은</div><br>
                 <div  class="email">yeeun_1ee@naver.com</div>
             </div>
-            <div class="setting">
+            <div class="setting"  @click="modifyForm">
                 <button class="setting-button"/>
             </div>
         </div>
@@ -22,7 +22,7 @@
                 <div class="title">내가 작성한 <b>여행 코스</b></div>
                 <div class="count">38</div>
             </button>
-            <button class="course-block" :class="{ active: isCourseSelected }" @click="toggleReviewSelection('course')">
+            <button class="course-block" :class="{ active: isCourseSelected }" @click="toggleReviewSelection('review')">
                 <div class="title">내가 작성한 <b>여행 후기</b></div>
                 <div class="count">5</div>
             </button>
@@ -30,11 +30,10 @@
 
         <div class="details">
             <div class="detail-title">내가 작성한 <b>여행 코스</b></div>
-            <!-- <div class="detail-imgs" v-for="(num, index) in 5" :key="index">
-                <button class="detail-img" v-for="(num, index) in 3" :key="index"/>
-            </div> -->
-            <div class="detail-imgs">
-                <button class="detail-img"  v-for="(num, index) in rowSize" :key="index"/>
+            <div class="detail-img-table">
+                <div class="detail-frame">
+                    <button class="detail-img"  v-for="(num, index) in rowSize" :key="index"/>
+                </div>
             </div>
         </div>
     </div>
@@ -47,18 +46,22 @@ export default {
       isReviewSelected: false,
       isCourseSelected: true,
       photos:[],
-      rowSize : 8
+      rowSize : 15
     };
   },
   methods: {
     toggleReviewSelection(reviewType) {
-      if (reviewType === 'course') {
+      if (reviewType === 'course' && this.isCourseSelected) {
         this.isReviewSelected = !this.isReviewSelected;
         this.isCourseSelected = !this.isCourseSelected;
-      } else if (reviewType === 'review') {
+      } else if (reviewType === 'review' && this.isReviewSelected) {
         this.isReviewSelected = !this.isReviewSelected;
         this.isCourseSelected = !this.isCourseSelected;
       }
+    },
+    modifyForm() {
+     console.log("ssss");
+     this.$router.push("/mypage/manage");
     }
   }
 }
@@ -66,7 +69,7 @@ export default {
 
 <style scoped>
 .main-container{
-    margin: 0px 30px;
+    margin: 5px 30px;
 }
 .profile { 
 	height:auto;
@@ -163,7 +166,7 @@ export default {
     text-align: center;
     color: #000000;
 }
-.count{
+.count {
     width: 93px;
     height: 44px;
 
@@ -179,7 +182,8 @@ export default {
 .details{
     display: flex;
     flex-direction: column;
-    margin: 15px;
+    width:100%;
+    margin: 15px 0px;
     padding-bottom: 80px;
 }
 .detail-title{
@@ -190,21 +194,18 @@ export default {
     line-height: 29px;
     margin: 10px 5px;
 }
-/* .detail-imgs{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin: 5px 5px;
-} */
-.detail-imgs{
+.detail-frame{
     justify-content: center;
     display: grid;
-	grid-template-columns: repeat(3, 90px);
-	grid-auto-rows: 90px;
-	column-gap: 10px;
+	grid-template-columns: repeat(3, 30%);
+	grid-auto-rows: 100px;
+	column-gap: 5px;
 	row-gap: 7px;
 }
 .detail-img{
+    width:100%;
+    height: auto;
+    /* transform: translate( 8%, 0% ); */
     border-radius: 10px;
     background-image: url("@/assets/경복궁.jpg");
 	background-size: 300%;
