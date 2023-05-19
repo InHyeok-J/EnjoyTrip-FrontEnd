@@ -2,10 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
+import MypageView from "../views/MypageView.vue";
 import SignUpFormView from "@/views/SignUpFormView.vue";
 import SignUpEmailAuthView from "@/views/SignUpEmailAuthView.vue";
 import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -20,6 +20,11 @@ const routes = [
     component: LoginView,
   },
   {
+    path: "/mypage",
+    name: "mypage",
+    component: MypageView
+  },
+  {
     path: "/signup",
     name: "signup form",
     component: SignUpFormView,
@@ -32,7 +37,7 @@ const routes = [
   {
     path: "/signup/nickname",
     name: "signup nicknameCheck",
-    component: SignUpNicknameView,
+    component: SignUpNicknameView
   },
 ];
 
