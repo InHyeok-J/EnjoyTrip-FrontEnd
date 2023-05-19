@@ -17,15 +17,19 @@
             </button>
         </div>
 
-        <div class="review">
-            <button class="review-block" :class="{ active: isReviewSelected }" @click="toggleReviewSelection('course')">
-                <div class="title">내가 작성한 <b>여행 코스</b></div>
-                <div class="count">38</div>
-            </button>
-            <button class="course-block" :class="{ active: isCourseSelected }" @click="toggleReviewSelection('review')">
-                <div class="title">내가 작성한 <b>여행 후기</b></div>
-                <div class="count">5</div>
-            </button>
+        <div class="review-container">
+            <div class="reviews">
+                <button class="review-block" :class="{ active: isReviewSelected }" @click="toggleReviewSelection('course')">
+                    <div class="title">내가 작성한 <b>여행 코스</b></div>
+                    <div class="count">38</div>
+                </button>
+            </div>
+            <div class="reviews">
+                <button class="course-block" :class="{ active: isCourseSelected }" @click="toggleReviewSelection('review')">
+                    <div class="title">내가 작성한 <b>여행 후기</b></div>
+                    <div class="count">5</div>
+                </button>
+            </div>
         </div>
 
         <div class="details">
@@ -110,11 +114,14 @@ export default {
     color: #000;
     text-align: center;
 }
-.review { 
+.review-container { 
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    margin-top: 15px;
+    margin-top: 30px;
+}
+.reviews{
+    
 }
 .review-block { 
 	background-color:white;
@@ -126,8 +133,6 @@ export default {
     padding: 17px 24px;
     gap: 10px;
 
-    width: 40%;
-    height: auto;
 
     border-radius: 10px;
 }
@@ -144,9 +149,6 @@ export default {
     align-items: center;
     padding: 17px 24px;
     gap: 10px;
-
-    width: 40%;
-    height: auto;
 
     border-radius: 10px;
 }

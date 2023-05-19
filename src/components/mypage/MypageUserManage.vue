@@ -1,14 +1,22 @@
 <template>
     <div class="main-container">
+        <div class="header">
+            <div class="bcak-btn" alt="back icon" @click="moveBack" >
+                <img class="bcak-btn-img" src="@/assets/LeftArrow.svg" alt="back icon" @click="moveBack" />    
+            </div>
+            <div class="title-text">정보 변경</div>
+            <div class="modify" @click="modify">수정 완료
+            </div>
+        </div>
         <div class="profile">
-            <div class="image" @click="userIndoModify">
+            <div class="image">
                 <div class="img"></div>    
-                <div class="img-modify">
-                    <div class="txt">
-                        수정
-                    </div>  
+                <div class="filebox">
+                    <label for="ex_file">업로드</label>
+                    <input type="file" id="ex_file"> 
                 </div>
             </div>
+            
             <div class="user-infoes">
                 <div class="user-info">    
                     <div class="title">닉네임
@@ -67,6 +75,7 @@
 </template>
 
 <script>
+// import http from "@/api/axios/index.js"
 export default {
     data() {
         return {
@@ -91,9 +100,29 @@ export default {
 		// 			})
 		// 			.catch((exp) => alert("getTodo처리에 실패하였습니다." + exp));
 		// },
-        userIndoModify() {
-            console.log("프로필 수정");
-            return;
+        userPhotoModify() {
+            console.log("유저 사진 수정");
+            
+        },
+        moveBack() {
+            const path = this.$route.path;
+            if (path.includes("mypage")) {
+                this.$router.push("/mypage");
+                return;
+            }
+            this.$router.push("/login");
+        },
+        modify() {
+            console.log("유저 정보 수정");
+            this.$router.push("/mypage");
+            // http
+			// 		.put("/todo/",this.todo)
+			// 		.then(() => {
+			// 			console.log("수정하였습니다.");
+			// 			this.$router.push("/user/" + this.user.id);
+			// 		})
+			// 		.catch((exp) => alert("회원정보 수정에 실패하였습니다." + exp));
+            // return;
         },
         userWithdraw() {
             console.log("회원 탈퇴");
@@ -114,9 +143,38 @@ export default {
 
 <style scoped>
 .main-container{
-    margin: 0px 30px;
+    margin: 0px 0px;
+}
+.header {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  
+  border-bottom: 1px solid #e7e7e7;
+  box-shadow: 0 6px 6px -6px #e7e7e7;
+  padding: 0 10px;
+}
+.back-btn-img{
+    margin: 10px;
+}
+.title-text {
+  font-weight: bold;
+  font-size: 18px;
+  width: 120%;
+  height: 24px;
+  padding: 4px 10% 0px 2%;
+}
+.modify{
+  color:#496DEF;
+  width: 120%;
+  height: 24px;
+  font-weight: bold;
+  font-size: 18px;
+  text-align:right;
+  padding: 4px 5% 0px 15%;
 }
 .profile { 
+    margin: 0px 30px;
 	height:auto;
     display: flex;
     flex-direction: column;
@@ -130,6 +188,7 @@ export default {
     cursor: pointer;
     width: 100%;
     height: 20%;
+    margin-top:18px;
     padding : 18.5px 0px 10px
 }
 .img{
@@ -142,7 +201,7 @@ export default {
     
     transform: translate( 50%, 0% );
 }
-.img-modify{
+.filebox label {
     width: 104.75px;
     height: 100.33px;
     border-radius:500px;
@@ -150,30 +209,39 @@ export default {
     background-position: center;;
     background-color: rgba(0, 0, 0, 0.335);
 
-    transform: translate( -50%, 0% );
+    transform: translate( -50%, 3.5% );
 
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.txt{
     color: white;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: 27px;
 }
+
+.filebox input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
 .user-infoes{
     display: flex;
     flex-direction: column;
     margin-top: 30px;
+    gap: 5px;
 }
 .user-info{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 10px 0px;
-    gap: 5px;
 
     height: 94px;
 }
