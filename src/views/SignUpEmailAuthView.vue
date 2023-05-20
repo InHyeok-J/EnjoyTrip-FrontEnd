@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import NotLogoHeader from "@/components/common/NotLogoHeader.vue";
-import SignUpEmailAuthMain from "@/components/signup/SignUpEmailAuthMain.vue";
+import NotLogoHeader from '@/components/common/NotLogoHeader.vue';
+import SignUpEmailAuthMain from '@/components/signup/SignUpEmailAuthMain.vue';
 export default {
-  name: "SingUpEmailAuthView",
+  name: 'SignUpEmailAuthView',
   components: { NotLogoHeader, SignUpEmailAuthMain },
 };
 </script>
