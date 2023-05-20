@@ -2,7 +2,6 @@
   <div>
     <common-header />
     <mypage-home />
-    <common-footer />
   </div>
 </template>
 
