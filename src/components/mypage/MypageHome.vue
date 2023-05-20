@@ -74,6 +74,8 @@ export default {
 <style scoped>
 .main-container{
     margin: 5px 30px;
+    
+    padding-bottom: 70px;
 }
 .profile { 
 	height:auto;
@@ -186,7 +188,6 @@ export default {
     flex-direction: column;
     width:100%;
     margin: 15px 0px;
-    padding-bottom: 80px;
 }
 .detail-title{
     font-family: 'Noto Sans KR';

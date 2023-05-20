@@ -32,11 +32,6 @@ export default {
     padding: 15px;
     
 }
-/* .nav-btn{
-    width: 31px;
-    height: 31px;
-    margin-top: 15px;
-} */
 .home{
     width: 31px;
     height: 31px;
@@ -44,7 +39,7 @@ export default {
     order: 0;
     flex-grow: 0;
     
-    background-image: url("@/assets/home_not_click.png");
+    background-image: url("@/assets/Footer_home_not_click.png");
     background-size: 100%;
     background-position: center;
 }
@@ -55,7 +50,7 @@ export default {
     order: 0;
     flex-grow: 0;
     
-    background-image: url("@/assets/search_not_click.png");
+    background-image: url("@/assets/Footer_search_not_click.png");
     background-size: 100%;
     background-position: center;
 }  
@@ -66,7 +61,7 @@ export default {
     order: 0;
     flex-grow: 0;
     
-    background-image: url("@/assets/map_not_click.png");
+    background-image: url("@/assets/Footer_map_not_click.png");
     background-size: 100%;
     background-position: center;
 } 
@@ -77,7 +72,7 @@ export default {
     order: 0;
     flex-grow: 0;
     
-    background-image: url("@/assets/mypage_clicked.png");
+    background-image: url("@/assets/Footer_mypage_clicked.png");
     background-size: 100%;
     background-position: center;
 }

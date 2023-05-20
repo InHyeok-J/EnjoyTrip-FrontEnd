@@ -7,6 +7,7 @@ import MypageUserManageView from "@/views/MypageUserManageView.vue";
 import SignUpFormView from "@/views/SignUpFormView.vue";
 import SignUpEmailAuthView from "@/views/SignUpEmailAuthView.vue";
 import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
+import CourseAllView from "@/views/CourseAllView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -44,6 +45,11 @@ const routes = [
     path: "/signup/nickname",
     name: "signup nicknameCheck",
     component: SignUpNicknameView
+  },
+  {
+    path: "/courses",
+    name: "courses all",
+    component: CourseAllView
   },
 ];
 
