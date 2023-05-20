@@ -37,6 +37,7 @@ export default {
   height: 54px;
   display: flex;
   align-items: center;
+  padding: 0 30px;
 }
 .header > img {
   cursor: pointer;

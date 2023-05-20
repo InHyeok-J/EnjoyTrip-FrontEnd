@@ -45,19 +45,19 @@ export default {
           attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
         },
         {
-          id:1,
+          id:2,
           username: "이예은",
           title: "떠나요 제주도",
           attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
         },
         {
-          id:1,
+          id:3,
           username: "이예은",
           title: "떠나요 제주도",
           attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
         },
         {
-          id:1,
+          id:4,
           username: "이예은",
           title: "떠나요 제주도",
           attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
@@ -74,6 +74,7 @@ export default {
   methods: {
     moveInCourse(id){
       console.log(id);
+      this.$router.push("/courses/${id}");
     }
   }
 }
