@@ -73,7 +73,7 @@ export default {
   order: 0;
   flex-grow: 0;
 
-  background-image: url('@/assets/home_unclicked.svg');
+  background-image: url('@/assets/tab-icons/home_unclicked.svg');
   background-size: 100%;
   background-position: center;
 }
@@ -84,7 +84,7 @@ export default {
   order: 0;
   flex-grow: 0;
 
-  background-image: url('@/assets/search_unclicked.svg');
+  background-image: url('@/assets/tab-icons/search_unclicked.svg');
   background-size: 100%;
   background-position: center;
 }
@@ -95,7 +95,7 @@ export default {
   order: 0;
   flex-grow: 0;
 
-  background-image: url('@/assets/map_unclicked.svg');
+  background-image: url('@/assets/tab-icons/map_unclicked.svg');
   background-size: 100%;
   background-position: center;
 }
@@ -106,7 +106,7 @@ export default {
   order: 0;
   flex-grow: 0;
 
-  background-image: url('@/assets/profile_unclicked.svg');
+  background-image: url('@/assets/tab-icons/profile_unclicked.svg');
   background-size: 100%;
   background-position: center;
 }
