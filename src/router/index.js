@@ -10,6 +10,7 @@ import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
 import CourseAllView from "@/views/CourseAllView.vue";
 import CourseDetailView from "@/views/CourseDetailView.vue";
 import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -21,17 +22,18 @@ const routes = [
   {
     path: "/login",
     name: "login",
+
     component: LoginView,
   },
   {
     path: "/mypage",
     name: "mypage",
-    component: MypageHomeView
+    component: MypageHomeView,
   },
   {
     path: "/mypage/manage",
     name: "mypage user manage",
-    component: MypageUserManageView
+    component: MypageUserManageView,
   },
   {
     path: "/signup",
@@ -56,12 +58,12 @@ const routes = [
   {
     path: "/courses",
     name: "courses all",
-    component: CourseAllView
+    component: CourseAllView,
   },
   {
     path: "/courses/:id",
     name: "courses detail",
-    component: CourseDetailView
+    component: CourseDetailView,
   },
 ];
 

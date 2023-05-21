@@ -1,13 +1,18 @@
 <template>
-  <div>redirect..</div>
+  <div>
+    <loding-component text="로그인중.."></loding-component>
+  </div>
 </template>
 
 <script>
 import { postOAuthLogin } from "@/api/authApi.js";
 import signUpConstant from "@/store/constants/signUpConstant";
+import userConstant from "@/store/constants/userConstant";
+import LodingComponent from "@/components/common/LodingComponent.vue";
 // import axios from "axios";
 export default {
   name: "KakaoRedirectView",
+  components: { LodingComponent },
   async created() {
     const authCode = this.$route.query.code;
     if (this.$route.query.error) {
@@ -35,6 +40,7 @@ export default {
         this.$router.push("/signup/nickname");
       } else {
         alert("로그인 성공!");
+        this.$store.dispatch(userConstant.CALL_ACTION_USER_INFO);
         this.$router.push("/");
       }
     } catch (e) {

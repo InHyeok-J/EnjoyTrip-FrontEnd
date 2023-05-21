@@ -22,7 +22,7 @@ import { postSignUp } from "@/api/userApi.js";
 import { postOAuthSignUp } from "@/api/authApi.js";
 import signUpConstant from "@/store/constants/signUpConstant";
 import { nicknameValidator } from "@/utils/inputValidator";
-
+import userConstant from "@/store/constants/userConstant";
 export default {
   name: "SignUpNicknameMain",
   components: { CommonInput },
@@ -52,10 +52,8 @@ export default {
         return;
       }
       if (this.$store.state.signUpStore.process == 4) {
-        console.log("OAuth 가입");
         this.oauthSignUp();
       } else {
-        console.log("로컬 가입");
         this.localSignUp();
       }
     },
@@ -83,6 +81,7 @@ export default {
           this.$store.state.signUpStore.provider
         );
         alert("회원가입 성공!");
+        this.$store.dispatch(userConstant.CALL_ACTION_USER_INFO);
         this.$router.push("/"); // 바로 로그인까지 처리한다.
       } catch (e) {
         console.log(e);
