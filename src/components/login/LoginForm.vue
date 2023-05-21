@@ -54,9 +54,14 @@ export default {
         this.$router.push("/");
       } catch (e) {
         console.log(e);
+        if (e.response === undefined) {
+          alert("로그인 실패");
+          return;
+        }
         alert(e.response.data.message);
       }
     },
+
     isInputValidate() {
       return !emailValidator(this.email) || !passwordValidator(this.password);
     },

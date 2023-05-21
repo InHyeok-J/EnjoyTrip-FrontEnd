@@ -12,7 +12,7 @@
     <div class="sns-line">sns 로그인</div>
     <div class="oauth-block">
       <div class="oauth-block-icons">
-        <img src="@/assets/KakaoIcon.svg" alt="kakao" />
+        <img src="@/assets/KakaoIcon.svg" alt="kakao" @click="kakaoLogin" />
         <img src="@/assets/GoogleIcon.svg" alt="google" />
       </div>
     </div>
@@ -25,10 +25,20 @@
 
 <script>
 import LoginForm from "./LoginForm.vue";
+// import axios from "axios";
+
 export default {
   name: "LoginHome",
   components: { LoginForm },
-  methods: {},
+  methods: {
+    async kakaoLogin() {
+      const kakaoKey = process.env.VUE_APP_KAKAO_OAUTH_KEY;
+      console.log(kakaoKey);
+      const redirect = "http://localhost:8080/oauth/kakao/callback";
+      const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirect}&response_type=code`;
+      window.location.href = kakaoUrl;
+    },
+  },
 };
 </script>
 

@@ -6,6 +6,7 @@ import MypageView from "../views/MypageView.vue";
 import SignUpFormView from "@/views/SignUpFormView.vue";
 import SignUpEmailAuthView from "@/views/SignUpEmailAuthView.vue";
 import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
+import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -22,7 +23,7 @@ const routes = [
   {
     path: "/mypage",
     name: "mypage",
-    component: MypageView
+    component: MypageView,
   },
   {
     path: "/signup",
@@ -37,7 +38,12 @@ const routes = [
   {
     path: "/signup/nickname",
     name: "signup nicknameCheck",
-    component: SignUpNicknameView
+    component: SignUpNicknameView,
+  },
+  {
+    path: "/oauth/kakao/callback",
+    name: "kakao oauth redirect",
+    component: KakaoRedirectView,
   },
 ];
 
