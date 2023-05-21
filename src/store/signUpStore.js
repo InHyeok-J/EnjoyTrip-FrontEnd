@@ -4,6 +4,7 @@ const initStore = {
   email: null,
   password: null,
   nickname: null,
+  provider: null,
 };
 
 const signUpStore = {
@@ -22,6 +23,10 @@ const signUpStore = {
     },
     [signUpConstant.MU_PROCESS]: (state, payload) => {
       state.process = payload.process;
+    },
+    [signUpConstant.MU_OAUTH_INFO]: (state, payload) => {
+      state.process = payload.process;
+      state.provider = payload.provider;
     },
   },
 };
