@@ -49,7 +49,6 @@ export default {
     return {
       isReviewSelected: false,
       isCourseSelected: true,
-      photos:[],
       rowSize : 15
     };
   },
@@ -77,44 +76,44 @@ export default {
     
     padding-bottom: 70px;
 }
-.profile { 
-	height:auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.profile {
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 .image {
-	border-radius:500px;
-	width:69px;
-	height:69px;
-	background-image:url("@/assets/profile_image.png");
-	background-size:cover;
-    background-position: center;
+	border-radius: 500px;
+	width: 69px;
+	height: 69px;
+	background-image: url('@/assets/profile_image.png');
+	background-size: cover;
+	background-position: center;
 }
-.user{
-    display: flex;
-    flex-direction: column;
-    width: 60%;
+.user {
+	display: flex;
+	flex-direction: column;
+	width: 60%;
 }
-.setting-button { 
-	width:30px;
-	height:30px;
-    background-image:url("@/assets/setting_button.png");
-	background-size:cover;
+.setting-button {
+	width: 30px;
+	height: 30px;
+	background-image: url('@/assets/setting_button.png');
+	background-size: cover;
 }
-.logout{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.logout {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-.common-btn{
-    margin-top: 30px;
-    width: 320px;
-    height: 50px;
-    background-color: #E7E7E7;
-    font-family: 'Noto Sans KR';
-    color: #000;
-    text-align: center;
+.common-btn {
+	margin-top: 30px;
+	width: 320px;
+	height: 50px;
+	background-color: #e7e7e7;
+	font-family: 'Noto Sans KR';
+	color: #000;
+	text-align: center;
 }
 .review-container { 
     display: flex;
@@ -122,66 +121,63 @@ export default {
     justify-content: space-evenly;
     margin-top: 30px;
 }
-.reviews{
-    
-}
-.review-block { 
-	background-color:white;
+.review-block {
+	background-color: white;
 	/* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 17px 24px;
-    gap: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 17px 24px;
+	gap: 10px;
 
 
-    border-radius: 10px;
+	border-radius: 10px;
 }
 .review-block.active {
-  background-color: #E7E7E7;
-  color: #FFFFFF;
+	background-color: #e7e7e7;
+	color: #ffffff;
 }
-.course-block { 
-	background-color:white;
+.course-block {
+	background-color: white;
 	/* Auto layout */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 17px 24px;
-    gap: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 17px 24px;
+	gap: 10px;
 
     border-radius: 10px;
 }
 .course-block.active {
-  background-color: #E7E7E7;
-  color: #FFFFFF;
+	background-color: #e7e7e7;
+	color: #ffffff;
 }
 .title {
-    width: 87px;
-    height: 44px;
+	width: 87px;
+	height: 44px;
 
-    font-family: 'Noto Sans';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-    text-align: center;
-    color: #000000;
+	font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 22px;
+	text-align: center;
+	color: #000000;
 }
 .count {
     width: 93px;
     height: 44px;
 
-    font-family: 'Noto Sans';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 41px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	font-family: 'Noto Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 30px;
+	line-height: 41px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .details{
     display: flex;
@@ -189,13 +185,13 @@ export default {
     width:100%;
     margin: 15px 0px;
 }
-.detail-title{
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
-    margin: 10px 5px;
+.detail-title {
+	font-family: 'Noto Sans KR';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 29px;
+	margin: 10px 5px;
 }
 .detail-frame{
     justify-content: center;
@@ -212,7 +208,6 @@ export default {
     border-radius: 10px;
     background-image: url("@/assets/경복궁.jpg");
 	background-size: 300%;
-    background-position: center;
+	background-position: center;
 }
-
 </style>

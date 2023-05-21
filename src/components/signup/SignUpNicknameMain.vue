@@ -22,9 +22,9 @@ import { postSignUp } from "@/api/userApi.js";
 import { postOAuthSignUp } from "@/api/authApi.js";
 import signUpConstant from "@/store/constants/signUpConstant";
 import { nicknameValidator } from "@/utils/inputValidator";
+
 export default {
   name: "SignUpNicknameMain",
-
   components: { CommonInput },
   data() {
     return {
@@ -78,7 +78,10 @@ export default {
     },
     async oauthSignUp() {
       try {
-        await postOAuthSignUp(this.nickname, this.$store.state.signUpStore.provider);
+        await postOAuthSignUp(
+          this.nickname,
+          this.$store.state.signUpStore.provider
+        );
         alert("회원가입 성공!");
         this.$router.push("/"); // 바로 로그인까지 처리한다.
       } catch (e) {
