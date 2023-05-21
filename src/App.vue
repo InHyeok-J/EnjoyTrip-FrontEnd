@@ -63,7 +63,7 @@ input {
 	/* caret-color: #c62917; */
 }
 #app {
-	max-width: 500px;
+	max-width: 390px;
 	height: 100vh;
 	margin: 0 auto;
 }

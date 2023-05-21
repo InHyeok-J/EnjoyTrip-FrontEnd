@@ -1,83 +1,80 @@
 <template>
-	<div class="main-container">
-		<div class="profile">
-			<div class="image"></div>
-			<div class="user">
-				<div class="name">이예은</div>
-				<br />
-				<div class="email">yeeun_1ee@naver.com</div>
-			</div>
-			<div class="setting">
-				<button class="setting-button" />
-			</div>
-		</div>
+    <div class="main-container">
+        <div class="profile">
+            <div class="image"></div>
+            <div class="user">
+                <div  class="name">이예은</div><br>
+                <div  class="email">yeeun_1ee@naver.com</div>
+            </div>
+            <div class="setting"  @click="modifyForm">
+                <button class="setting-button"/>
+            </div>
+        </div>
+        
+        <div class="logout">
+            <button class="common-btn">
+                로그아웃
+            </button>
+        </div>
 
-		<div class="logout">
-			<button class="common-btn">로그아웃</button>
-		</div>
+        <div class="review-container">
+            <div class="reviews">
+                <button class="review-block" :class="{ active: isReviewSelected }" @click="toggleReviewSelection('course')">
+                    <div class="title">내가 작성한 <b>여행 코스</b></div>
+                    <div class="count">38</div>
+                </button>
+            </div>
+            <div class="reviews">
+                <button class="course-block" :class="{ active: isCourseSelected }" @click="toggleReviewSelection('review')">
+                    <div class="title">내가 작성한 <b>여행 후기</b></div>
+                    <div class="count">5</div>
+                </button>
+            </div>
+        </div>
 
-		<div class="review">
-			<button
-				class="review-block"
-				:class="{ active: isReviewSelected }"
-				@click="toggleReviewSelection('course')"
-			>
-				<div class="title">내가 작성한 <b>여행 코스</b></div>
-				<div class="count">38</div>
-			</button>
-			<button
-				class="course-block"
-				:class="{ active: isCourseSelected }"
-				@click="toggleReviewSelection('course')"
-			>
-				<div class="title">내가 작성한 <b>여행 후기</b></div>
-				<div class="count">5</div>
-			</button>
-		</div>
-
-		<div class="details">
-			<div class="detail-title">내가 작성한 <b>여행 코스</b></div>
-			<!-- <div class="detail-imgs" v-for="(num, index) in 5" :key="index">
-                <button class="detail-img" v-for="(num, index) in 3" :key="index"/>
-            </div> -->
-			<div class="detail-imgs">
-				<button
-					class="detail-img"
-					v-for="(num, index) in rowSize"
-					:key="index"
-				/>
-			</div>
-		</div>
-	</div>
+        <div class="details">
+            <div class="detail-title">내가 작성한 <b>여행 코스</b></div>
+            <div class="detail-img-table">
+                <div class="detail-frame">
+                    <button class="detail-img"  v-for="(num, index) in rowSize" :key="index"/>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-	data() {
-		return {
-			isReviewSelected: false,
-			isCourseSelected: true,
-			photos: [],
-			rowSize: 8,
-		};
-	},
-	methods: {
-		toggleReviewSelection(reviewType) {
-			if (reviewType === 'course') {
-				this.isReviewSelected = !this.isReviewSelected;
-				this.isCourseSelected = !this.isCourseSelected;
-			} else if (reviewType === 'review') {
-				this.isReviewSelected = !this.isReviewSelected;
-				this.isCourseSelected = !this.isCourseSelected;
-			}
-		},
-	},
-};
+ data() {
+    return {
+      isReviewSelected: false,
+      isCourseSelected: true,
+      rowSize : 15
+    };
+  },
+  methods: {
+    toggleReviewSelection(reviewType) {
+      if (reviewType === 'course' && this.isCourseSelected) {
+        this.isReviewSelected = !this.isReviewSelected;
+        this.isCourseSelected = !this.isCourseSelected;
+      } else if (reviewType === 'review' && this.isReviewSelected) {
+        this.isReviewSelected = !this.isReviewSelected;
+        this.isCourseSelected = !this.isCourseSelected;
+      }
+    },
+    modifyForm() {
+     console.log("ssss");
+     this.$router.push("/mypage/manage");
+    }
+  }
+}
 </script>
 
 <style scoped>
-.main-container {
-	margin: 0px 30px;
+.main-container{
+    margin: 5px 30px;
+    
+    padding-bottom: 70px;
 }
 .profile {
 	height: auto;
@@ -118,11 +115,11 @@ export default {
 	color: #000;
 	text-align: center;
 }
-.review {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	margin-top: 15px;
+.review-container { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 30px;
 }
 .review-block {
 	background-color: white;
@@ -134,8 +131,6 @@ export default {
 	padding: 17px 24px;
 	gap: 10px;
 
-	width: 40%;
-	height: auto;
 
 	border-radius: 10px;
 }
@@ -153,10 +148,7 @@ export default {
 	padding: 17px 24px;
 	gap: 10px;
 
-	width: 40%;
-	height: auto;
-
-	border-radius: 10px;
+    border-radius: 10px;
 }
 .course-block.active {
 	background-color: #e7e7e7;
@@ -175,8 +167,8 @@ export default {
 	color: #000000;
 }
 .count {
-	width: 93px;
-	height: 44px;
+    width: 93px;
+    height: 44px;
 
 	font-family: 'Noto Sans';
 	font-style: normal;
@@ -187,11 +179,11 @@ export default {
 	justify-content: center;
 	align-items: center;
 }
-.details {
-	display: flex;
-	flex-direction: column;
-	margin: 15px;
-	padding-bottom: 80px;
+.details{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    margin: 15px 0px;
 }
 .detail-title {
 	font-family: 'Noto Sans KR';
@@ -201,23 +193,20 @@ export default {
 	line-height: 29px;
 	margin: 10px 5px;
 }
-/* .detail-imgs{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin: 5px 5px;
-} */
-.detail-imgs {
-	justify-content: center;
-	display: grid;
-	grid-template-columns: repeat(3, 90px);
-	grid-auto-rows: 90px;
-	column-gap: 10px;
+.detail-frame{
+    justify-content: center;
+    display: grid;
+	grid-template-columns: repeat(3, 30%);
+	grid-auto-rows: 100px;
+	column-gap: 5px;
 	row-gap: 7px;
 }
-.detail-img {
-	border-radius: 10px;
-	background-image: url('@/assets/경복궁.jpg');
+.detail-img{
+    width:100%;
+    height: auto;
+    /* transform: translate( 8%, 0% ); */
+    border-radius: 10px;
+    background-image: url("@/assets/경복궁.jpg");
 	background-size: 300%;
 	background-position: center;
 }
