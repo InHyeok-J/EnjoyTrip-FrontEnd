@@ -92,7 +92,7 @@ export default {
   methods: {
     moveInCourse(id){
       console.log(id);
-      this.$router.push("/courses/${id}");
+      this.$router.push("/courses/"+id);
     }
   }
 }

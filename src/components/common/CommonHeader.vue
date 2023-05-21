@@ -13,10 +13,12 @@ export default {
 <style scoped>
 .header {
   height: 60px;
-  top: 44px;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin: 0px 30px;
 }
 .logo {
   color: #6f8cf4;
