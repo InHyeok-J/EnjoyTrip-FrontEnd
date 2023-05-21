@@ -1,15 +1,23 @@
 <template>
   <div class="tab-bar">
-    <div
-      v-for="(tab, index) in tabs"
-      :key="index"
-      :class="['tab-item', { active: activeTab === index }]"
-      @click="changeTab(index)"
-    >
-      <i :class="tab.icon"></i>
-      <!-- 아이콘을 표시하는 부분 -->
-      {{ tab.title }}
-      <!-- 탭의 제목을 표시하는 부분 -->
+    <div class="icons">
+      <div
+        v-for="(tab, index) in tabs"
+        :key="index"
+        :class="['tab-item', { active: activeTab === index }]"
+        @click="changeTab(index)"
+      >
+        <div
+          :class="[
+            'tab-icon',
+            tab.iconClass,
+            {
+              'active-icon': activeTab === index,
+              [`${tab.iconClass}-active`]: activeTab === index,
+            },
+          ]"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
@@ -19,16 +27,36 @@ export default {
   data() {
     return {
       tabs: [
-        { title: 'Tab 1', icon: 'fa fa-home' },
-        { title: 'Tab 2', icon: 'fa fa-search' },
-        { title: 'Tab 3', icon: 'fa fa-user' },
-      ], // 탭의 제목과 아이콘을 객체로 저장합니다.
-      activeTab: 0, // 활성화된 탭의 인덱스를 저장합니다.
+        { iconClass: 'home-icon', route: '/' },
+        { iconClass: 'search-icon', route: 'attraction' },
+        { iconClass: 'map-icon', route: 'course' },
+        { iconClass: 'profile-icon', route: 'login' },
+      ],
+      activeTab: 0,
     };
   },
   methods: {
     changeTab(index) {
-      this.activeTab = index; // 선택한 탭으로 활성화된 탭을 변경합니다.
+      const prevActiveTab = this.activeTab;
+      this.activeTab = index;
+
+      const route = this.tabs[index].route;
+      if (this.$router.currentRoute.path !== route) {
+        this.$router.push(route).catch((err) => {
+          if (err.name !== 'NavigationDuplicated') {
+            throw err;
+          }
+        });
+      }
+
+      this.$nextTick(() => {
+        const prevActiveIconClass = `${this.tabs[prevActiveTab].iconClass}-active`;
+        const activeIconClass = `${this.tabs[this.activeTab].iconClass}-active`;
+        const icons = document.querySelectorAll('.tab-icon');
+
+        icons[prevActiveTab].classList.remove(prevActiveIconClass);
+        icons[this.activeTab].classList.add(activeIconClass);
+      });
     },
   },
 };
@@ -50,6 +78,18 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 268px;
+  height: 43px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 9px;
+}
 
 .tab-item {
   cursor: pointer;
@@ -58,56 +98,39 @@ export default {
   align-items: center;
 }
 
-.tab-item i {
-  font-size: 20px;
-}
-
-.tab-item.active {
-  font-weight: bold;
+.tab-icon {
+  width: 31px;
+  height: 31px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  background-size: 100%;
+  background-position: center;
 }
 
 .home-icon {
-  width: 31px;
-  height: 31px;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-
   background-image: url('@/assets/tab-icons/home_unclicked.svg');
-  background-size: 100%;
-  background-position: center;
 }
 .search-icon {
-  width: 31px;
-  height: 31px;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-
   background-image: url('@/assets/tab-icons/search_unclicked.svg');
-  background-size: 100%;
-  background-position: center;
 }
 .map-icon {
-  width: 28px;
-  height: 28px;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-
   background-image: url('@/assets/tab-icons/map_unclicked.svg');
-  background-size: 100%;
-  background-position: center;
 }
-.mypage-icon {
-  width: 38px;
-  height: 38px;
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-
+.profile-icon {
   background-image: url('@/assets/tab-icons/profile_unclicked.svg');
-  background-size: 100%;
-  background-position: center;
+}
+.home-icon-active {
+  background-image: url('@/assets/tab-icons/home_clicked.svg');
+}
+.search-icon-active {
+  background-image: url('@/assets/tab-icons/search_clicked.svg');
+}
+.map-icon-active {
+  background-image: url('@/assets/tab-icons/map_clicked.svg');
+}
+.profile-icon-active {
+  background-image: url('@/assets/tab-icons/profile_clicked.svg');
+  transform: scale(1.2); /* 크기 변화 설정 */
 }
 </style>
