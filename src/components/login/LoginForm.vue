@@ -14,13 +14,17 @@
       :onChangeFun="passwordOnChange"
     ></common-password>
     <button class="common-btn" @click="login">로그인</button>
+    <br />
+    <br />
+    <button class="common-btn nomal" @click="login">비밀번호 찾기</button>
   </div>
 </template>
 
 <script>
 import CommonInput from "../common/CommonInput.vue";
 import CommonPassword from "../common/CommonPassword.vue";
-import http from "../../api/axios";
+import { postLogin } from "@/api/authApi";
+import { emailValidator, passwordValidator } from "@/utils/inputValidator";
 
 export default {
   name: "LoginForm",
@@ -39,16 +43,37 @@ export default {
       this.password = inputValue;
     },
     async login() {
-      try {
-        const data = await http.get("/attractions?sidoCode=38&gugunCode=128&category=12&title=%EC%82%B0&offset=1");
-        console.log(data);
-      } catch (e) {
-        console.log("ERRROR");
-        console.log(e);
+      if (this.isInputValidate()) {
+        alert("값을 정확히 입력해주세요!");
+        return;
       }
+
+      try {
+        await postLogin(this.email, this.password);
+        alert("로그인 성공!");
+        this.$router.push("/");
+      } catch (e) {
+        console.log(e);
+        if (e.response === undefined) {
+          alert("로그인 실패");
+          return;
+        }
+        alert(e.response.data.message);
+      }
+    },
+
+    isInputValidate() {
+      return !emailValidator(this.email) || !passwordValidator(this.password);
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.nomal {
+  background-color: #e7e7e7;
+  font-weight: 700;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+}
+</style>

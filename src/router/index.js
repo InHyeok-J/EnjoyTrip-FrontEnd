@@ -9,6 +9,7 @@ import SignUpEmailAuthView from "@/views/SignUpEmailAuthView.vue";
 import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
 import CourseAllView from "@/views/CourseAllView.vue";
 import CourseDetailView from "@/views/CourseDetailView.vue";
+import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -45,7 +46,12 @@ const routes = [
   {
     path: "/signup/nickname",
     name: "signup nicknameCheck",
-    component: SignUpNicknameView
+    component: SignUpNicknameView,
+  },
+  {
+    path: "/oauth/kakao/callback",
+    name: "kakao oauth redirect",
+    component: KakaoRedirectView,
   },
   {
     path: "/courses",

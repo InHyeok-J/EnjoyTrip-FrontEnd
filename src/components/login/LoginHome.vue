@@ -12,7 +12,7 @@
     <div class="sns-line">sns 로그인</div>
     <div class="oauth-block">
       <div class="oauth-block-icons">
-        <img src="@/assets/KakaoIcon.svg" alt="kakao" />
+        <img src="@/assets/KakaoIcon.svg" alt="kakao" @click="kakaoLogin" />
         <img src="@/assets/GoogleIcon.svg" alt="google" />
       </div>
     </div>
@@ -24,11 +24,19 @@
 </template>
 
 <script>
-import LoginForm from './LoginForm.vue';
+import LoginForm from "./LoginForm.vue";
+
 export default {
-  name: 'LoginHome',
+  name: "LoginHome",
   components: { LoginForm },
-  methods: {},
+  methods: {
+    async kakaoLogin() {
+      const kakaoKey = process.env.VUE_APP_KAKAO_OAUTH_KEY;
+      const redirect = process.env.VUE_APP_REDIRECT_URI;
+      const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirect}&response_type=code`;
+      window.location.href = kakaoUrl;
+    },
+  },
 };
 </script>
 
@@ -46,7 +54,7 @@ export default {
 .logo-block-text {
   color: #6f8cf4;
 
-  font-family: 'Righteous';
+  font-family: "Righteous";
   font-style: normal;
   font-weight: 400;
   font-size: 48px;
@@ -74,7 +82,7 @@ export default {
   margin: 60px 0px 20px 0;
 }
 .sns-line::before {
-  content: '';
+  content: "";
   flex-grow: 1;
   background-color: #dadada;
   height: 1px;
@@ -83,7 +91,7 @@ export default {
   margin: 0px 16px 0px 0px;
 }
 .sns-line::after {
-  content: '';
+  content: "";
   flex-grow: 1;
   background-color: #dadada;
   height: 1px;
