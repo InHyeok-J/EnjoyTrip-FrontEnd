@@ -37,11 +37,12 @@ export default {
   },
   methods: {
     changeTab(index) {
-      const prevActiveTab = this.activeTab;
-      this.activeTab = index;
+      const prevActiveTab = this.activeTab; // 이전 활성화된 탭의 인덱스를 저장합니다.
+      this.activeTab = index; // 클릭한 탭을 활성화합니다.
 
-      const route = this.tabs[index].route;
+      const route = this.tabs[index].route; // 클릭한 탭에 해당하는 라우트 정보를 가져옵니다.
       if (this.$router.currentRoute.path !== route) {
+        // 현재 라우트와 클릭한 탭의 라우트가 다른 경우에만 라우터를 변경합니다.
         this.$router.push(route).catch((err) => {
           if (err.name !== 'NavigationDuplicated') {
             throw err;
@@ -50,12 +51,12 @@ export default {
       }
 
       this.$nextTick(() => {
-        const prevActiveIconClass = `${this.tabs[prevActiveTab].iconClass}-active`;
-        const activeIconClass = `${this.tabs[this.activeTab].iconClass}-active`;
-        const icons = document.querySelectorAll('.tab-icon');
+        const prevActiveIconClass = `${this.tabs[prevActiveTab].iconClass}-active`; // 이전 활성화된 탭의 아이콘 클래스명을 가져옵니다.
+        const activeIconClass = `${this.tabs[this.activeTab].iconClass}-active`; // 현재 활성화된 탭의 아이콘 클래스명을 가져옵니다.
+        const icons = document.querySelectorAll('.tab-icon'); // 모든 탭 아이콘 요소를 선택합니다.
 
-        icons[prevActiveTab].classList.remove(prevActiveIconClass);
-        icons[this.activeTab].classList.add(activeIconClass);
+        icons[prevActiveTab].classList.remove(prevActiveIconClass); // 이전 활성화된 탭의 아이콘에서 활성화 클래스를 제거합니다.
+        icons[this.activeTab].classList.add(activeIconClass); // 현재 활성화된 탭의 아이콘에 활성화 클래스를 추가합니다.
       });
     },
   },
