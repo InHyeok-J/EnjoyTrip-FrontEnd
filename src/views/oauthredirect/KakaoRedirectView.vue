@@ -13,25 +13,25 @@ export default {
     if (this.$route.query.error) {
       alert("로그인 실패");
       this.$router.push("/login");
-      console.log("로그인 실패");
       return;
     }
 
-    console.log("로그인성공!");
-    console.log("CODE => " + authCode);
     try {
       const response = await postOAuthLogin(authCode);
-      console.log(response.data);
+
       if (response.data.isNewUser) {
         alert("회원가입이 필요합니다!");
-<<<<<<< HEAD
+
         this.$store.commit(signUpConstant.CALL_MU_OAUTH_INFO, {
           process: 4,
           provider: "KAKAO",
         });
-=======
-        this.$store.commit(signUpConstant.CALL_MU_OAUTH_INFO, { process: 4, provider: "KAKAO" });
->>>>>>> f90360db6c792dc5bf68c57a6baa90f1a3fc32f8
+
+        this.$store.commit(signUpConstant.CALL_MU_OAUTH_INFO, {
+          process: 4,
+          provider: "KAKAO",
+        });
+
         this.$router.push("/signup/nickname");
       } else {
         alert("로그인 성공!");

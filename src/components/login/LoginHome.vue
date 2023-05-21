@@ -1,28 +1,4 @@
 <template>
-<<<<<<< HEAD
-	<div class="main-container">
-		<div class="logo-block">
-			<div class="logo-block-text">
-				<img src="@/assets/Logo.png" class="logo-image" alt="Logo image" />
-				Tripfy
-			</div>
-		</div>
-		<div>
-			<login-form></login-form>
-		</div>
-		<div class="sns-line">sns 로그인</div>
-		<div class="oauth-block">
-			<div class="oauth-block-icons">
-				<img src="@/assets/KakaoIcon.svg" alt="kakao" />
-				<img src="@/assets/GoogleIcon.svg" alt="google" />
-			</div>
-		</div>
-		<div class="ask-block">
-			Tripfy 는 처음이신가요? &nbsp;
-			<router-link to="/signup">회원가입</router-link>
-		</div>
-	</div>
-=======
   <div class="main-container">
     <div class="logo-block">
       <div class="logo-block-text">
@@ -45,18 +21,12 @@
       <router-link to="/signup">회원가입</router-link>
     </div>
   </div>
->>>>>>> f90360db6c792dc5bf68c57a6baa90f1a3fc32f8
 </template>
 
 <script>
 import LoginForm from "./LoginForm.vue";
 
 export default {
-<<<<<<< HEAD
-	name: 'LoginHome',
-	components: { LoginForm },
-	methods: {},
-=======
   name: "LoginHome",
   components: { LoginForm },
   methods: {
@@ -67,33 +37,23 @@ export default {
       window.location.href = kakaoUrl;
     },
   },
->>>>>>> f90360db6c792dc5bf68c57a6baa90f1a3fc32f8
 };
 </script>
 
 <style scoped>
 .main-container {
-	margin: 0px 35px;
+  margin: 0px 35px;
 }
 .logo-image {
-	width: 58px;
-	display: inline-block;
-	position: relative;
-	top: -5px;
-	left: 5px;
+  width: 58px;
+  display: inline-block;
+  position: relative;
+  top: -5px;
+  left: 5px;
 }
 .logo-block-text {
-	color: #6f8cf4;
+  color: #6f8cf4;
 
-<<<<<<< HEAD
-	font-family: 'Righteous';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 48px;
-	line-height: 60px;
-	text-align: center;
-	letter-spacing: 0.02em;
-=======
   font-family: "Righteous";
   font-style: normal;
   font-weight: 400;
@@ -101,46 +61,27 @@ export default {
   line-height: 60px;
   text-align: center;
   letter-spacing: 0.02em;
->>>>>>> f90360db6c792dc5bf68c57a6baa90f1a3fc32f8
 
-	position: relative;
-	left: -10px;
+  position: relative;
+  left: -10px;
 }
 .logo-block {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	margin-top: 70px;
-	margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+  margin-bottom: 60px;
 }
 .sns-line {
-	display: flex;
-	flex-basis: 100%;
-	align-items: center;
-	color: #949494;
-	font-size: 11px;
-	margin: 60px 0px 20px 0;
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  color: #949494;
+  font-size: 11px;
+  margin: 60px 0px 20px 0;
 }
 .sns-line::before {
-<<<<<<< HEAD
-	content: '';
-	flex-grow: 1;
-	background-color: #dadada;
-	height: 1px;
-	font-size: 0px;
-	line-height: 0px;
-	margin: 0px 16px 0px 0px;
-}
-.sns-line::after {
-	content: '';
-	flex-grow: 1;
-	background-color: #dadada;
-	height: 1px;
-	font-size: 0px;
-	line-height: 0px;
-	margin: 0px 0px 0px 16px;
-=======
   content: "";
   flex-grow: 1;
   background-color: #dadada;
@@ -157,33 +98,32 @@ export default {
   font-size: 0px;
   line-height: 0px;
   margin: 0px 0px 0px 16px;
->>>>>>> f90360db6c792dc5bf68c57a6baa90f1a3fc32f8
 }
 .oauth-block {
-	margin-top: 30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .oauth-block-icons {
-	width: 110px;
-	display: flex;
-	justify-content: space-between;
+  width: 110px;
+  display: flex;
+  justify-content: space-between;
 }
 .oauth-block-icons > img {
-	height: 49px;
-	cursor: pointer;
+  height: 49px;
+  cursor: pointer;
 }
 .ask-block {
-	margin-top: 120px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 12px;
-	color: #282732;
+  margin-top: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  color: #282732;
 }
 .ask-block > a {
-	color: #496def;
-	font-size: 12px;
+  color: #496def;
+  font-size: 12px;
 }
 </style>
