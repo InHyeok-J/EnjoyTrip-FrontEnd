@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import LoginForm from "./LoginForm.vue";
+import LoginForm from './LoginForm.vue';
 export default {
-  name: "LoginHome",
+  name: 'LoginHome',
   components: { LoginForm },
   methods: {},
 };
@@ -45,7 +45,15 @@ export default {
 }
 .logo-block-text {
   color: #6f8cf4;
+
+  font-family: 'Righteous';
+  font-style: normal;
+  font-weight: 400;
   font-size: 48px;
+  line-height: 60px;
+  text-align: center;
+  letter-spacing: 0.02em;
+
   position: relative;
   left: -10px;
 }
@@ -66,7 +74,7 @@ export default {
   margin: 60px 0px 20px 0;
 }
 .sns-line::before {
-  content: "";
+  content: '';
   flex-grow: 1;
   background-color: #dadada;
   height: 1px;
@@ -75,7 +83,7 @@ export default {
   margin: 0px 16px 0px 0px;
 }
 .sns-line::after {
-  content: "";
+  content: '';
   flex-grow: 1;
   background-color: #dadada;
   height: 1px;

@@ -22,13 +22,14 @@ body {
   min-height: 100%;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR';
   overflow: auto;
 }
 
 button {
   all: unset;
   cursor: pointer;
+  font-weight: 500;
 }
 
 a {
@@ -47,15 +48,14 @@ ul,
 div,
 input,
 label,
-button,
 strong,
 span {
   margin: 0;
   padding: 0;
   font-size: 16px;
+  font-family: 'Noto Sans KR';
   line-height: 1.1;
   color: #292929;
-  font-weight: 500;
 }
 input {
   /* caret-color: #c62917; */
@@ -79,6 +79,7 @@ input {
   transition: all 0.9s;
 }
 .common-btn:hover {
-  box-shadow: 0 80px 0 0 rgba(0, 0, 0, 0.25) inset, 0 -80px 0 0 rgba(0, 0, 0, 0.25) inset;
+  box-shadow: 0 80px 0 0 rgba(0, 0, 0, 0.25) inset,
+    0 -80px 0 0 rgba(0, 0, 0, 0.25) inset;
 }
 </style>
