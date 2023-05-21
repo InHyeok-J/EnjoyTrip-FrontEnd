@@ -1,5 +1,5 @@
 <template>
-	<div class="home">
+	<div>
 		<common-header></common-header>
 		<common-tab></common-tab>
 	</div>
@@ -9,9 +9,8 @@
 // @ is an alias to /src
 import CommonHeader from '@/components/common/CommonHeader.vue';
 import CommonTab from '@/components/common/CommonTab.vue';
-
 export default {
-	name: 'HomeView',
+	name: 'AttractionSearchView',
 
 	components: { CommonHeader, CommonTab },
 };

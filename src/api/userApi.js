@@ -1,5 +1,5 @@
-import http from "./axios";
+import http from './axios';
 
-export const postSignUp = async (payload) => {
-  await http.post("/user/signup", payload);
+export const postSignUp = async payload => {
+	await http.post('/user/signup', payload);
 };
