@@ -19,11 +19,11 @@
           </div>
           <div class="course-reaction">
             <div class="course-comment">
-              <img class="course-comment-img" src="@/assets/Course_comment.png">
+              <img class="course-comment-img" src="@/assets/course-icons/Course_comment.png">
               <div class="course-comment-count">23</div>
             </div>
             <div class="course-like">
-              <img class="course-like-img" src="@/assets/Course_like.png">
+              <img class="course-like-img" src="@/assets/course-icons/Course_like.png">
               <div class="course-like-count">23</div>
             </div>
           </div>

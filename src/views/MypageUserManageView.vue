@@ -1,17 +1,17 @@
 <template>
   <div>
     <mypage-user-manage/>
-    <common-footer/>
+    <common-tab/>
   </div>
 </template>
 
 <script>
-import CommonFooter from "@/components/common/CommonFooter.vue"
 import MypageUserManage from "@/components/mypage/MypageUserManage.vue"
+import CommonTab from '@/components/common/CommonTab.vue'
 export default {
   components: {
-    CommonFooter,
-    MypageUserManage
+    MypageUserManage,
+    CommonTab
   },
 
 }

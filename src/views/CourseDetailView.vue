@@ -2,16 +2,16 @@
   <div class="course-detail">
     <back-btn-and-logo-header/>
     <course-detail/>
-    <common-footer/>
+    <common-tab/>
   </div>
 </template>
 
 <script>
 import BackBtnAndLogoHeader from "@/components/common/BackBtnAndLogoHeader.vue"
-import CommonFooter from "@/components/common/CommonFooter.vue"
+import CommonTab from '@/components/common/CommonTab.vue'
 import CourseDetail from "@/components/course/CourseDetail.vue"
 export default {
-  components: { BackBtnAndLogoHeader, CommonFooter, CourseDetail },
+  components: { BackBtnAndLogoHeader, CommonTab, CourseDetail },
 
 }
 </script>
