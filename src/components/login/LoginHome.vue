@@ -25,7 +25,6 @@
 
 <script>
 import LoginForm from "./LoginForm.vue";
-// import axios from "axios";
 
 export default {
   name: "LoginHome",
@@ -33,8 +32,7 @@ export default {
   methods: {
     async kakaoLogin() {
       const kakaoKey = process.env.VUE_APP_KAKAO_OAUTH_KEY;
-      console.log(kakaoKey);
-      const redirect = "http://localhost:8080/oauth/kakao/callback";
+      const redirect = process.env.VUE_APP_REDIRECT_URI;
       const kakaoUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoKey}&redirect_uri=${redirect}&response_type=code`;
       window.location.href = kakaoUrl;
     },
@@ -55,7 +53,15 @@ export default {
 }
 .logo-block-text {
   color: #6f8cf4;
+
+  font-family: "Righteous";
+  font-style: normal;
+  font-weight: 400;
   font-size: 48px;
+  line-height: 60px;
+  text-align: center;
+  letter-spacing: 0.02em;
+
   position: relative;
   left: -10px;
 }

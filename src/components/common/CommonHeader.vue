@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "CommonHeader",
+  name: 'CommonHeader',
 };
 </script>
 
@@ -15,6 +15,7 @@ export default {
   height: 60px;
   top: 44px;
   display: flex;
+
   justify-content: center;
   align-items: center;
 }
@@ -23,5 +24,7 @@ export default {
   font-size: 24px;
   text-align: center;
   letter-spacing: 0.03em;
+
+  font-family: 'Righteous';
 }
 </style>
