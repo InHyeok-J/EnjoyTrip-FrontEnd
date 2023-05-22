@@ -19,3 +19,11 @@ export const postLogin = async (email, password) => {
 export const getLogout = async () => {
 	await http.get('/auth/logout');
 };
+
+export const postOAuthLogin = async (code) => {
+  return (await http.post("/oauth/kakao", { code })).data;
+};
+
+export const postOAuthSignUp = async (nickname, provider) => {
+  return (await http.post("/oauth/signup", { nickname, provider })).data;
+};

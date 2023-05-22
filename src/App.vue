@@ -22,7 +22,7 @@ body {
   min-height: 100%;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   overflow: auto;
 }
 
@@ -53,7 +53,7 @@ span {
   margin: 0;
   padding: 0;
   font-size: 16px;
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   line-height: 1.1;
   color: #292929;
 }
@@ -63,7 +63,7 @@ input {
   /* caret-color: #c62917; */
 }
 #app {
-  max-width: 500px;
+  max-width: 390px;
   height: 100vh;
   margin: 0 auto;
 }
