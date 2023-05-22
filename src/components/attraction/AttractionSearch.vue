@@ -1,17 +1,55 @@
 <template>
   <div class="main-container">
-    <search-input
-      placeholder="관광지를 입력해보세요"
-      type="text"
-      style="margin-bottom: 10px"
-      :inputvalue="keyword"
-      v-model="keyword"
-      :onChangeFun="keywordOnChange"
-      :saveRecentKeyword="saveRecentKeyword"
-    ></search-input>
-    <div class="warn">검색어를 입력하세요</div>
-    <div class="title keyword">최근 검색어</div>
-    <carousel
+    <div class="search-block">
+      <search-input
+        placeholder="관광지를 입력해보세요"
+        type="text"
+        style="margin-bottom: 10px"
+        :inputvalue="keyword"
+        v-model="keyword"
+        :onChangeFun="keywordOnChange"
+        :saveRecentKeyword="saveRecentKeyword"
+      ></search-input>
+      <div class="warn">검색어를 입력하세요</div>
+    </div>
+    <div class="recent-block">
+      <div class="title keyword">최근 검색어</div>
+    </div>
+    <div class="condition-block">
+      <div class="title filter">검색 조건</div>
+
+      <div class="dropdown-container">
+        <b-form-select
+          id="category"
+          class="custom-dropdown"
+          variant="custom"
+          v-model="selectedCategory"
+          :options="category"
+          @change="handleCategoryChange"
+        ></b-form-select>
+        <b-form-select
+          id="sido"
+          class="custom-dropdown"
+          variant="custom"
+          v-model="selectedSido"
+          :options="sido"
+          @change="handleSidoChange"
+        ></b-form-select>
+        <b-form-select
+          id="gugun"
+          class="custom-dropdown"
+          variant="custom"
+          v-model="selectedGugun"
+          :options="gugun"
+          @change="handleGugunChange"
+        ></b-form-select>
+      </div>
+    </div>
+    <div class="recommend-block">
+      <div class="title recommend">취향 저격 관광지</div>
+    </div>
+    <!-- <div class="search-block"></div> -->
+    <!-- <carousel
       class="pills"
       :perPageCustom="[
         [320, 2],
@@ -23,7 +61,7 @@
       <slide v-for="recentKeyword in recentKeywords" :key="recentKeyword">
         <div class="pill">{{ recentKeyword }}</div>
       </slide>
-    </carousel>
+    </carousel> -->
     <!-- <div class="pills">
       <div class="pill-container">
         <span
@@ -34,45 +72,16 @@
         >
       </div>
     </div> -->
-    <div class="title filter">검색 조건</div>
-
-    <div class="dropdown-container">
-      <b-form-select
-        id="category"
-        class="custom-dropdown"
-        variant="custom"
-        v-model="selectedCategory"
-        :options="category"
-        @change="handleCategoryChange"
-      ></b-form-select>
-      <b-form-select
-        id="sido"
-        class="custom-dropdown"
-        variant="custom"
-        v-model="selectedSido"
-        :options="sido"
-        @change="handleSidoChange"
-      ></b-form-select>
-      <b-form-select
-        id="gugun"
-        class="custom-dropdown"
-        variant="custom"
-        v-model="selectedGugun"
-        :options="gugun"
-        @change="handleGugunChange"
-      ></b-form-select>
-    </div>
-    <div class="title recommend">취향 저격 관광지</div>
   </div>
 </template>
 
 <script>
-import Carousel from "vue-carousel";
+// import Carousel from "vue-carousel";
 import SearchInput from "./SearchInput.vue";
 import { getGuguns } from "@/api/attractionApi";
 export default {
   name: "AttractionSearch",
-  components: { SearchInput, Carousel },
+  components: { SearchInput },
   data() {
     return {
       keyword: "",
@@ -111,9 +120,10 @@ export default {
       gugun: [{ value: null, text: "구/군" }],
     };
   },
-  mounted() {
+  created() {
     // 페이지가 로드될 때 localStorage에서 최근 검색어를 불러옴
     this.loadRecentKeywords();
+    this.clearRecentKeywords();
   },
   methods: {
     keywordOnChange(value) {
@@ -167,16 +177,46 @@ export default {
 .main-container {
   margin: 10px 35px;
 }
+.search-block {
+  height: 100px;
+}
+
+.recent-block {
+  height: 100px;
+}
+
+.condition-block {
+  height: 200px;
+}
 .custom-dropdown {
   background-color: #ffffff;
   border-radius: 10px;
-  padding: 0px 25px 0px 15px;
   width: auto;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
-  border: none; /* border 제거 */
+  border: none;
+}
+
+.custom-dropdown .dropdown-item {
+  padding: 8px 12px;
+  font-family: "Noto Sans KR";
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+}
+
+.custom-dropdown .dropdown-item.active,
+.custom-dropdown .dropdown-item:active {
+  background-color: #beccfe;
+  color: white;
+}
+
+.custom-dropdown .dropdown-item:focus,
+.custom-dropdown .dropdown-item:hover {
+  background-color: #d8e0ff;
+  color: #000000;
 }
 .pills {
-  position: absolute;
+  /* position: absolute; */
   top: 215px;
   display: flex;
   flex-direction: row;
@@ -229,7 +269,7 @@ export default {
 }
 
 .title {
-  position: absolute;
+  /* position: absolute; */
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
@@ -247,8 +287,8 @@ export default {
   top: 274px;
 }
 .dropdown-container {
-  position: absolute;
-  top: 306px;
+  /* position: absolute;
+  top: 306px; */
   display: flex;
   flex-direction: row;
   align-items: flex-start;
