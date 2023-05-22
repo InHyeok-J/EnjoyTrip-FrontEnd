@@ -3,7 +3,7 @@
     <div class="main-img">
        <div class="course-title">{{ course.title }}</div>
        <div class="course-like-container">
-        <img class="course-titile-like-img" src="@/assets/course-icons/Course_detail_like.png">
+        <img class="course-titile-like-img" src="@/assets/course-icons/Course_detail_unlike.svg">
        </div>
     </div>
     <div class="course-writer-container">
@@ -43,7 +43,7 @@
       <hr>
       <div class="course-info-detail">
         <div class="total-day">{{ course.days }}</div>
-        <div v-for="(attractions,x) in course.plans" :key="x">
+        <div class="day-container" v-for="(attractions,x) in course.plans" :key="x">
           <div class="day-info">
             <div class="day-title">{{ x+1 }}일차</div>
             <div class="day-date">{{ attractions[0].date}}</div>
@@ -90,6 +90,8 @@ import KakaoMap from "@/components/course/KakaoMap.vue";
 export default {
   data() {
     return {
+      detailImgs: ['@/assets/course-icons/Course_detail_unlike.svg', '@/assets/course-icons/Course_detail_like.svg'],
+      detailImgIndex:0,
       course: {
           id:1,
           username: "이예은",
@@ -166,6 +168,9 @@ export default {
     },
     courseShare() {
       console.log(this.course.id);
+    },
+    changeDeatilImg() {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
     }
   },
   components: {
@@ -285,11 +290,6 @@ export default {
       font-size: 15px;
       color: #F46F6F;
     }
-    /* .course-map{
-      height: 514px;
-      border: 1px solid black;
-    } */
-
     .course-info-container{
       margin: 10px 30px;
     }
@@ -301,7 +301,7 @@ export default {
       padding: 10px 0px 25px;
       gap: 5px;
 
-      width: 330px;
+      width: 100%;
       height: 96px;
     }
 
@@ -317,7 +317,7 @@ export default {
     }
 
     .course-comment{
-      width: 328px;
+      width: 100%;
       height: 53px;
 
       font-family: 'Noto Sans KR';
@@ -343,17 +343,18 @@ export default {
       font-size: 18px;
       line-height: 26px;
     }
+    .day-container{
+      width: 100%;
+    }
     .day-info{
       display: flex;
-      align-items: flex-start;
-      padding: 10px 15px;
       gap: 16px;
 
-      width: 329px;
+      width: 100%;
       height: 39px;
     }
     .day-title{
-      width: 217px;
+      width: 75%;
       height: 29px;
 
       font-family: 'Noto Sans KR';
@@ -364,7 +365,7 @@ export default {
     }
 
     .day-date{
-      width: 71px;
+      width: 30%;
       height: 19px;
 
       font-family: 'Noto Sans KR';
@@ -375,16 +376,16 @@ export default {
     }
     .attractions{
       justify-content: center;
-      align-items: flex-start;
-      padding: 3px 15px;
-      gap: 13px;
-
+      /* align-items: flex-start; */
       width: 330px;
       height: 42px;
-
     }
     .attraction-name{
-      font-weight: bold;
+      font-family: 'Noto Sans KR';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 13px;
+      line-height: 19px;
     }
     .attraction-address{
       font-family: 'Noto Sans KR';
@@ -392,27 +393,25 @@ export default {
       font-weight: 400;
       font-size: 13px;
       line-height: 19px;
+      margin: 3px 0px;
     }
     .course-comments-container{
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 10px 16px 25px;
       gap: 5px;
     }
 
     .course-comments-head{
       display: flex;
-      flex-direction: row;
       align-items: center;
-      padding: 0px;
-      gap: 182px;
+      gap: 50%;
 
-      width: 309px;
+      width: 100%;
       height: 37px;
     }
     .course-comments-title{
-      width: 34px;
+      width: 35%;
       height: 26px;
 
       font-family: 'Noto Sans KR';
@@ -435,28 +434,19 @@ export default {
       order: 1;
       flex-grow: 0;
     }
-
+    .course-comments-detail-container{
+      width: 100%;
+    }
     .course-comments-detail-title{
       display: flex;
       flex-direction: row;
       align-items: center;
       padding: 6px 0px 0px;
 
-      width: 301px;
+      width: 100%;
       height: 41px;
-
-
-      /* Inside auto layout */
-
-      flex: none;
-      order: 1;
-      flex-grow: 0;
     }
     .course-comment-userimg{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 0px;
       gap: 10px;
 
       width: 35px;
@@ -467,7 +457,7 @@ export default {
       flex-grow: 0;
     }
     .course-comment-username{
-      width: 110px;
+      width: 35%px;
       height: 19px;
 
       font-family: 'Noto Sans KR';
@@ -482,7 +472,7 @@ export default {
     .course-comment-comment{
       gap: 13px;
 
-      width: 303px;
+      width: 100%;
 
       margin: 5px 0px;
 
@@ -500,7 +490,7 @@ export default {
       align-items: flex-start;
       padding: 0px;
 
-      width: 303px;
+      width: 100%;
       height: 27px;
       font-family: 'Noto Sans KR';
       font-style: normal;
