@@ -10,6 +10,7 @@ import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
 import CourseAllView from "@/views/CourseAllView.vue";
 import CourseDetailView from "@/views/CourseDetailView.vue";
 import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
+import AttractionSearchView from "../views/AttractionSearchView";
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,11 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/attraction",
+    name: "attraction",
+    component: AttractionSearchView,
   },
   {
     path: "/login",

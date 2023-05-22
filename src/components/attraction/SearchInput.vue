@@ -2,9 +2,9 @@
   <div>
     <common-input
       placeholder="검색어를 입력해보세요"
-      type="keyword"
-      :inputvalue="keyword"
-      @onChange="keywordOnChange"
+      type="text"
+      :inputvalue="inputvalue"
+      @onChange="onChangeFun"
     ></common-input>
     <div class="view-block">
       <img
@@ -17,22 +17,27 @@
 </template>
 
 <script>
-import CommonInput from '../common/CommonInput.vue';
+import CommonInput from "../common/CommonInput.vue";
 export default {
-  name: 'SearchInput',
+  name: "SearchInput",
   components: { CommonInput },
-  props: ['placeholder', 'inputvalue', 'onChangeFun'],
+  props: ["placeholder", "inputvalue", "onChangeFun"],
   data() {
     return {
+      keyword: "", // keyword 속성 추가
       isViewPassword: false,
     };
   },
   methods: {
     update(e) {
-      this.$emit('onChange', e.target.value);
+      this.$emit("onChange", e.target.value);
     },
     changeViewMode() {
       this.isViewPassword = !this.isViewPassword;
+    },
+    keywordOnChange(value) {
+      // 이곳에 keyword 변경 로직을 추가하거나 원하는 동작을 수행하세요.
+      this.keyword = value;
     },
   },
 };
