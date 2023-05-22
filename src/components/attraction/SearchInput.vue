@@ -3,6 +3,8 @@
     <common-input
       placeholder="검색어를 입력해보세요"
       type="text"
+      v-model="keyword"
+      @input="keywordOnChange"
       :inputvalue="inputvalue"
       @onChange="onChangeFun"
     ></common-input>
@@ -10,7 +12,7 @@
       <img
         :src="require(`@/assets/search.svg`)"
         class="pass-view"
-        @click="changeViewMode"
+        @click="search"
       />
     </div>
   </div>
@@ -18,13 +20,15 @@
 
 <script>
 import CommonInput from "../common/CommonInput.vue";
+import { search } from "@/api/attractionApi";
+
 export default {
   name: "SearchInput",
   components: { CommonInput },
-  props: ["placeholder", "inputvalue", "onChangeFun"],
+  props: ["placeholder", "inputvalue", "onChangeFun", "saveRecentKeyword"],
   data() {
     return {
-      keyword: "", // keyword 속성 추가
+      keyword: this.inputvalue,
       isViewPassword: false,
     };
   },
@@ -32,10 +36,15 @@ export default {
     update(e) {
       this.$emit("onChange", e.target.value);
     },
-    changeViewMode() {
-      this.isViewPassword = !this.isViewPassword;
+    async search() {
+      console.log(this.keyword, this.inputvalue);
+      console.log(this.inputvalue, "ihii");
+      const response = await search({ title: this.inputvalue });
+      console.log(response);
+      this.saveRecentKeyword(this.inputvalue); // 최근 검색어 저장
     },
     keywordOnChange(value) {
+      // this.onChangeFun(value);
       // 이곳에 keyword 변경 로직을 추가하거나 원하는 동작을 수행하세요.
       this.keyword = value;
     },

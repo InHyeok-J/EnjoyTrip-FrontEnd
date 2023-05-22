@@ -5,11 +5,35 @@
       type="text"
       style="margin-bottom: 10px"
       :inputvalue="keyword"
+      v-model="keyword"
       :onChangeFun="keywordOnChange"
+      :saveRecentKeyword="saveRecentKeyword"
     ></search-input>
     <div class="warn">검색어를 입력하세요</div>
     <div class="title keyword">최근 검색어</div>
-    <div class="pills"></div>
+    <carousel
+      class="pills"
+      :perPageCustom="[
+        [320, 2],
+        [480, 3],
+        [720, 4],
+        [960, 5],
+      ]"
+    >
+      <slide v-for="recentKeyword in recentKeywords" :key="recentKeyword">
+        <div class="pill">{{ recentKeyword }}</div>
+      </slide>
+    </carousel>
+    <!-- <div class="pills">
+      <div class="pill-container">
+        <span
+          v-for="recentKeyword in recentKeywords"
+          :key="recentKeyword"
+          class="pill"
+          >{{ recentKeyword }}</span
+        >
+      </div>
+    </div> -->
     <div class="title filter">검색 조건</div>
 
     <div class="dropdown-container">
@@ -19,7 +43,7 @@
         variant="custom"
         v-model="selectedCategory"
         :options="category"
-        @change="handleDropdownChange"
+        @change="handleCategoryChange"
       ></b-form-select>
       <b-form-select
         id="sido"
@@ -35,7 +59,7 @@
         variant="custom"
         v-model="selectedGugun"
         :options="gugun"
-        @change="handleDropdownChange"
+        @change="handleGugunChange"
       ></b-form-select>
     </div>
     <div class="title recommend">취향 저격 관광지</div>
@@ -43,14 +67,16 @@
 </template>
 
 <script>
+import Carousel from "vue-carousel";
 import SearchInput from "./SearchInput.vue";
 import { getGuguns } from "@/api/attractionApi";
 export default {
   name: "AttractionSearch",
-  components: { SearchInput },
+  components: { SearchInput, Carousel },
   data() {
     return {
       keyword: "",
+      recentKeywords: [],
       selectedCategory: null,
       selectedSido: null,
       selectedGugun: null,
@@ -82,13 +108,17 @@ export default {
         { value: 38, text: "전남" },
         { value: 39, text: "제주" },
       ],
-      gugun: [{ value: null, text: "구/군  " }],
+      gugun: [{ value: null, text: "구/군" }],
     };
+  },
+  mounted() {
+    // 페이지가 로드될 때 localStorage에서 최근 검색어를 불러옴
+    this.loadRecentKeywords();
   },
   methods: {
     keywordOnChange(value) {
       this.keyword = value;
-      console.log(value);
+      // console.log(value);
     },
     async handleSidoChange(value) {
       console.log("선택된 시/도:", value);
@@ -104,11 +134,30 @@ export default {
       // 구/군 선택값 초기화
       this.selectedGugun = null;
     },
-    handleDropdownChange(value) {
-      console.log("선택된 항목:", value);
+    handleCategoryChange(value) {
+      this.selectedCategory = value;
     },
-    handleDropdownClick() {
-      console.log("Dropdown clicked");
+    handleGugunChange(value) {
+      this.selectedGugun = value;
+    },
+    saveRecentKeyword(keyword) {
+      // localStorage에 최근 검색어 저장
+      const recentKeywords =
+        JSON.parse(localStorage.getItem("recentKeywords")) || [];
+      const updatedKeywords = [keyword, ...recentKeywords];
+      localStorage.setItem("recentKeywords", JSON.stringify(updatedKeywords));
+      this.recentKeywords = updatedKeywords;
+    },
+    loadRecentKeywords() {
+      // localStorage에서 최근 검색어 불러오기
+      const recentKeywords =
+        JSON.parse(localStorage.getItem("recentKeywords")) || [];
+      this.recentKeywords = recentKeywords;
+    },
+    clearRecentKeywords() {
+      // localStorage의 최근 검색어 초기화
+      localStorage.removeItem("recentKeywords");
+      this.recentKeywords = [];
     },
   },
 };
@@ -126,16 +175,42 @@ export default {
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
   border: none; /* border 제거 */
 }
+.pills {
+  position: absolute;
+  top: 215px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
 
-.custom-dropdown .dropdown-menu {
-  border-radius: 10px;
+  width: 325px;
+  height: 35px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
 }
 
-.custom-dropdown .dropdown-item {
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+.pill-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  display: inline-block;
+  min-width: 59px;
+  height: 32px;
+  background: #beccfe;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 500;
 }
 
 .warn {
