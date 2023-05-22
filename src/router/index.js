@@ -11,7 +11,7 @@ import CourseAllView from "@/views/CourseAllView.vue";
 import CourseDetailView from "@/views/CourseDetailView.vue";
 import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
 import AttractionSearchView from "../views/AttractionSearchView";
-
+import AttractionSearchResultView from "../views/AttractionSearchResultView";
 Vue.use(VueRouter);
 
 const routes = [
@@ -24,6 +24,11 @@ const routes = [
     path: "/attraction",
     name: "attraction",
     component: AttractionSearchView,
+  },
+  {
+    path: "/attraction-result",
+    name: "attraction-result",
+    component: AttractionSearchResultView,
   },
   {
     path: "/login",

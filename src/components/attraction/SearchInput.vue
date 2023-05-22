@@ -37,11 +37,18 @@ export default {
       this.$emit("onChange", e.target.value);
     },
     async search() {
-      console.log(this.keyword, this.inputvalue);
-      console.log(this.inputvalue, "ihii");
+      if (this.inputvalue == null || this.inputvalue == "") {
+        return;
+      }
       const response = await search({ title: this.inputvalue });
       console.log(response);
       this.saveRecentKeyword(this.inputvalue); // 최근 검색어 저장
+
+      this.$router.push({
+        name: "attraction-result", // 이동할 라우트의 이름
+        query: { keyword: this.inputvalue }, // query string으로 데이터 전달
+        // params: { keyword: this.inputvalue } // route params로 데이터 전달
+      });
     },
     keywordOnChange(value) {
       // this.onChangeFun(value);

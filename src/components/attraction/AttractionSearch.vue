@@ -1,55 +1,56 @@
 <template>
-  <div class="main-container">
-    <div class="search-block">
-      <search-input
-        placeholder="관광지를 입력해보세요"
-        type="text"
-        style="margin-bottom: 10px"
-        :inputvalue="keyword"
-        v-model="keyword"
-        :onChangeFun="keywordOnChange"
-        :saveRecentKeyword="saveRecentKeyword"
-      ></search-input>
-      <div class="warn">검색어를 입력하세요</div>
-    </div>
-    <div class="recent-block">
-      <div class="title keyword">최근 검색어</div>
-    </div>
-    <div class="condition-block">
-      <div class="title filter">검색 조건</div>
-
-      <div class="dropdown-container">
-        <b-form-select
-          id="category"
-          class="custom-dropdown"
-          variant="custom"
-          v-model="selectedCategory"
-          :options="category"
-          @change="handleCategoryChange"
-        ></b-form-select>
-        <b-form-select
-          id="sido"
-          class="custom-dropdown"
-          variant="custom"
-          v-model="selectedSido"
-          :options="sido"
-          @change="handleSidoChange"
-        ></b-form-select>
-        <b-form-select
-          id="gugun"
-          class="custom-dropdown"
-          variant="custom"
-          v-model="selectedGugun"
-          :options="gugun"
-          @change="handleGugunChange"
-        ></b-form-select>
+  <div>
+    <div class="main-container">
+      <div class="search-block">
+        <search-input
+          placeholder="관광지를 입력해보세요"
+          type="text"
+          style="margin-bottom: 10px"
+          :inputvalue="keyword"
+          v-model="keyword"
+          :onChangeFun="keywordOnChange"
+          :saveRecentKeyword="saveRecentKeyword"
+        ></search-input>
+        <div class="warn">검색어를 입력하세요</div>
       </div>
-    </div>
-    <div class="recommend-block">
-      <div class="title recommend">취향 저격 관광지</div>
-    </div>
-    <!-- <div class="search-block"></div> -->
-    <!-- <carousel
+      <div class="recent-block">
+        <div class="title keyword">최근 검색어</div>
+      </div>
+      <div class="condition-block">
+        <div class="title filter">검색 조건</div>
+
+        <div class="dropdown-container">
+          <b-form-select
+            id="category"
+            class="custom-dropdown"
+            variant="custom"
+            v-model="selectedCategory"
+            :options="category"
+            @change="handleCategoryChange"
+          ></b-form-select>
+          <b-form-select
+            id="sido"
+            class="custom-dropdown"
+            variant="custom"
+            v-model="selectedSido"
+            :options="sido"
+            @change="handleSidoChange"
+          ></b-form-select>
+          <b-form-select
+            id="gugun"
+            class="custom-dropdown"
+            variant="custom"
+            v-model="selectedGugun"
+            :options="gugun"
+            @change="handleGugunChange"
+          ></b-form-select>
+        </div>
+      </div>
+      <div class="recommend-block">
+        <div class="title recommend">취향 저격 관광지</div>
+      </div>
+      <!-- <div class="search-block"></div> -->
+      <!-- <carousel
       class="pills"
       :perPageCustom="[
         [320, 2],
@@ -62,7 +63,7 @@
         <div class="pill">{{ recentKeyword }}</div>
       </slide>
     </carousel> -->
-    <!-- <div class="pills">
+      <!-- <div class="pills">
       <div class="pill-container">
         <span
           v-for="recentKeyword in recentKeywords"
@@ -72,11 +73,13 @@
         >
       </div>
     </div> -->
+    </div>
   </div>
 </template>
 
 <script>
 // import Carousel from "vue-carousel";
+
 import SearchInput from "./SearchInput.vue";
 import { getGuguns } from "@/api/attractionApi";
 export default {
@@ -123,12 +126,26 @@ export default {
   created() {
     // 페이지가 로드될 때 localStorage에서 최근 검색어를 불러옴
     this.loadRecentKeywords();
-    this.clearRecentKeywords();
+    // this.clearRecentKeywords();
   },
   methods: {
     keywordOnChange(value) {
       this.keyword = value;
-      // console.log(value);
+      console.log(value);
+    },
+    getPillWidth(recentKeyword) {
+      const minWidth = 29;
+      const padding = 10;
+      // const maxWidth = 50;
+      const keywordLength = recentKeyword.length;
+
+      let width = minWidth + keywordLength * padding;
+      if (keywordLength > 6) {
+        width = minWidth + 6 * padding;
+        recentKeyword = recentKeyword.substr(0, 6);
+      }
+
+      return `min-width: ${width}px`;
     },
     async handleSidoChange(value) {
       console.log("선택된 시/도:", value);
@@ -151,12 +168,19 @@ export default {
       this.selectedGugun = value;
     },
     saveRecentKeyword(keyword) {
-      // localStorage에 최근 검색어 저장
       const recentKeywords =
         JSON.parse(localStorage.getItem("recentKeywords")) || [];
-      const updatedKeywords = [keyword, ...recentKeywords];
-      localStorage.setItem("recentKeywords", JSON.stringify(updatedKeywords));
-      this.recentKeywords = updatedKeywords;
+
+      // 이미 있는 키워드인지 확인
+      if (!recentKeywords.includes(keyword)) {
+        // 최대 개수를 초과하면 가장 오래된 키워드를 제거
+        // if (recentKeywords.length >= 3) {
+        //   recentKeywords.pop();
+        // }
+        const updatedKeywords = [keyword, ...recentKeywords];
+        localStorage.setItem("recentKeywords", JSON.stringify(updatedKeywords));
+        this.recentKeywords = updatedKeywords;
+      }
     },
     loadRecentKeywords() {
       // localStorage에서 최근 검색어 불러오기
@@ -221,12 +245,10 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px;
+  /* padding: 10px; */
   gap: 10px;
-
-  width: 325px;
+  width: 340px;
   height: 35px;
-
   /* Inside auto layout */
 
   flex: none;
@@ -242,7 +264,7 @@ export default {
 
 .pill {
   display: inline-block;
-  min-width: 59px;
+  min-width: 409px;
   height: 32px;
   background: #beccfe;
   border-radius: 50px;
@@ -251,6 +273,7 @@ export default {
   align-items: center;
   color: white;
   font-weight: 500;
+  margin: 5px;
 }
 
 .warn {
@@ -277,7 +300,7 @@ export default {
   line-height: 26px;
 
   color: #000000;
-  width: 217px;
+  width: 337px;
   height: 24px;
 }
 .keyword {
