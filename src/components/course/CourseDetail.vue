@@ -177,7 +177,7 @@ export default {
 <style scoped>
 .main-container{
   margin: 0px;
-  padding-bottom: 80px;
+  padding-bottom: 60px;
 }
 
 .main-img{
@@ -186,14 +186,13 @@ export default {
 
   background-image: linear-gradient(180deg, rgba(17, 21, 54, 0) 0%, rgba(17, 21, 54, 0.5538) 126.77%),url("@/assets/경복궁.jpg");
   background-position: center;
-  background-size: 100%;
+  background-size: cover;
   
   display: flex;
-  /* justify-content: space-around; */
+  justify-content: space-around;
   align-items: end;
 }
 .course-title {
-    height: 39px;
 
     color: aliceblue;
 
@@ -203,17 +202,9 @@ export default {
     font-size: 27px;
     line-height: 39px;
 
-    margin: 0px 145px 19px 27px;
-    
+    margin-bottom: 19px;
   }
-  .course-count-reaction{
-    height: 25px;
 
-    display: flex;
-    justify-content: space-between;
-
-    margin: 0px 30px;
-  }
   .course-like-container{
       width: 43px;
       height: 43px;
@@ -224,7 +215,6 @@ export default {
       height: 86px;
 
       display: flex;
-      justify-content: space-between;
       align-items: center;
       margin: 0px 30px;
     }
@@ -233,6 +223,12 @@ export default {
       height: 50px;
 
       border-radius: 50%;
+      margin-right: 17px;
+    }
+    .course-writer-info{
+      width: 70%;
+      height: 38px;
+      margin-right: 11%;
     }
     .course-share{
       height: 50px;
@@ -243,11 +239,19 @@ export default {
       width: 24px;
       height: 24px;
     }
+    .course-count-reaction{
+    height: 25px;
+
+    display: flex;
+    justify-content: space-between;
+
+    margin: 0px 30px;
+  }
     .course-reaction{
       width: 117px;
       height: 30px;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: end;
     }
     .course-comment-info{
       width: 32px;
@@ -255,6 +259,8 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-right: 12px;
+      gap: 5px;
     }
     .course-comment-img{
       width: 15px;
@@ -265,13 +271,15 @@ export default {
       color: #496DEF;
     }
     .course-like{
-      width: 30%;
+      width: 35px;
       display: flex;
-      justify-content: space-between;
+      gap: 5px;
     }
     .course-like-img{
       widows: 15px;
       height: 15px;
+      
+      margin-top: 3px;
     }
     .course-like-count{
       font-size: 15px;

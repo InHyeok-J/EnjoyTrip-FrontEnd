@@ -1,7 +1,7 @@
 <template>
   <div class="course-detail">
-    <back-btn-and-logo-header/>
-    <course-detail/>
+    <back-btn-and-logo-header isback="isback"/>
+    <course-detail />
     <common-tab/>
   </div>
 </template>

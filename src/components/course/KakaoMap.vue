@@ -118,8 +118,10 @@
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
   #map {
-    width: 400px;
+    width: 100%;
     height: 514px;
+    z-index: 0;
+    margin: 10px 0px 0px;
   }
   
   .button-group {
