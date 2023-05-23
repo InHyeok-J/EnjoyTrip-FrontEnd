@@ -1,16 +1,16 @@
 <template>
   <div class="main-container">
-    <div class="main-img">
-       <div class="course-title">{{ course.title }}</div>
+    <div class="main-img"  :style="`background-image:linear-gradient(180deg, rgba(17, 21, 54, 0) 0%, rgba(17, 21, 54, 0.5538) 126.77%), url(${course.course.courseImgUrl}) `" >
+       <div class="course-title">{{ course.course.title }}</div>
        <div class="course-like-container">
         <img class="course-titile-like-img" src="@/assets/course-icons/Course_detail_unlike.svg">
        </div>
     </div>
     <div class="course-writer-container">
-      <img class="course-writer-img" src="@/assets/profile_image.png">
+      <img class="course-writer-img" :src=course.profileImg alt='@/assets/defaultUser.svg'>
       <div class="course-writer-info">
-        <div class="course-writer-name"><b>{{ course.username }}</b>님의 여행코스</div>
-        <div class="course-writer-createdAt">{{ course.createdAt }}</div>
+        <div class="course-writer-name"><b>{{ course.nickname }}</b>님의 여행코스</div>
+        <div class="course-writer-createdAt">{{ course.course.createdAt }}</div>
       </div>
       <div class="course-share">
         <button @click="courseShare">
@@ -19,15 +19,15 @@
       </div>
     </div>
     <div class="course-count-reaction">
-      <div class="course-count">관광지 4개</div>
+      <div class="course-count">관광지 {{course.attractionCnt}}개</div>
       <div class="course-reaction">
             <div class="course-comment-info">
               <img class="course-comment-img" src="@/assets/course-icons/Course_comment.png">
-              <div class="course-comment-count">23</div>
+              <div class="course-comment-count">{{course.commentCnt}}</div>
             </div>
             <div class="course-like">
               <img class="course-like-img" src="@/assets/course-icons/Course_like.png">
-              <div class="course-like-count">23</div>
+              <div class="course-like-count">{{course.likeCnt}}</div>
             </div>
           </div>
     </div>
@@ -38,7 +38,7 @@
     <div class="course-info-container">
       <div class="course-info-explain">
         <div class="explain-title">설명</div>
-        <div calss="course-comment">{{ course.comment }}</div>
+        <div calss="course-comment">{{ course.course.description }}</div>
       </div>
       <hr>
       <div class="course-info-detail">
@@ -50,7 +50,7 @@
           </div>
           <div class="attractions" v-for="(attraction,y) in attractions" :key="y">      
             <div class="attraction-name">
-              {{ attraction.name }}
+              {{ attraction.attractionName }}
             </div>
             <div class="attraction-address">
               {{ attraction.address }}
@@ -64,7 +64,7 @@
           <div class="course-comments-title">댓글</div>
           <div class="course-comments-add">댓글 작성하기</div>
         </div>
-        <div class="course-comments-detail-container" v-for="(comment, index) in comments" :key="index">
+        <div class="course-comments-detail-container" v-for="(comment, index) in course.comments" :key="index">
           <div class="course-comments-detail-title">
             <img class ="course-comment-userimg" src="@/assets/profile_image.png">
             <div class="course-comment-username">
@@ -72,7 +72,7 @@
             </div>
           </div>
           <div class="course-comment-comment">
-            {{ comment.comment }}
+            {{ comment.content }}
           </div>
           <div class="course-comment-createdAt">
             {{ comment.createdAt }}
@@ -87,56 +87,13 @@
 
 <script>
 import KakaoMap from "@/components/course/KakaoMap.vue";
+import http from "@/api/axios/index.js"
 export default {
   data() {
     return {
       detailImgs: ['@/assets/course-icons/Course_detail_unlike.svg', '@/assets/course-icons/Course_detail_like.svg'],
       detailImgIndex:0,
-      course: {
-          id:1,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractionsName: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커",
-          days: "2박 3일",
-          plans : [
-            [
-              {
-                id: 1,
-                day: "1",
-                date:"2023-05-19",
-                name: "월정리 해변",
-                address: "제주도 제주시 정자일로 80"
-              },
-              {
-                id: 2,
-                day: "1",
-                date:"2023-05-19",
-                name: "만장굴",
-                address: "제주도 제주시 정자일로 80"
-              }
-            ],
-            [
-              {
-                id: 1,
-                day: "2",
-                date:"2023-05-20",
-                name: "성산일출봉",
-                address:"제주도 제주시 정자일로 80",
-              }
-            ],
-            [
-              {
-                id: 1,
-                day: "3",
-                date:"2023-05-20",
-                name: "성산일출봉",
-                address:"제주도 제주시 정자일로 80",
-              }
-            ]
-          ],
-          createdAt: "2023-05-19",
-          comment: "걷는 거 싫어해서 적게 걷는 코스를 계획해봤어요."
-      },
+      course: [],
       comments: [
         {
           id: 1,
@@ -165,6 +122,15 @@ export default {
   methods: {
     getCourse(id) {
       console.log(id);
+      http
+        .get("/courses/"+id)
+        .then(response => {
+          this.course = response.data.data;
+          console.log(this.course);
+        })
+        .catch(()=>{
+          console.log("데이터 가져오지 못함")
+        })
     },
     courseShare() {
       console.log(this.course.id);
@@ -189,7 +155,6 @@ export default {
   width: 100%;
   height: 255px;
 
-  background-image: linear-gradient(180deg, rgba(17, 21, 54, 0) 0%, rgba(17, 21, 54, 0.5538) 126.77%),url("@/assets/경복궁.jpg");
   background-position: center;
   background-size: cover;
   

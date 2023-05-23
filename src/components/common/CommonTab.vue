@@ -1,25 +1,25 @@
 <template>
-	<div class="tab-bar">
-		<div class="icons">
-			<div
-				v-for="(tab, index) in tabs"
-				:key="index"
-				:class="['tab-item', { active: activeTab === index }]"
-				@click="changeTab(index)"
-			>
-				<div
-					:class="[
-						'tab-icon',
-						tab.iconClass,
-						{
-							'active-icon': activeTab === index,
-							[`${tab.iconClass}-active`]: activeTab === index,
-						},
-					]"
-				></div>
-			</div>
-		</div>
-	</div>
+  <div class="tab-bar">
+    <div class="icons">
+      <div
+        v-for="(tab, index) in tabs"
+        :key="index"
+        :class="['tab-item', { active: activeTab === index }]"
+        @click="changeTab(index)"
+      >
+        <div
+          :class="[
+            'tab-icon',
+            tab.iconClass,
+            {
+              'active-icon': activeTab === index,
+              [`${tab.iconClass}-active`]: activeTab === index,
+            },
+          ]"
+        ></div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -50,16 +50,16 @@ export default {
 				});
 			}
 
-			this.$nextTick(() => {
-				const prevActiveIconClass = `${this.tabs[prevActiveTab].iconClass}-active`; // 이전 활성화된 탭의 아이콘 클래스명을 가져옵니다.
-				const activeIconClass = `${this.tabs[this.activeTab].iconClass}-active`; // 현재 활성화된 탭의 아이콘 클래스명을 가져옵니다.
-				const icons = document.querySelectorAll('.tab-icon'); // 모든 탭 아이콘 요소를 선택합니다.
+      this.$nextTick(() => {
+        const prevActiveIconClass = `${this.tabs[prevActiveTab].iconClass}-active`; // 이전 활성화된 탭의 아이콘 클래스명을 가져옵니다.
+        const activeIconClass = `${this.tabs[this.activeTab].iconClass}-active`; // 현재 활성화된 탭의 아이콘 클래스명을 가져옵니다.
+        const icons = document.querySelectorAll('.tab-icon'); // 모든 탭 아이콘 요소를 선택합니다.
 
-				icons[prevActiveTab].classList.remove(prevActiveIconClass); // 이전 활성화된 탭의 아이콘에서 활성화 클래스를 제거합니다.
-				icons[this.activeTab].classList.add(activeIconClass); // 현재 활성화된 탭의 아이콘에 활성화 클래스를 추가합니다.
-			});
-		},
-	},
+        icons[prevActiveTab].classList.remove(prevActiveIconClass); // 이전 활성화된 탭의 아이콘에서 활성화 클래스를 제거합니다.
+        icons[this.activeTab].classList.add(activeIconClass); // 현재 활성화된 탭의 아이콘에 활성화 클래스를 추가합니다.
+      });
+    },
+  },
 };
 </script>
 
@@ -75,63 +75,65 @@ export default {
 	box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.15);
 	border-radius: 0;
 
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .icons {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	width: 268px;
-	height: 43px;
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
-	top: 9px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 268px;
+  height: 43px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 9px;
 }
 
 .tab-item {
-	cursor: pointer;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .tab-icon {
-	width: 31px;
-	height: 31px;
-	flex: none;
-	order: 0;
-	flex-grow: 0;
-	background-size: 100%;
-	background-position: center;
+  width: 31px;
+  height: 31px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  background-size: 100%;
+  background-position: center;
 }
 
 .home-icon {
-	background-image: url('@/assets/tab-icons/home_unclicked.svg');
+  background-image: url('@/assets/tab-icons/home_unclicked.svg');
 }
 .search-icon {
-	background-image: url('@/assets/tab-icons/search_unclicked.svg');
+  background-image: url('@/assets/tab-icons/search_unclicked.svg');
 }
 .map-icon {
-	background-image: url('@/assets/tab-icons/map_unclicked.svg');
+  background-image: url('@/assets/tab-icons/map_unclicked.svg');
 }
 .profile-icon {
-	background-image: url('@/assets/tab-icons/profile_unclicked.svg');
+  background-image: url('@/assets/tab-icons/profile_unclicked.svg');
 }
 .home-icon-active {
-	background-image: url('@/assets/tab-icons/home_clicked.svg');
+  background-image: url('@/assets/tab-icons/home_clicked.svg');
 }
 .search-icon-active {
-	background-image: url('@/assets/tab-icons/search_clicked.svg');
+  background-image: url('@/assets/tab-icons/search_clicked.svg');
+  transform: scale(1.2); /* 크기 변화 설정 */
 }
 .map-icon-active {
-	background-image: url('@/assets/tab-icons/map_clicked.svg');
+  background-image: url('@/assets/tab-icons/map_clicked.svg');
+  transform: scale(1.2); /* 크기 변화 설정 */
 }
 .profile-icon-active {
-	background-image: url('@/assets/tab-icons/profile_clicked.svg');
-	transform: scale(1.2); /* 크기 변화 설정 */
+  background-image: url('@/assets/tab-icons/profile_clicked.svg');
+  transform: scale(1.2); /* 크기 변화 설정 */
 }
 </style>
