@@ -18,6 +18,30 @@
       </div>
       <div class="recent-block">
         <div class="title keyword">최근 검색어</div>
+        <div class="pills">
+          <div class="pill-container">
+            <span
+              v-for="recentKeyword in recentKeywords"
+              :key="recentKeyword"
+              class="pill"
+              >{{ recentKeyword }}</span
+            >
+          </div>
+        </div>
+        <!-- <carousel
+          class="pills"
+          :perPageCustom="[
+            [320, 2],
+            [480, 3],
+            [720, 4],
+          ]"
+        >
+          <slide v-for="recentKeyword in recentKeywords" :key="recentKeyword">
+            <div class="pill" :style="getPillStyle(recentKeyword)">
+              {{ recentKeyword }}
+            </div>
+          </slide>
+        </carousel> -->
       </div>
       <div class="condition-block">
         <div class="title filter">검색 조건</div>
@@ -52,30 +76,17 @@
       <div class="recommend-block">
         <div class="title recommend">취향 저격 관광지</div>
       </div>
-      <!-- <div class="search-block"></div> -->
-      <!-- <carousel
-      class="pills"
-      :perPageCustom="[
-        [320, 2],
-        [480, 3],
-        [720, 4],
-        [960, 5],
-      ]"
-    >
-      <slide v-for="recentKeyword in recentKeywords" :key="recentKeyword">
-        <div class="pill">{{ recentKeyword }}</div>
-      </slide>
-    </carousel> -->
+
       <!-- <div class="pills">
-      <div class="pill-container">
-        <span
-          v-for="recentKeyword in recentKeywords"
-          :key="recentKeyword"
-          class="pill"
-          >{{ recentKeyword }}</span
-        >
-      </div>
-    </div> -->
+        <div class="pill-container">
+          <span
+            v-for="recentKeyword in recentKeywords"
+            :key="recentKeyword"
+            class="pill"
+            >{{ recentKeyword }}</span
+          >
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -85,6 +96,8 @@
 
 import SearchInput from "./SearchInput.vue";
 import { getGuguns } from "@/api/attractionApi";
+// import Carousel from "vue-carousel";
+
 export default {
   name: "AttractionSearch",
   components: { SearchInput },
@@ -136,20 +149,6 @@ export default {
       this.keyword = value;
       console.log(value);
     },
-    getPillWidth(recentKeyword) {
-      const minWidth = 29;
-      const padding = 10;
-      // const maxWidth = 50;
-      const keywordLength = recentKeyword.length;
-
-      let width = minWidth + keywordLength * padding;
-      if (keywordLength > 6) {
-        width = minWidth + 6 * padding;
-        recentKeyword = recentKeyword.substr(0, 6);
-      }
-
-      return `min-width: ${width}px`;
-    },
     async handleSidoChange(value) {
       console.log("선택된 시/도:", value);
       // 시/도가 선택되었을 때 해당 시/도의 구/군 목록을 가져오기 위해 API 호출
@@ -170,6 +169,12 @@ export default {
     handleGugunChange(value) {
       this.selectedGugun = value;
     },
+    getPillStyle(text) {
+      const pillWidth = 15 * text.length + 13; // Calculate the width based on the text length
+      return {
+        width: `${pillWidth}px`,
+      };
+    },
     saveRecentKeyword(keyword) {
       const recentKeywords =
         JSON.parse(localStorage.getItem("recentKeywords")) || [];
@@ -177,9 +182,9 @@ export default {
       // 이미 있는 키워드인지 확인
       if (!recentKeywords.includes(keyword)) {
         // 최대 개수를 초과하면 가장 오래된 키워드를 제거
-        // if (recentKeywords.length >= 3) {
-        //   recentKeywords.pop();
-        // }
+        if (recentKeywords.length >= 4) {
+          recentKeywords.pop();
+        }
         const updatedKeywords = [keyword, ...recentKeywords];
         localStorage.setItem("recentKeywords", JSON.stringify(updatedKeywords));
         this.recentKeywords = updatedKeywords;
@@ -190,6 +195,7 @@ export default {
       const recentKeywords =
         JSON.parse(localStorage.getItem("recentKeywords")) || [];
       this.recentKeywords = recentKeywords;
+      console.log(this.recentKeywords);
     },
     clearRecentKeywords() {
       // localStorage의 최근 검색어 초기화
@@ -243,40 +249,27 @@ export default {
   color: #000000;
 }
 .pills {
-  /* position: absolute; */
-  top: 215px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  /* padding: 10px; */
-  gap: 10px;
-  width: 340px;
-  height: 35px;
-  /* Inside auto layout */
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
+  /* justify-content: center; */
+  margin-top: 10px;
+  /* align-items: center; */
 }
 
 .pill-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 7px;
 }
 
 .pill {
-  display: inline-block;
-  min-width: 409px;
-  height: 32px;
-  background: #beccfe;
-  border-radius: 50px;
+  height: 28px;
+  padding: 0 13px;
+  background-color: #beccfe;
+  border-radius: 20px;
   display: flex;
-  justify-content: center;
   align-items: center;
   color: white;
-  font-weight: 500;
-  margin: 5px;
+  font-size: 15px;
 }
 
 .warn {
