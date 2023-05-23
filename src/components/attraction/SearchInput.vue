@@ -95,6 +95,8 @@ export default {
         gugunCode: this.selectedGugun,
         title: this.inputvalue,
       };
+
+      if (this.inputvalue === "" || this.inputvalue === null) return;
       this.saveRecentKeyword(this.inputvalue); // 최근 검색어 저장
 
       console.log("commit", searchOption);
