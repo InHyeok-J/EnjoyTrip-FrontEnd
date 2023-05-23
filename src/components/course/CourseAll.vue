@@ -2,29 +2,28 @@
   <div class="main-container">
     <div class ="course-all">
       <div class="page-title">여행 코스</div>
-      <div class="course" v-for="(course, index) in courses" :key="index" @click="moveInCourse(course.id)">
+      <div class="course" v-for="(course) in courses" :key="course.course.id" @click="moveInCourse(course.course.id)">
         <div class="course-img-container">
-          <img class="course-img" src="@/assets/경복궁.jpg">
-          {{ course.img }}
+          <img class="course-img" :src=course.course.courseImgUrl>
         </div>
         <div class="courss-info">
           <div class="course-username">
-            {{ course.username }}
+            {{ course.nickname }}
           </div>
           <div class="course-title">
-            {{ course.title }}
+            {{ course.course.title }}
           </div>
           <div class="course-attractions">
-            {{ course.attractions }}
+            {{ course.courseExample }}
           </div>
           <div class="course-reaction">
             <div class="course-comment">
-              <img class="course-comment-img" src="@/assets/Course_comment.png">
-              <div class="course-comment-count">23</div>
+              <img class="course-comment-img" src="@/assets/course-icons/Course_comment.png">
+              <div class="course-comment-count">{{course.commentCnt}}</div>
             </div>
             <div class="course-like">
-              <img class="course-like-img" src="@/assets/Course_like.png">
-              <div class="course-like-count">23</div>
+              <img class="course-like-img" src="@/assets/course-icons/Course_like.png">
+              <div class="course-like-count">{{course.likeCnt}}</div>
             </div>
           </div>
         </div>
@@ -34,65 +33,32 @@
 </template>
 
 <script>
+import http from "@/api/axios/index.js"
 export default {
   data() {
     return {
-      courses: [
-        {
-          id:1,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
-        },
-        {
-          id:2,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
-        },
-        {
-          id:3,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
-        },
-        {
-          id:4,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
-        },
-        {
-          id:1,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
-        },
-        {
-          id:2,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
-        },
-        {
-          id:3,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
-        },
-        {
-          id:4,
-          username: "이예은",
-          title: "떠나요 제주도",
-          attractions: "월정리 해변, 우도, 성산일출봉, 만장동굴, 우무, 빛의 벙커"
-        },
-      ],
+      courses: [],
+      commentCnt:0,
     }
+  },
+  created() {
+    this.selectAll();
   },
   methods: {
     moveInCourse(id){
       console.log(id);
       this.$router.push("/courses/"+id);
+    },
+    selectAll(){
+      http
+        .get("/courses")
+        .then(response => {
+          this.courses = response.data.data;
+          console.log(this.courses);
+        })
+        .catch(()=>{
+          console.log("데이터 가져오지 못함")
+        })
     }
   }
 }
@@ -126,9 +92,6 @@ export default {
     column-gap: 10px;
     margin-bottom: 20px;
   }
-
-  .course-img-container {
-  }
   .course-img{
     width: 110px;
     height: 110px;
@@ -136,12 +99,11 @@ export default {
   }
 
   .course-info {
-    width: 205px;
     margin: 3px 4px;
   }
 
   .course-username {
-    width: 60px;
+    width: 100%;
     height: 19px;
   }
 
@@ -162,6 +124,8 @@ export default {
     font-weight: 400;
     font-size: 13px;
     line-height: 19px;
+    height: 38px;
+    width: 210px;
   }
   .course-reaction{
     display: flex;

@@ -163,7 +163,8 @@ export default {
     addAttraction(day) {
       //더미데이터를 넣을 거임
       const dum = {
-        attractions: idGlobal++,
+        // attractions: idGlobal++,
+        attractionId: idGlobal++,
         name: "집집집" + idGlobal,
         address: "서울특별시 강남구",
       };

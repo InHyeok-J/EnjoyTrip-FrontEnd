@@ -228,7 +228,6 @@ export default {
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
   border: none;
 }
-
 .custom-dropdown .dropdown-item {
   padding: 8px 12px;
   font-family: "Noto Sans KR";

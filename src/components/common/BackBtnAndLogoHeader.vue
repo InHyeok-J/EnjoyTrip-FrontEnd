@@ -1,8 +1,11 @@
 <template>
   <div class="header">
-    <img class="bcak-btn" src="@/assets/LeftArrow.svg" alt="back icon" @click="moveBack" />
+    <img v-if="isback" class="bcak-btn" src="@/assets/LeftArrow.svg" alt="back icon" @click="moveBack" />
+
     <div class="logo-container">
-      <div class="logo">Tripfy</div>
+    <!-- <div class="back-btn-container"> -->
+    <!-- </div> -->
+      <div class="logo" :class="`${ isback == null ? '':'logo-left' }`">Tripfy</div>
     </div>
   </div>
 </template>
@@ -23,31 +26,49 @@ export default {
       
     },
   },
+  props:["isback"]
 };
 </script>
 
 <style scoped>
 .header {
   height: 60px;
-  display: flex;
-  justify-content: space-between;
+	display: flex;
   align-items: center;
-  margin: 0 30px;
+  justify-content: center;
   border-bottom: 1px solid #e7e7e7;
   box-shadow: 0 6px 6px -6px #e7e7e7;
 }
-.back-btn{
+.back-btn-container{
+  width: 44px;
+  height: 44px;
+  margin: 1px 0px 0px 6px;
 }
+.back-btn{
+  position: relative;
+  /* left: 14.5px;
+  top: 5px; */
+}
+
 .logo-container {
-  position: sticky;
-  left: 50%;
-  transform: translateX(-200%);
+  width: 100%;
+  display:flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 1px;
 }
 .logo {
   color: #6f8cf4;
-  font-size: 24px;
-  letter-spacing: 0.03em;
-
+	font-size: 24px;
+	text-align: center;
+	letter-spacing: 0.03em;
+  font-family: 'Righteous';
+  display: inline-block;
   text-align: center;
+
+}
+.logo-left{
+  position: relative;
+  left:-22px;
 }
 </style>

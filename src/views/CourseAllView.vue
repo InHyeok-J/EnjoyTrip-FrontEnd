@@ -2,16 +2,16 @@
   <div class="courseAll">
     <common-header/>
     <course-all/>
-    <common-footer/>
+    <common-tab/>
   </div>
 </template>
 
 <script>
 import CommonHeader from "@/components/common/CommonHeader.vue"
 import CourseAll from "@/components/course/CourseAll.vue"
-import CommonFooter from "@/components/common/CommonFooter.vue"
+import CommonTab from '@/components/common/CommonTab.vue'
 export default {
-  components: { CommonHeader, CommonFooter, CourseAll },
+  components: { CommonHeader, CommonTab, CourseAll },
 
 }
 </script>
