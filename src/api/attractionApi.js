@@ -30,6 +30,5 @@ export const search = async (params) => {
     url += `title=${params.title}&`;
     // url += `title=${encodeURIComponent(params.title)}&`;
   }
-  console.log(url);
   return (await http.get(url)).data;
 };

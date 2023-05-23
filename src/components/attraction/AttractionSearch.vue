@@ -147,10 +147,8 @@ export default {
   methods: {
     keywordOnChange(value) {
       this.keyword = value;
-      console.log(value);
     },
     async handleSidoChange(value) {
-      console.log("선택된 시/도:", value);
       // 시/도가 선택되었을 때 해당 시/도의 구/군 목록을 가져오기 위해 API 호출
       const response = await getGuguns(value);
       // API 응답으로 받은 구/군 목록을 gugun 데이터에 할당
