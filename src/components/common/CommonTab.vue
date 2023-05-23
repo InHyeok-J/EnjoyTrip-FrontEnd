@@ -24,31 +24,31 @@
 
 <script>
 export default {
-  data() {
-    return {
-      tabs: [
-        { iconClass: 'home-icon', route: '/' },
-        { iconClass: 'search-icon', route: 'attraction' },
-        { iconClass: 'map-icon', route: 'course' },
-        { iconClass: 'profile-icon', route: 'login' },
-      ],
-      activeTab: 0,
-    };
-  },
-  methods: {
-    changeTab(index) {
-      const prevActiveTab = this.activeTab; // 이전 활성화된 탭의 인덱스를 저장합니다.
-      this.activeTab = index; // 클릭한 탭을 활성화합니다.
+	data() {
+		return {
+			tabs: [
+				{ iconClass: 'home-icon', route: '' },
+				{ iconClass: 'search-icon', route: 'attraction' },
+				{ iconClass: 'map-icon', route: 'courses' },
+				{ iconClass: 'profile-icon', route: 'login' },
+			],
+			activeTab: 0,
+		};
+	},
+	methods: {
+		changeTab(index) {
+			const prevActiveTab = this.activeTab; // 이전 활성화된 탭의 인덱스를 저장합니다.
+			this.activeTab = index; // 클릭한 탭을 활성화합니다.
 
-      const route = this.tabs[index].route; // 클릭한 탭에 해당하는 라우트 정보를 가져옵니다.
-      if (this.$router.currentRoute.path !== route) {
-        // 현재 라우트와 클릭한 탭의 라우트가 다른 경우에만 라우터를 변경합니다.
-        this.$router.push(route).catch((err) => {
-          if (err.name !== 'NavigationDuplicated') {
-            throw err;
-          }
-        });
-      }
+			const route = this.tabs[index].route; // 클릭한 탭에 해당하는 라우트 정보를 가져옵니다.
+			if (this.$router.currentRoute.path !== route) {
+				// 현재 라우트와 클릭한 탭의 라우트가 다른 경우에만 라우터를 변경합니다.
+				this.$router.push("/"+route).catch(err => {
+					if (err.name !== 'NavigationDuplicated') {
+						throw err;
+					}
+				});
+			}
 
       this.$nextTick(() => {
         const prevActiveIconClass = `${this.tabs[prevActiveTab].iconClass}-active`; // 이전 활성화된 탭의 아이콘 클래스명을 가져옵니다.
@@ -65,15 +65,15 @@ export default {
 
 <style>
 .tab-bar {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 83px;
-
-  background: #ffffff;
-  box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.15);
-  border-radius: 0;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 83px;
+	z-index: 100;
+	background: #ffffff;
+	box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.15);
+	border-radius: 0;
 
   display: flex;
   justify-content: space-around;
