@@ -14,7 +14,7 @@
           :selectedSido="selectedSido"
           :selectedGugun="selectedGugun"
         ></search-input>
-        <div class="warn">검색어를 입력하세요</div>
+        <div v-if="!keyword" class="warn">검색어를 입력하세요</div>
       </div>
       <div class="recent-block">
         <div class="title keyword">최근 검색어</div>

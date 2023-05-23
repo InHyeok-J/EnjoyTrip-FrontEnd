@@ -24,6 +24,7 @@
 <script>
 import CommonInput from "../common/CommonInput.vue";
 import { search } from "@/api/attractionApi";
+import searchStore from "@/store/searchStore";
 
 export default {
   name: "SearchInput",
@@ -69,17 +70,23 @@ export default {
       this.$emit("onChange", e.target.value);
     },
     async search() {
-      console.log(this.keyword, this.inputvalue);
-      console.log(this.inputvalue, "ihii");
-      console.log(this.selectedCategory, "category");
-      const response = await search({
-        category: this.selectedCategory,
-        sidoCode: this.selectedSido,
-        gugunCode: this.selectedGugun,
-        title: this.inputvalue,
-      });
-      console.log(response);
-      this.saveRecentKeyword(this.inputvalue); // 최근 검색어 저장
+      try {
+        const response = await search({
+          category: this.selectedCategory,
+          sidoCode: this.selectedSido,
+          gugunCode: this.selectedGugun,
+          title: this.inputvalue,
+        });
+        console.log(response);
+        this.saveRecentKeyword(this.inputvalue); // 최근 검색어 저장
+        searchStore.commit("SET_RESULT", response.data);
+        this.$router.push({
+          name: "attraction-result",
+          params: { result: response.data },
+        });
+      } catch (err) {
+        console.error(err);
+      }
     },
     keywordOnChange(value) {
       // this.onChangeFun(value);

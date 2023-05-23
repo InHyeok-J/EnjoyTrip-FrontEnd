@@ -14,7 +14,7 @@ import CommonTab from "@/components/common/CommonTab.vue";
 import AttractionSearchHeaderVue from "@/components/attraction/AttractionSearchHeader.vue";
 import AttractionSearchResult from "@/components/attraction/AttractionSearchResult.vue";
 export default {
-  name: "AttractionSearchView",
+  name: "AttractionSearchResultView",
 
   components: {
     CommonHeader,
