@@ -7,7 +7,6 @@ import VueCarousel from "vue-carousel";
 
 Vue.use(VueCarousel);
 
-
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)

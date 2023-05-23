@@ -12,6 +12,8 @@ import CourseDetailView from "@/views/CourseDetailView.vue";
 import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
 import AttractionSearchView from "../views/AttractionSearchView.vue";
 import AttractionSearchResultView from "../views/AttractionSearchResultView.vue";
+import CorseRegisterView from "@/views/CourseRegisterView.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -75,6 +77,11 @@ const routes = [
     path: "/courses/:id",
     name: "courses detail",
     component: CourseDetailView,
+  },
+  {
+    path: "/courses/regist/form",
+    name: "course regist",
+    component: CorseRegisterView,
   },
 ];
 
