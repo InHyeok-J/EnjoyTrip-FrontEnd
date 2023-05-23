@@ -10,8 +10,8 @@ import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
 import CourseAllView from "@/views/CourseAllView.vue";
 import CourseDetailView from "@/views/CourseDetailView.vue";
 import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
-import AttractionSearchView from "../views/AttractionSearchView.vue";
-import AttractionSearchResultView from "../views/AttractionSearchResultView.vue";
+import AttractionSearchView from "../views/attractions/AttractionSearchView.vue";
+import AttractionSearchResultView from "../views/attractions/AttractionSearchResultView.vue";
 import CorseRegisterView from "@/views/CourseRegisterView.vue";
 
 Vue.use(VueRouter);
