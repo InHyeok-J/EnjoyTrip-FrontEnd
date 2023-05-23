@@ -3,7 +3,7 @@
     <div class="main-img"  :style="`background-image:linear-gradient(180deg, rgba(17, 21, 54, 0) 0%, rgba(17, 21, 54, 0.5538) 126.77%), url(${course.course.courseImgUrl}) `" >
        <div class="course-title">{{ course.course.title }}</div>
        <div class="course-like-container">
-        <img class="course-titile-like-img" src="@/assets/course-icons/Course_detail_unlike.svg">
+        <img class="course-titile-like-img" src="@/assets/course-icons/Course_detail_unlike.svg" @click="addLike(course.course.id)">
        </div>
     </div>
     <div class="course-writer-container">
@@ -66,16 +66,16 @@
         </div>
         <div class="course-comments-detail-container" v-for="(comment, index) in course.comments" :key="index">
           <div class="course-comments-detail-title">
-            <img class ="course-comment-userimg" src="@/assets/profile_image.png">
+            <img class ="course-comment-userimg" :src=comment.profileImgUrl>
             <div class="course-comment-username">
-              {{ comment.username }}
+              {{ comment.nickname }}
             </div>
           </div>
           <div class="course-comment-comment">
-            {{ comment.content }}
+            {{ comment.courseComment.content }}
           </div>
           <div class="course-comment-createdAt">
-            {{ comment.createdAt }}
+            {{ comment.courseComment.createdAt }}
           </div>
           <hr>
         </div>
@@ -94,26 +94,9 @@ export default {
       detailImgs: ['@/assets/course-icons/Course_detail_unlike.svg', '@/assets/course-icons/Course_detail_like.svg'],
       detailImgIndex:0,
       course: [],
-      comments: [
-        {
-          id: 1,
-          username: "멋진 사나이 조인혁",
-          comment: "여자친구 내놔",
-          createdAt: "2023-05-21"
-        },
-        {
-          id: 2,
-          username: "멋진 사나이 박지환",
-          comment: "여자친구가 걷는 거 싫어하는데 괜찮은 코스네요",
-          createdAt: "2023-05-21"
-        },
-        {
-          id: 3,
-          username: "미친 쳇바퀴",
-          comment: "그녀와 나는요 언젠간 만날거죠 변해버린 모습 변해버린 시간 속에 그녀도 날 못잊을 거야 나는 믿어요 그만큼 사랑했죠 그래서 우린 한 번은 만나야만 해요 우리가 처음만난 그 시간 그자리에 내가 매일 기다린다고 언제라도",
-          createdAt: "2023-05-21"
-        },
-      ]
+      comments: [],
+      thisCouseLikes: ["@/assets/course-icons/Course_detail_like.svg","@/assets/course-icons/Course_detail_unlike.svg"],
+      thisCouuseLikeIndex: 0
     }
   },
   created(){
@@ -137,6 +120,9 @@ export default {
     },
     changeDeatilImg() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+    },
+    addLike(id) {
+      console.log(id);
     }
   },
   components: {
@@ -189,10 +175,11 @@ export default {
       margin: 0px 30px;
     }
     .course-writer-img{
-      width: 50px;
+      width: 55px;
       height: 50px;
 
       border-radius: 50%;
+      object-fit: cover;
       margin-right: 17px;
     }
     .course-writer-info{
@@ -417,6 +404,7 @@ export default {
       width: 35px;
       height: 34px;
       border-radius: 50%;
+      object-fit: cover;
       flex: none;
       order: 0;
       flex-grow: 0;
