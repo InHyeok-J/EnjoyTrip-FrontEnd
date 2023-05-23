@@ -23,8 +23,8 @@
 
 <script>
 import CommonInput from "../common/CommonInput.vue";
-import { search } from "@/api/attractionApi";
-import searchStore from "@/store/searchStore";
+// import { search } from "@/api/attractionApi";
+// import searchStore from "@/store/searchStore";
 
 export default {
   name: "SearchInput",
@@ -71,18 +71,20 @@ export default {
     },
     async search() {
       try {
-        const response = await search({
+        const searchOption = {
           category: this.selectedCategory,
           sidoCode: this.selectedSido,
           gugunCode: this.selectedGugun,
           title: this.inputvalue,
-        });
-        console.log(response);
+        };
+        // const response = await search(searchOption);
+
         this.saveRecentKeyword(this.inputvalue); // 최근 검색어 저장
-        searchStore.commit("SET_RESULT", response.data);
+
+        this.$store.commit("searchStore/SET_RESULT", searchOption);
         this.$router.push({
           name: "attraction-result",
-          params: { result: response.data },
+          params: { result: searchOption },
         });
       } catch (err) {
         console.error(err);

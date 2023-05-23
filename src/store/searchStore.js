@@ -1,24 +1,25 @@
-import attractionApi from "@/api/attractionApi";
+// import attractionApi from "@/api/attractionApi";
 
 export default {
   namespaced: true,
   state: {
-    result: null,
+    searchOption: null,
   },
   getters: {},
-  actions: {
-    async SET_RESULT({ commit, params }) {
-      try {
-        const response = await attractionApi.search(params);
-        commit("SET_RESULT", response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  },
+  // actions: {
+  //   async SET_RESULT({ commit, params }) {
+  //     try {
+  //       const response = await attractionApi.search(params);
+  //       commit("SET_RESULT", response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   },
+  // },
   mutations: {
-    SET_RESULT(state, payload) {
-      state.result = payload;
+    SET_RESULT: (state, payload) => {
+      console.log("pa" + JSON.stringify(payload));
+      state.searchOption = payload;
     },
   },
 };

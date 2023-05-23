@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+  <div class="attraction-search">
     <search-input
       placeholder="관광지를 입력해보세요"
       type="text"
@@ -148,6 +148,14 @@ export default {
 <style scoped>
 .main-container {
   margin: 10px 35px;
+}
+
+.attraction-search {
+  margin: 10px 35px;
+  position: relative;
+  /* height: 100vh;  */
+  padding: 0px 0px 10px 0px;
+  overflow: hidden; /* Hide the overflow to prevent scrolling */
 }
 .custom-dropdown {
   background-color: #ffffff;
