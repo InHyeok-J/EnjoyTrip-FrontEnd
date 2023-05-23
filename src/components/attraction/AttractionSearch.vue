@@ -1,56 +1,110 @@
 <template>
-  <div class="main-container">
-    <search-input
-      placeholder="관광지를 입력해보세요"
-      type="text"
-      style="margin-bottom: 10px"
-      :inputvalue="keyword"
-      :onChangeFun="keywordOnChange"
-    ></search-input>
-    <div class="warn">검색어를 입력하세요</div>
-    <div class="title keyword">최근 검색어</div>
-    <div class="pills"></div>
-    <div class="title filter">검색 조건</div>
+  <div>
+    <div class="main-container">
+      <div class="search-block">
+        <search-input
+          placeholder="관광지를 입력해보세요"
+          type="text"
+          style="margin-bottom: 10px"
+          :inputvalue="keyword"
+          v-model="keyword"
+          :onChangeFun="keywordOnChange"
+          :saveRecentKeyword="saveRecentKeyword"
+          :selectedCategory="selectedCategory"
+          :selectedSido="selectedSido"
+          :selectedGugun="selectedGugun"
+        ></search-input>
+        <div v-if="!keyword" class="warn">검색어를 입력하세요</div>
+      </div>
+      <div class="recent-block">
+        <div class="title keyword">최근 검색어</div>
+        <div class="pills">
+          <div class="pill-container">
+            <span
+              v-for="recentKeyword in recentKeywords"
+              :key="recentKeyword"
+              class="pill"
+              >{{ recentKeyword }}</span
+            >
+          </div>
+        </div>
+        <!-- <carousel
+          class="pills"
+          :perPageCustom="[
+            [320, 2],
+            [480, 3],
+            [720, 4],
+          ]"
+        >
+          <slide v-for="recentKeyword in recentKeywords" :key="recentKeyword">
+            <div class="pill" :style="getPillStyle(recentKeyword)">
+              {{ recentKeyword }}
+            </div>
+          </slide>
+        </carousel> -->
+      </div>
+      <div class="condition-block">
+        <div class="title filter">검색 조건</div>
 
-    <div class="dropdown-container">
-      <b-form-select
-        id="category"
-        class="custom-dropdown"
-        variant="custom"
-        v-model="selectedCategory"
-        :options="category"
-        @change="handleDropdownChange"
-      ></b-form-select>
-      <b-form-select
-        id="sido"
-        class="custom-dropdown"
-        variant="custom"
-        v-model="selectedSido"
-        :options="sido"
-        @change="handleSidoChange"
-      ></b-form-select>
-      <b-form-select
-        id="gugun"
-        class="custom-dropdown"
-        variant="custom"
-        v-model="selectedGugun"
-        :options="gugun"
-        @change="handleDropdownChange"
-      ></b-form-select>
+        <div class="dropdown-container">
+          <b-form-select
+            id="category"
+            class="custom-dropdown"
+            variant="custom"
+            v-model="selectedCategory"
+            :options="category"
+            @change="handleCategoryChange"
+          ></b-form-select>
+          <b-form-select
+            id="sido"
+            class="custom-dropdown"
+            variant="custom"
+            v-model="selectedSido"
+            :options="sido"
+            @change="handleSidoChange"
+          ></b-form-select>
+          <b-form-select
+            id="gugun"
+            class="custom-dropdown"
+            variant="custom"
+            v-model="selectedGugun"
+            :options="gugun"
+            @change="handleGugunChange"
+          ></b-form-select>
+        </div>
+      </div>
+      <div class="recommend-block">
+        <div class="title recommend">취향 저격 관광지</div>
+      </div>
+
+      <!-- <div class="pills">
+        <div class="pill-container">
+          <span
+            v-for="recentKeyword in recentKeywords"
+            :key="recentKeyword"
+            class="pill"
+            >{{ recentKeyword }}</span
+          >
+        </div>
+      </div> -->
     </div>
-    <div class="title recommend">취향 저격 관광지</div>
   </div>
 </template>
 
 <script>
+// import Carousel from "vue-carousel";
+
 import SearchInput from "./SearchInput.vue";
 import { getGuguns } from "@/api/attractionApi";
+// import Carousel from "vue-carousel";
+
 export default {
   name: "AttractionSearch",
   components: { SearchInput },
   data() {
     return {
       keyword: "",
+      recentKeywords: [],
       selectedCategory: null,
       selectedSido: null,
       selectedGugun: null,
@@ -82,8 +136,13 @@ export default {
         { value: 38, text: "전남" },
         { value: 39, text: "제주" },
       ],
-      gugun: [{ value: null, text: "구/군  " }],
+      gugun: [{ value: null, text: "구/군" }],
     };
+  },
+  created() {
+    // 페이지가 로드될 때 localStorage에서 최근 검색어를 불러옴
+    this.loadRecentKeywords();
+    // this.clearRecentKeywords();
   },
   methods: {
     keywordOnChange(value) {
@@ -104,11 +163,44 @@ export default {
       // 구/군 선택값 초기화
       this.selectedGugun = null;
     },
-    handleDropdownChange(value) {
-      console.log("선택된 항목:", value);
+    handleCategoryChange(value) {
+      this.selectedCategory = value;
     },
-    handleDropdownClick() {
-      console.log("Dropdown clicked");
+    handleGugunChange(value) {
+      this.selectedGugun = value;
+    },
+    getPillStyle(text) {
+      const pillWidth = 15 * text.length + 13; // Calculate the width based on the text length
+      return {
+        width: `${pillWidth}px`,
+      };
+    },
+    saveRecentKeyword(keyword) {
+      const recentKeywords =
+        JSON.parse(localStorage.getItem("recentKeywords")) || [];
+
+      // 이미 있는 키워드인지 확인
+      if (!recentKeywords.includes(keyword)) {
+        // 최대 개수를 초과하면 가장 오래된 키워드를 제거
+        if (recentKeywords.length >= 4) {
+          recentKeywords.pop();
+        }
+        const updatedKeywords = [keyword, ...recentKeywords];
+        localStorage.setItem("recentKeywords", JSON.stringify(updatedKeywords));
+        this.recentKeywords = updatedKeywords;
+      }
+    },
+    loadRecentKeywords() {
+      // localStorage에서 최근 검색어 불러오기
+      const recentKeywords =
+        JSON.parse(localStorage.getItem("recentKeywords")) || [];
+      this.recentKeywords = recentKeywords;
+      console.log(this.recentKeywords);
+    },
+    clearRecentKeywords() {
+      // localStorage의 최근 검색어 초기화
+      localStorage.removeItem("recentKeywords");
+      this.recentKeywords = [];
     },
   },
 };
@@ -118,24 +210,66 @@ export default {
 .main-container {
   margin: 10px 35px;
 }
+.search-block {
+  height: 100px;
+}
+
+.recent-block {
+  height: 100px;
+}
+
+.condition-block {
+  height: 200px;
+}
 .custom-dropdown {
   background-color: #ffffff;
   border-radius: 10px;
-  padding: 0px 25px 0px 15px;
   width: auto;
   box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
-  border: none; /* border 제거 */
-}
-
-.custom-dropdown .dropdown-menu {
-  border-radius: 10px;
+  border: none;
 }
 
 .custom-dropdown .dropdown-item {
-  background-color: #ffffff;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+  padding: 8px 12px;
+  font-family: "Noto Sans KR";
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+}
+
+.custom-dropdown .dropdown-item.active,
+.custom-dropdown .dropdown-item:active {
+  background-color: #beccfe;
+  color: white;
+}
+
+.custom-dropdown .dropdown-item:focus,
+.custom-dropdown .dropdown-item:hover {
+  background-color: #d8e0ff;
+  color: #000000;
+}
+.pills {
+  display: flex;
+  /* justify-content: center; */
+  margin-top: 10px;
+  /* align-items: center; */
+}
+
+.pill-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.pill {
+  height: 28px;
+  padding: 0 13px;
+  background-color: #beccfe;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 15px;
 }
 
 .warn {
@@ -154,7 +288,7 @@ export default {
 }
 
 .title {
-  position: absolute;
+  /* position: absolute; */
   font-family: "Noto Sans KR";
   font-style: normal;
   font-weight: 700;
@@ -162,7 +296,7 @@ export default {
   line-height: 26px;
 
   color: #000000;
-  width: 217px;
+  width: 337px;
   height: 24px;
 }
 .keyword {
@@ -172,8 +306,8 @@ export default {
   top: 274px;
 }
 .dropdown-container {
-  position: absolute;
-  top: 306px;
+  /* position: absolute;
+  top: 306px; */
   display: flex;
   flex-direction: row;
   align-items: flex-start;
