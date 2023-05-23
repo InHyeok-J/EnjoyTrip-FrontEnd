@@ -15,7 +15,7 @@
       <img
         :src="require(`@/assets/search.svg`)"
         class="pass-view"
-        @click="search"
+        @click="reloadWithData"
       />
     </div>
   </div>
@@ -23,8 +23,7 @@
 
 <script>
 import CommonInput from "../common/CommonInput.vue";
-// import { search } from "@/api/attractionApi";
-// import searchStore from "@/store/searchStore";
+// import { NavigationDuplicated } from "vue-router";
 
 export default {
   name: "SearchInput",
@@ -77,8 +76,6 @@ export default {
           gugunCode: this.selectedGugun,
           title: this.inputvalue,
         };
-        // const response = await search(searchOption);
-
         this.saveRecentKeyword(this.inputvalue); // 최근 검색어 저장
 
         this.$store.commit("searchStore/SET_RESULT", searchOption);
@@ -90,9 +87,26 @@ export default {
         console.error(err);
       }
     },
+    reloadWithData() {
+      // 현재 경로를 다른 데이터로 대체합니다.
+      const searchOption = {
+        category: this.selectedCategory,
+        sidoCode: this.selectedSido,
+        gugunCode: this.selectedGugun,
+        title: this.inputvalue,
+      };
+      this.saveRecentKeyword(this.inputvalue); // 최근 검색어 저장
+
+      console.log("commit", searchOption);
+      this.$store.commit("searchStore/SET_RESULT", searchOption); // store에 현재 검색조건 저장
+      this.$router
+        .push({
+          name: "attraction-result",
+          params: searchOption,
+        })
+        .catch(() => {});
+    },
     keywordOnChange(value) {
-      // this.onChangeFun(value);
-      // 이곳에 keyword 변경 로직을 추가하거나 원하는 동작을 수행하세요.
       this.keyword = value;
     },
   },

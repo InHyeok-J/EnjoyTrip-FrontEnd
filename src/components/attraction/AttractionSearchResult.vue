@@ -51,10 +51,25 @@ export default {
     ...mapState("searchStore", ["searchOption"]), // Vuex 스토어의 result 상태를 가져옴
   },
   async created() {
-    const response = await search(this.searchOption);
-    this.result = response.data;
+    this.fetchData();
+  },
+  async mounted() {
+    this.fetchData();
+  },
+  watch: {
+    searchOption: {
+      deep: true, // Enable deep watching for nested properties
+      immediate: true, // Trigger the watcher immediately when the component is created
+      handler() {
+        this.fetchData(); // Call a method to fetch data based on the new searchOption
+      },
+    },
   },
   methods: {
+    async fetchData() {
+      const response = await search(this.searchOption);
+      this.result = response.data;
+    },
     truncateAttractionName(name) {
       const maxLength = 6;
       if (name.length > maxLength) {
