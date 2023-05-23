@@ -13,6 +13,7 @@ import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
 import AttractionSearchView from "../views/attractions/AttractionSearchView.vue";
 import AttractionSearchResultView from "../views/attractions/AttractionSearchResultView.vue";
 import CorseRegisterView from "@/views/CourseRegisterView.vue";
+import AttractionDetailView from "@/views/attractions/AttractionDetailView.vue";
 
 Vue.use(VueRouter);
 
@@ -31,6 +32,11 @@ const routes = [
     path: "/attraction-result",
     name: "attraction-result",
     component: AttractionSearchResultView,
+  },
+  {
+    path: "/attraction-detail",
+    name: "attraction-detail",
+    component: AttractionDetailView,
   },
   {
     path: "/login",
