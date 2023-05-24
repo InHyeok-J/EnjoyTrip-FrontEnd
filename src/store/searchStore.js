@@ -18,7 +18,6 @@ export default {
   // },
   mutations: {
     SET_RESULT: (state, payload) => {
-      console.log("pa" + JSON.stringify(payload));
       state.searchOption = payload;
     },
   },
