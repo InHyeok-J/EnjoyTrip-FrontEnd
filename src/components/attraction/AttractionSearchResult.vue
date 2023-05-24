@@ -1,7 +1,12 @@
 <template>
   <div class="main-container">
     <div class="grid-list">
-      <div v-for="item in result" :key="item.id" class="grid-item">
+      <router-link
+        v-for="item in result"
+        :key="item.id"
+        :to="`/attraction-detail/${item.id}`"
+        class="grid-item"
+      >
         <div>
           <img
             :src="
@@ -15,7 +20,6 @@
           <span class="attraction-name-text">{{
             truncateAttractionName(item.attractionName)
           }}</span>
-          <span class="category-text">{{ item.categoryMean }}</span>
         </div>
         <div class="star-rating">
           <div v-for="index in 5" :key="index">
@@ -25,6 +29,8 @@
               :key="index"
             ></div>
           </div>
+
+          <span class="category-text">{{ item.categoryMean }}</span>
         </div>
         <div class="evaluation">
           <span class="evaluation-score">{{ item.score.toFixed(1) }}</span> / 5
@@ -33,7 +39,7 @@
         <div class="address">
           {{ item.address }}
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -71,7 +77,7 @@ export default {
       this.result = response.data;
     },
     truncateAttractionName(name) {
-      const maxLength = 6;
+      const maxLength = 11;
       if (name.length > maxLength) {
         return name.slice(0, maxLength) + "...";
       }
@@ -115,12 +121,16 @@ img {
 .category-text {
   font-weight: 300;
   font-size: 13px;
+  flex: 1;
+  padding-top: 5px;
+  padding-right: 3px;
   text-align: right;
 }
 .address {
   font-size: 13px;
   font-weight: 400;
-  padding-top: 8px;
+  padding-top: 4px;
+  word-break: keep-all;
 }
 .evaluation {
   font-size: 13px;

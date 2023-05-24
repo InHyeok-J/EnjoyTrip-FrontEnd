@@ -146,7 +146,6 @@ export default {
         this.$store.commit(signUpConstant.CALL_MU_EMAIL_PASSWORD, data);
         this.$router.push("/signup/email");
       } catch (e) {
-        // console.log(e.response.data);
         if (e.response.data) {
           alert(e.response.data.message);
         }

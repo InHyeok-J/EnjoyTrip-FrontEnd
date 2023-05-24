@@ -88,7 +88,6 @@ export default {
   methods: {
     keywordOnChange(value) {
       this.keyword = value;
-      // console.log(value);
     },
     getPillWidth(recentKeyword) {
       const minWidth = 59;
