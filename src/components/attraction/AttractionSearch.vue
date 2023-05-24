@@ -1,34 +1,33 @@
 <template>
-  <div>
-    <div class="main-container">
-      <div class="search-block">
-        <search-input
-          placeholder="관광지를 입력해보세요"
-          type="text"
-          style="margin-bottom: 10px"
-          :inputvalue="keyword"
-          v-model="keyword"
-          :onChangeFun="keywordOnChange"
-          :saveRecentKeyword="saveRecentKeyword"
-          :selectedCategory="selectedCategory"
-          :selectedSido="selectedSido"
-          :selectedGugun="selectedGugun"
-        ></search-input>
-        <div v-if="!keyword" class="warn">검색어를 입력하세요</div>
-      </div>
-      <div class="recent-block">
-        <div class="title keyword">최근 검색어</div>
-        <div class="pills">
-          <div class="pill-container">
-            <span
-              v-for="recentKeyword in recentKeywords"
-              :key="recentKeyword"
-              class="pill"
-              >{{ recentKeyword }}</span
-            >
-          </div>
+  <div class="main-container">
+    <div class="search-block">
+      <search-input
+        placeholder="관광지를 입력해보세요"
+        type="text"
+        style="margin-bottom: 10px"
+        :inputvalue="keyword"
+        v-model="keyword"
+        :onChangeFun="keywordOnChange"
+        :saveRecentKeyword="saveRecentKeyword"
+        :selectedCategory="selectedCategory"
+        :selectedSido="selectedSido"
+        :selectedGugun="selectedGugun"
+      ></search-input>
+      <div v-if="!keyword" class="warn">검색어를 입력하세요</div>
+    </div>
+    <div class="recent-block">
+      <div class="title keyword">최근 검색어</div>
+      <div class="pills">
+        <div class="pill-container">
+          <span
+            v-for="recentKeyword in recentKeywords"
+            :key="recentKeyword"
+            class="pill"
+            >{{ recentKeyword }}</span
+          >
         </div>
-        <!-- <carousel
+      </div>
+      <!-- <carousel
           class="pills"
           :perPageCustom="[
             [320, 2],
@@ -42,42 +41,42 @@
             </div>
           </slide>
         </carousel> -->
-      </div>
-      <div class="condition-block">
-        <div class="title filter">검색 조건</div>
+    </div>
+    <div class="condition-block">
+      <div class="title filter">검색 조건</div>
 
-        <div class="dropdown-container">
-          <b-form-select
-            id="category"
-            class="custom-dropdown"
-            variant="custom"
-            v-model="selectedCategory"
-            :options="category"
-            @change="handleCategoryChange"
-          ></b-form-select>
-          <b-form-select
-            id="sido"
-            class="custom-dropdown"
-            variant="custom"
-            v-model="selectedSido"
-            :options="sido"
-            @change="handleSidoChange"
-          ></b-form-select>
-          <b-form-select
-            id="gugun"
-            class="custom-dropdown"
-            variant="custom"
-            v-model="selectedGugun"
-            :options="gugun"
-            @change="handleGugunChange"
-          ></b-form-select>
-        </div>
+      <div class="dropdown-container">
+        <b-form-select
+          id="category"
+          class="custom-dropdown"
+          variant="custom"
+          v-model="selectedCategory"
+          :options="category"
+          @change="handleCategoryChange"
+        ></b-form-select>
+        <b-form-select
+          id="sido"
+          class="custom-dropdown"
+          variant="custom"
+          v-model="selectedSido"
+          :options="sido"
+          @change="handleSidoChange"
+        ></b-form-select>
+        <b-form-select
+          id="gugun"
+          class="custom-dropdown"
+          variant="custom"
+          v-model="selectedGugun"
+          :options="gugun"
+          @change="handleGugunChange"
+        ></b-form-select>
       </div>
-      <div class="recommend-block">
-        <div class="title recommend">취향 저격 관광지</div>
-      </div>
+    </div>
+    <div class="recommend-block">
+      <div class="title recommend">취향 저격 관광지</div>
+    </div>
 
-      <!-- <div class="pills">
+    <!-- <div class="pills">
         <div class="pill-container">
           <span
             v-for="recentKeyword in recentKeywords"
@@ -87,7 +86,6 @@
           >
         </div>
       </div> -->
-    </div>
   </div>
 </template>
 
@@ -207,6 +205,7 @@ export default {
 <style scoped>
 .main-container {
   margin: 10px 35px;
+  padding-top: 60px;
 }
 .search-block {
   height: 100px;
@@ -217,7 +216,7 @@ export default {
 }
 
 .condition-block {
-  height: 200px;
+  height: 140px;
 }
 .custom-dropdown {
   background-color: #ffffff;
@@ -320,6 +319,5 @@ export default {
 }
 
 .recommend {
-  top: 416px;
 }
 </style>
