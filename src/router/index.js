@@ -34,14 +34,13 @@ const routes = [
     component: AttractionSearchResultView,
   },
   {
-    path: "/attraction-detail",
+    path: "/attraction-detail/:id",
     name: "attraction-detail",
     component: AttractionDetailView,
   },
   {
     path: "/login",
     name: "login",
-
     component: LoginView,
   },
   {

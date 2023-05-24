@@ -4,7 +4,7 @@
       <router-link
         v-for="item in result"
         :key="item.id"
-        :to="`/attraction-detail`"
+        :to="`/attraction-detail/${item.id}`"
         class="grid-item"
       >
         <div>
