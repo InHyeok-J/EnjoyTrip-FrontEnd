@@ -102,6 +102,7 @@
 <script>
 import KakaoMap from "@/components/course/KakaoMap.vue";
 import http from "@/api/axios/index.js"
+
 export default {
   data() {
     return {
@@ -217,10 +218,10 @@ export default {
           "content": this.myComment
         })
         .then(response => {
-          this.course.comments.push(response.data.data);
+          this.course.comments.unshift(response.data.data);
           console.log(this.course.comments);
+          this.course.commentCnt++;
         })
-      this.course.commentCnt++;
       this.myComment = '';
       this.commentAddWindowShow = false; // 모달 닫기
     },
