@@ -12,7 +12,7 @@
       <img class="course-writer-img" :src=course.profileImg alt='@/assets/defaultUser.svg'>
       <div class="course-writer-info">
         <div class="course-writer-name"><b>{{ course.nickname }}</b>님의 여행코스</div>
-        <div class="course-writer-createdAt">{{ course.course.createdAt }}</div>
+        <div class="course-writer-createdAt"> {{ formatDate(course.course.createdAt) }}</div>
       </div>
       <div class="course-share">
         <button @click="courseShare">
@@ -48,7 +48,7 @@
         <div class="day-container" v-for="(attractions,x) in course.plans" :key="x">
           <div class="day-info">
             <div class="day-title">{{ x+1 }}일차</div>
-            <div class="day-date">{{ attractions[0].date}}</div>
+            <div class="day-date">{{ formatDate(attractions[0].date)}}</div>
           </div>
           <div class="attractions" v-for="(attraction,y) in attractions" :key="y">      
             <div class="attraction-name">
@@ -77,7 +77,7 @@
             {{ comment.courseComment.content }}
           </div>
           <div class="course-comment-createdAt">
-            {{ comment.courseComment.createdAt }}
+            {{ formatDate(comment.courseComment.createdAt) }}
           </div>
           <hr>
         </div>
@@ -105,8 +105,62 @@ import http from "@/api/axios/index.js"
 export default {
   data() {
     return {
-      course: [],
-      comments: [],
+      course: {
+        course:{
+    "success": true,
+    "message": "Course Detail 검색 성공",
+    "data": {
+        "course": {
+            "id": '',
+            "userId": '',
+            "title": '',
+            "isPublic": true,
+            "createdAt": null,
+            "updatedAt": null,
+            "description": "",
+            "courseImgUrl": "",
+            "schedule": ''
+        },
+        "nickname": "",
+        "profileImg": "",
+        "days": '',
+        "likeCnt": '',
+        "commentCnt": '',
+        "attractionCnt": '',
+        "plans": [
+            [
+                {
+                    "id": '',
+                    "courseId": '',
+                    "attractionId": '',
+                    "turn": '',
+                    "attractionName": '',
+                    "address": '',
+                    "attractionImageUrl": "",
+                    "latitude": '',
+                    "longitude": '',
+                    "day": ''
+                }
+            ]
+        ],
+        "comments": [
+            {
+                "courseComment": {
+                    "id": '',
+                    "courseId": '',
+                    "userId": '',
+                    "content": '',
+                    "createdAt": '',
+                    "updatedAt": ''
+                },
+                "nickname": "",
+                "profileImgUrl": ""
+            }
+        ],
+        "isLike": true
+    }
+}
+      },
       couuseLike: true,
       myComment:'',
       commentAddWindowShow: false,
@@ -114,10 +168,11 @@ export default {
   },
   created(){
     this.getCourse(this.$route.params.id);
+  }, watch: {
+    
   },
   methods: {
     getCourse(id) {
-      console.log(id);
       http
         .get("/courses/"+id)
         .then(response => {
@@ -162,15 +217,23 @@ export default {
           "content": this.myComment
         })
         .then(response => {
-          this.course.comments.push(response.data);
-          console.log(response.data);
+          this.course.comments.push(response.data.data);
+          console.log(this.course.comments);
         })
       this.course.commentCnt++;
+      this.myComment = '';
       this.commentAddWindowShow = false; // 모달 닫기
     },
     cancel() {
       this.myComment = '';
       this.commentAddWindowShow = false; // 모달 닫기
+    },
+    formatDate(date) {
+      const formattedDate = new Date(date);
+      const year = formattedDate.getFullYear().toString().slice(-2);
+      const month = (formattedDate.getMonth() + 1).toString().padStart(2, "0");
+      const day = formattedDate.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
     },
   },
   components: {
@@ -365,7 +428,6 @@ export default {
     }
 
     .day-date{
-      width: 30%;
       height: 19px;
 
       font-family: 'Noto Sans KR';
