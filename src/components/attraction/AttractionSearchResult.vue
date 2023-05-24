@@ -90,7 +90,7 @@ export default {
 .main-container {
   margin: 10px 35px;
   overflow-y: auto;
-  max-height: calc(100vh - 20px);
+  /* max-height: calc(100vh - 20px); */
 }
 div {
   padding: 3px 0px;
@@ -99,6 +99,8 @@ div {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 17px 5px;
+  padding-bottom: 100px;
+  padding-top: 190px;
 }
 
 .grid-item {
