@@ -3,7 +3,9 @@
     <div class="main-img"  :style="`background-image:linear-gradient(180deg, rgba(17, 21, 54, 0) 0%, rgba(17, 21, 54, 0.5538) 126.77%), url(${course.course.courseImgUrl}) `" >
        <div class="course-title">{{ course.course.title }}</div>
        <div class="course-like-container">
-        <img class="course-titile-like-img" src="@/assets/course-icons/Course_detail_unlike.svg">
+        <img v-if="course.isLike == true" class="course-titile-like-img" src="@/assets/course-icons/Course_detail_like.svg" @click="changeLike(course.course.id)">
+        <img v-else class="course-titile-like-img" src="@/assets/course-icons/Course_detail_unlike.svg" @click="changeLike(course.course.id)">
+
        </div>
     </div>
     <div class="course-writer-container">
@@ -27,7 +29,7 @@
             </div>
             <div class="course-like">
               <img class="course-like-img" src="@/assets/course-icons/Course_like.png">
-              <div class="course-like-count">{{course.likeCnt}}</div>
+              <div class="course-like-count" >{{course.likeCnt}}</div>
             </div>
           </div>
     </div>
@@ -62,22 +64,34 @@
       <div class="course-comments-container">
         <div class="course-comments-head">
           <div class="course-comments-title">댓글</div>
-          <div class="course-comments-add">댓글 작성하기</div>
+          <div class="course-comments-add" @click="showCommentWindow()">댓글 작성하기</div>
         </div>
         <div class="course-comments-detail-container" v-for="(comment, index) in course.comments" :key="index">
           <div class="course-comments-detail-title">
-            <img class ="course-comment-userimg" src="@/assets/profile_image.png">
+            <img class ="course-comment-userimg" :src=comment.profileImgUrl>
             <div class="course-comment-username">
-              {{ comment.username }}
+              {{ comment.nickname }}
             </div>
           </div>
           <div class="course-comment-comment">
-            {{ comment.content }}
+            {{ comment.courseComment.content }}
           </div>
           <div class="course-comment-createdAt">
-            {{ comment.createdAt }}
+            {{ comment.courseComment.createdAt }}
           </div>
           <hr>
+        </div>
+      </div>
+      <div class="modal" v-if="commentAddWindowShow">
+        <div class="modal-content">
+          <div class="modal-msg">
+            <textarea class="modal-txt" v-model="myComment" row="4"></textarea>
+          </div>
+          
+          <div class="button-container">
+            <button class="cancle-btn" @click="cancel">취소</button>
+            <button class="confirm-btn" @click="confirm">확인</button>
+          </div>
         </div>
       </div>
     </div>
@@ -91,29 +105,11 @@ import http from "@/api/axios/index.js"
 export default {
   data() {
     return {
-      detailImgs: ['@/assets/course-icons/Course_detail_unlike.svg', '@/assets/course-icons/Course_detail_like.svg'],
-      detailImgIndex:0,
       course: [],
-      comments: [
-        {
-          id: 1,
-          username: "멋진 사나이 조인혁",
-          comment: "여자친구 내놔",
-          createdAt: "2023-05-21"
-        },
-        {
-          id: 2,
-          username: "멋진 사나이 박지환",
-          comment: "여자친구가 걷는 거 싫어하는데 괜찮은 코스네요",
-          createdAt: "2023-05-21"
-        },
-        {
-          id: 3,
-          username: "미친 쳇바퀴",
-          comment: "그녀와 나는요 언젠간 만날거죠 변해버린 모습 변해버린 시간 속에 그녀도 날 못잊을 거야 나는 믿어요 그만큼 사랑했죠 그래서 우린 한 번은 만나야만 해요 우리가 처음만난 그 시간 그자리에 내가 매일 기다린다고 언제라도",
-          createdAt: "2023-05-21"
-        },
-      ]
+      comments: [],
+      couuseLike: true,
+      myComment:'',
+      commentAddWindowShow: false,
     }
   },
   created(){
@@ -137,7 +133,45 @@ export default {
     },
     changeDeatilImg() {
       this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
-    }
+    },
+    changeLike(id) {
+      http
+        .patch("/courses/like", {
+          "courseId": id,
+          "isLike": this.course.isLike
+        })
+        .then(response => {
+          this.course.isLike = response.data.data;
+          if (this.course.isLike) {
+            this.course.likeCnt++;
+          } else {
+            this.course.likeCnt--;
+          }
+        })
+        .catch(()=>{
+          console.log("좋아요 변경 실패")
+        })
+    },
+    showCommentWindow() {
+      this.commentAddWindowShow = !this.commentAddWindowShow;
+    },
+    confirm() {
+      http
+        .post("/courses/comment", {
+          "courseId": this.course.course.id,
+          "content": this.myComment
+        })
+        .then(response => {
+          this.course.comments.push(response.data);
+          console.log(response.data);
+        })
+      this.course.commentCnt++;
+      this.commentAddWindowShow = false; // 모달 닫기
+    },
+    cancel() {
+      this.myComment = '';
+      this.commentAddWindowShow = false; // 모달 닫기
+    },
   },
   components: {
     KakaoMap
@@ -148,7 +182,7 @@ export default {
 <style scoped>
 .main-container{
   margin: 0px;
-  padding-bottom: 60px;
+  padding-bottom: 90px;
 }
 
 .main-img{
@@ -189,10 +223,11 @@ export default {
       margin: 0px 30px;
     }
     .course-writer-img{
-      width: 50px;
+      width: 55px;
       height: 50px;
 
       border-radius: 50%;
+      object-fit: cover;
       margin-right: 17px;
     }
     .course-writer-info{
@@ -417,6 +452,7 @@ export default {
       width: 35px;
       height: 34px;
       border-radius: 50%;
+      object-fit: cover;
       flex: none;
       order: 0;
       flex-grow: 0;
@@ -463,6 +499,65 @@ export default {
       font-size: 12px;
       line-height: 17px;
     }
+    .modal {
+      position: fixed;
+      left: calc(50% - 264.88px / 2 + 0.44px);
+      top: calc(50% - 109.34px / 2 + 0.17px);
+      width: 264.88px;
+      height: 150px;
 
+      box-shadow: 1.54px 3.08px 7.7px 1.54px rgba(0, 0, 0, 0.2);
+      border-radius: 15.4px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 52px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-msg {
+      font-family: "Noto Sans KR";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 23px;
+
+      height: 60px;
+    }
+    .button-container {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      margin-top: 10px;
+    }
+    .confirm-btn {
+      font-family: "Noto Sans KR";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 23px;
+      color: #f46f6f;
+    }
+    .cancle-btn {
+      font-family: "Noto Sans KR";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 23px;
+
+      color: #65d4a5;
+    }
+
+    .modal-txt{
+      width: 200px;
+      resize: none; /* 크기 조절을 비활성화합니다. */
+    }
    
 </style>
