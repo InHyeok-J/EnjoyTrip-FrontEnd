@@ -79,7 +79,7 @@ export default {
   align-items: center;
   color: #949494;
   font-size: 11px;
-  margin: 60px 0px 20px 0;
+  margin: 40px 0px 20px 0;
 }
 .sns-line::before {
   content: "";
@@ -115,7 +115,7 @@ export default {
   cursor: pointer;
 }
 .ask-block {
-  margin-top: 120px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
