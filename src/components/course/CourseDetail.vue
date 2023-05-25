@@ -31,7 +31,9 @@
           <b>{{ course.nickname }}</b
           >님의 여행코스
         </div>
-        <div class="course-writer-createdAt">{{ course.course.createdAt }}</div>
+        <div class="course-writer-createdAt">
+          {{ formatDate(course.course.createdAt) }}
+        </div>
       </div>
       <div class="course-share">
         <button @click="courseShare">
@@ -61,10 +63,10 @@
         </div>
       </div>
     </div>
-    <!-- <div class="course-map">
-      ss
-    </div> -->
-    <kakao-map></kakao-map>
+    <!-- <kakao-map :plans="course.plans"></kakao-map> -->
+    <div>
+      <div id="map"></div>
+    </div>
     <div class="course-info-container">
       <div class="course-info-explain">
         <div class="explain-title">설명</div>
@@ -80,7 +82,7 @@
         >
           <div class="day-info">
             <div class="day-title">{{ x + 1 }}일차</div>
-            <div class="day-date">{{ attractions[0].date }}</div>
+            <div class="day-date">{{ formatDate(attractions[0].date) }}</div>
           </div>
           <div
             class="attractions"
@@ -119,7 +121,7 @@
             {{ comment.courseComment.content }}
           </div>
           <div class="course-comment-createdAt">
-            {{ comment.courseComment.createdAt }}
+            {{ formatDate(comment.courseComment.createdAt) }}
           </div>
           <hr />
         </div>
@@ -141,29 +143,49 @@
 </template>
 
 <script>
-import KakaoMap from "@/components/course/KakaoMap.vue";
+// import KakaoMap from "@/components/course/KakaoMap.vue";
 import http from "@/api/axios/index.js";
+
 export default {
   data() {
     return {
-      course: [],
-      comments: [],
+      course: { course: { courseImgUrl: null } },
       couuseLike: true,
       myComment: "",
       commentAddWindowShow: false,
+
+      coordinate: [],
+      first: [],
     };
   },
   created() {
     this.getCourse(this.$route.params.id);
   },
+  mounted() {
+    if (window.kakao && window.kakao.maps) {
+      this.loadMap();
+    } else {
+      this.loadScript();
+    }
+  },
+  watch: {},
   methods: {
     getCourse(id) {
-      console.log(id);
       http
         .get("/courses/" + id)
         .then((response) => {
           this.course = response.data.data;
-          console.log(this.course);
+          // console.log(this.course);
+          // console.log(this.course.plans);
+          for (var i = 0; i < this.course.plans.length; i++) {
+            for (var j = 0; j < this.course.plans[i].length; j++) {
+              var latitude = this.course.plans[i][j].latitude;
+              var longitude = this.course.plans[i][j].longitude;
+              this.coordinate.push({ latitude, longitude });
+            }
+          }
+          this.first = this.coordinate[0];
+          console.log(this.first);
         })
         .catch(() => {
           console.log("데이터 가져오지 못함");
@@ -209,20 +231,80 @@ export default {
           courseId: this.course.course.id,
           content: this.myComment,
         })
+
         .then((response) => {
-          this.course.comments.push(response.data);
-          console.log(response.data);
+          this.course.comments.unshift(response.data.data);
+          this.course.commentCnt++;
         });
-      this.course.commentCnt++;
+      this.myComment = "";
+
       this.commentAddWindowShow = false; // 모달 닫기
     },
     cancel() {
       this.myComment = "";
       this.commentAddWindowShow = false; // 모달 닫기
     },
+    formatDate(date) {
+      const formattedDate = new Date(date);
+      const year = formattedDate.getFullYear().toString().slice(-2);
+      const month = (formattedDate.getMonth() + 1).toString().padStart(2, "0");
+      const day = formattedDate.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    },
+    loadScript() {
+      const script = document.createElement("script");
+      script.src =
+        "//dapi.kakao.com/v2/maps/sdk.js?appkey=4c5b7b7b6e3f8a6e8eef32d998a17db7&autoload=false";
+      script.onload = () => window.kakao.maps.load(this.loadMap);
+
+      document.head.appendChild(script);
+    },
+    // 맵 출력하기
+    loadMap() {
+      console.log(this.first.latitude);
+      console.log(this.first.longitude);
+      const container = document.getElementById("map");
+      const options = {
+        center: new window.kakao.maps.LatLng(
+          this.first.latitude,
+          this.first.longitude
+        ),
+        level: 3,
+      };
+
+      this.map = new window.kakao.maps.Map(container, options);
+      this.loadMaker();
+    },
+    // 지정한 위치에 마커 불러오기
+    loadMaker() {
+      // const markerPosition = new window.kakao.maps.LatLng(
+      //   33.450701,
+      //   126.570667
+      // );
+
+      // const marker = new window.kakao.maps.Marker({
+      //   position: markerPosition,
+      // });
+
+      // marker.setMap(this.map);
+      console.log(this.coordinate);
+      for (var i = 0; i < this.coordinate.length; i++) {
+        const { latitude, longitude } = this.coordinate[i];
+        const markerPosition = new window.kakao.maps.LatLng(
+          latitude,
+          longitude
+        );
+
+        const marker = new window.kakao.maps.Marker({
+          position: markerPosition,
+        });
+
+        marker.setMap(this.map);
+      }
+    },
   },
   components: {
-    KakaoMap,
+    // KakaoMap
   },
 };
 </script>
@@ -245,6 +327,26 @@ export default {
   align-items: end;
 }
 .course-title {
+  color: aliceblue;
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 39px;
+
+  margin-bottom: 19px;
+}
+
+.course-like-container {
+  width: 43px;
+  height: 43px;
+  margin-bottom: 15px;
+}
+
+.course-writer-container {
+  height: 86px;
+
   color: aliceblue;
 
   font-family: "Noto Sans KR";
@@ -412,7 +514,6 @@ export default {
 }
 
 .day-date {
-  width: 30%;
   height: 19px;
 
   font-family: "Noto Sans KR";
@@ -605,5 +706,20 @@ export default {
 .modal-txt {
   width: 200px;
   resize: none; /* 크기 조절을 비활성화합니다. */
+}
+
+#map {
+  width: 100%;
+  height: 514px;
+  z-index: 0;
+  margin: 10px 0px 0px;
+}
+
+.button-group {
+  margin: 10px 0px;
+}
+
+button {
+  margin: 0 3px;
 }
 </style>

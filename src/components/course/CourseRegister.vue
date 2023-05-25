@@ -129,7 +129,13 @@ export default {
     };
   },
   created() {
-    this.attractions.day1 = [...this.dummy];
+    // this.attractions.day1 = [...this.dummy];
+    this.attractions = this.attraction;
+  },
+  computed: {
+    attraction() {
+      return this.$store.mutations.installData;
+    }
   },
   methods: {
     changeOption() {
@@ -168,6 +174,7 @@ export default {
         name: "집집집" + idGlobal,
         address: "서울특별시 강남구",
       };
+      this.$router.push("/attractionforcourse");
       this.attractions[`day${day}`].push(dum);
     },
     removeAttraction(day, id) {

@@ -45,16 +45,16 @@ export default {
     }
   },
   created() {
-    this.selectAll();
+    this.selectByLike();
   },
   methods: {
     moveInCourse(id){
       console.log(id);
       this.$router.push("/courses/"+id);
     },
-    selectAll(){
+    selectByLike(){
       http
-        .get("/courses")
+        .get("/courses/home")
         .then(response => {
           this.courses = response.data.data;
           console.log(this.courses);

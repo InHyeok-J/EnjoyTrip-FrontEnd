@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import signUpStore from "./signUpStore";
 import userStore from "./userStore";
 import searchStore from "./searchStore";
-
+import courseStore from "./courseStore";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -15,5 +15,6 @@ export default new Vuex.Store({
     signUpStore,
     userStore,
     searchStore,
+    courseStore,
   },
 });
