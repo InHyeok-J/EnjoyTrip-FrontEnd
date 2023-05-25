@@ -50,7 +50,7 @@ export default {
   name: "AttractionSearch",
   data() {
     return {
-      result: null, // 초기값은 필요에 따라 적절하게 설정하십시오.
+      result: null,
     };
   },
   computed: {
@@ -60,24 +60,29 @@ export default {
     this.fetchData();
   },
   async mounted() {
-    this.fetchData();
+    // this.fetchData();
   },
   watch: {
     searchOption: {
-      deep: true, // Enable deep watching for nested properties
-      immediate: true, // Trigger the watcher immediately when the component is created
+      deep: true,
+      immediate: true,
       handler() {
-        this.fetchData(); // Call a method to fetch data based on the new searchOption
+        this.fetchData();
       },
     },
   },
   methods: {
     async fetchData() {
-      const response = await search(this.searchOption);
-      this.result = response.data;
+      if (this.searchOption) {
+        // console.log("this" + JSON.stringify(this.searchOption));
+        const response = await search(this.searchOption);
+        console.log("data");
+        console.log(response.data);
+        this.result = response.data;
+      }
     },
     truncateAttractionName(name) {
-      const maxLength = 11;
+      const maxLength = 10;
       if (name.length > maxLength) {
         return name.slice(0, maxLength) + "...";
       }
@@ -148,8 +153,8 @@ img {
   flex-direction: row;
 }
 .star-icon {
-  width: 18px; /* Adjust the width of the star icons as needed */
-  height: 18px; /* Adjust the height of the star icons as needed */
+  width: 18px;
+  height: 18px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -166,6 +171,6 @@ img {
   max-width: 150px;
   height: 150px;
   object-fit: cover; /* 이미지 비율 유지 및 크롭을 위한 object-fit 속성 */
-  border-radius: 10px; /* 둥근 모서리를 위한 border-radius 속성 */
+  border-radius: 10px;
 }
 </style>

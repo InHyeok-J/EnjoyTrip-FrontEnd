@@ -115,7 +115,9 @@ export default {
   },
   async created() {
     this.itemId = this.$route.params.id;
+
     await this.loadData();
+    this.saveRecentAttraction(this.detail);
   },
 
   methods: {
@@ -126,7 +128,15 @@ export default {
         review.showOptions = !review.showOptions;
       }
     },
-
+    saveRecentAttraction(detail) {
+      const recentAttractions =
+        JSON.parse(localStorage.getItem("recentAttractions")) || [];
+      const updatedAttractions = [detail, ...recentAttractions];
+      localStorage.setItem(
+        "recentAttractions",
+        JSON.stringify(updatedAttractions)
+      );
+    },
     editReview(reviewId) {
       // 편집 기능을 처리합니다.
       // 편집 페이지로 이동하거나 편집을 위한 모달을 표시할 수 있습니다.
@@ -134,8 +144,6 @@ export default {
     },
 
     deleteReview(reviewId) {
-      // 삭제 기능을 처리합니다.
-      // 확인 대화 상자를 표시하거나 리뷰를 직접 삭제할 수 있습니다.
       alert(`ID가 ${reviewId}인 리뷰를 삭제합니다.`);
       deleteReview(this.itemId, reviewId);
       this.loadData();
@@ -185,7 +193,6 @@ export default {
         showOptions: false,
       }));
       console.log("deatil" + JSON.stringify(this.detail));
-
       console.log("review" + JSON.stringify(this.reviews));
       this.imageLoaded = true;
       this.calculateThumbnailHeight();

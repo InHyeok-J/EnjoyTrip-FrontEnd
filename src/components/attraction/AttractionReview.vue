@@ -93,8 +93,6 @@ export default {
       this.score = value;
     },
     submit() {
-      //여기서 입력 처리를 하면 된다.
-      console.log("작성!");
       const data = {
         title: this.title,
         content: this.description,

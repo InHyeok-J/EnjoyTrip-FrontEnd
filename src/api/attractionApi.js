@@ -38,8 +38,9 @@ export const search = async (params) => {
   }
 
   if (params.title) {
-    url += `title=${params.title}&`;
+    url += `title=${params.title}`;
     // url += `title=${encodeURIComponent(params.title)}&`;
   }
-  return (await http.get(url)).data;
+  const res = (await http.get(url)).data;
+  return res;
 };
