@@ -106,62 +106,7 @@ import http from "@/api/axios/index.js"
 export default {
   data() {
     return {
-      course: {
-        course:{
-    "success": true,
-    "message": "Course Detail 검색 성공",
-    "data": {
-        "course": {
-            "id": '',
-            "userId": '',
-            "title": '',
-            "isPublic": true,
-            "createdAt": null,
-            "updatedAt": null,
-            "description": "",
-            "courseImgUrl": "",
-            "schedule": ''
-        },
-        "nickname": "",
-        "profileImg": "",
-        "days": '',
-        "likeCnt": '',
-        "commentCnt": '',
-        "attractionCnt": '',
-        "plans": [
-            [
-                {
-                    "id": '',
-                    "courseId": '',
-                    "attractionId": '',
-                    "turn": '',
-                    "attractionName": '',
-                    "address": '',
-                    "attractionImageUrl": "",
-                    "latitude": '',
-                    "longitude": '',
-                    "day": ''
-                }
-            ]
-        ],
-        "comments": [
-            {
-                "courseComment": {
-                    "id": '',
-                    "courseId": '',
-                    "userId": '',
-                    "content": '',
-                    "createdAt": '',
-                    "updatedAt": ''
-                },
-                "nickname": "",
-                "profileImgUrl": ""
-            }
-        ],
-        "isLike": true
-    }
-}
-      },
+      course: { course: {courseImgUrl:null} },
       couuseLike: true,
       myComment:'',
       commentAddWindowShow: false,
@@ -178,7 +123,6 @@ export default {
         .get("/courses/"+id)
         .then(response => {
           this.course = response.data.data;
-          console.log(this.course);
         })
         .catch(()=>{
           console.log("데이터 가져오지 못함")
@@ -219,7 +163,6 @@ export default {
         })
         .then(response => {
           this.course.comments.unshift(response.data.data);
-          console.log(this.course.comments);
           this.course.commentCnt++;
         })
       this.myComment = '';

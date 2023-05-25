@@ -28,6 +28,9 @@
           </div>
         </div>
       </div>
+      <div class="addBnt-container">
+        <img src="@/assets/addBtn.svg">
+      </div>
     </div>
   </div>
 </template>
@@ -163,5 +166,19 @@ export default {
   .course-like-count{
     font-size: 15px;
     color: #F46F6F;
+  }
+  .addBnt-container{
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    left: 286px;
+    top: 50%;
+    border-radius: 50%;
+    background: #BECCFE;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>
