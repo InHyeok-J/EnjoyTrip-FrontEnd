@@ -54,24 +54,33 @@
               :src="review.userImageUrl || require('@/assets/Logo.png')"
               class="profile logo"
             />
-            <span class="nickname">{{ review.nickname }}</span>
-            <div class="star-rating">
-              <div v-for="index in 5" :key="index">
-                <div
-                  class="star-icon"
-                  :class="{
-                    'star-filled-icon':
-                      index <= Math.floor(review.review.score),
-                  }"
-                  :key="index"
-                ></div>
-              </div>
+            <span class="nickname">{{ review.nickname }}&nbsp; - </span>
+            <div v-if="isToday(review.review.createdAt)" class="review-date">
+              &nbsp;&nbsp;{{ formatRelativeDate(review.review.createdAt) }}
+            </div>
+            <div class="more-icon align-right"></div>
+          </div>
+
+          <div class="star-rating">
+            <div v-for="index in 5" :key="index">
+              <div
+                class="star-icon"
+                :class="{
+                  'star-filled-icon': index <= review.review.score,
+                }"
+                :key="index"
+              ></div>
             </div>
           </div>
+          <div class="review-title">{{ review.review.title }}</div>
           <div class="review-content">{{ review.review.content }}</div>
         </div>
       </div>
-      <router-link :to="`/review/${detail.id}`" class="floating-button">
+      <router-link
+        v-if="!hasUserReviewed"
+        :to="`/review/${detail.id}`"
+        class="floating-button"
+      >
         <span class="button-icon"></span>
       </router-link>
     </div>
@@ -90,6 +99,7 @@ export default {
       imageLoaded: false,
       thumbnailHeight: 0,
       showFullDescription: false,
+      hasUserReviewed: false,
     };
   },
   async created() {
@@ -98,6 +108,42 @@ export default {
   },
 
   methods: {
+    formatRelativeDate(dateString) {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diffInMilliseconds = Math.abs(now - date);
+      const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+      const diffInHours = Math.floor(diffInMinutes / 60);
+
+      if (diffInMinutes < 60) {
+        return `${diffInMinutes}분 전`;
+      } else {
+        return `${diffInHours}시간 전`;
+      }
+    },
+
+    isToday(dateString) {
+      const date = new Date(dateString);
+      const today = new Date();
+      return (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      );
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    },
+    isWithinDateLimit(dateString) {
+      const limitDate = new Date("2023-05-26");
+      const date = new Date(dateString);
+      return date <= limitDate;
+    },
     async loadData() {
       const resDetail = await getDetail(this.itemId);
       const resReviews = await getReviews(this.itemId);
@@ -108,6 +154,13 @@ export default {
       console.log("review" + JSON.stringify(this.reviews));
       this.imageLoaded = true;
       this.calculateThumbnailHeight();
+
+      const currentUserId = JSON.parse(localStorage.getItem("trify-user")).id;
+
+      const currentUserReviews = this.reviews.filter(
+        (review) => parseInt(review.userId) === currentUserId
+      );
+      this.hasUserReviewed = currentUserReviews.length > 0;
     },
     onImageLoad() {
       this.imageLoaded = true;
@@ -168,12 +221,29 @@ div {
   background-position: center;
   background-size: cover;
 }
-
+.review {
+  padding: 10px 0px;
+}
+.review-title {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
+  word-break: keep-all;
+}
 .review-content {
   font-weight: 400;
   font-size: 13px;
   line-height: 19px;
   word-break: keep-all;
+  padding: 0px 0px;
+}
+
+.review-date {
+  font-weight: 300;
+  font-size: 12px;
+  padding-top: 0px;
+  word-break: keep-all;
+  text-align: right;
 }
 .logo {
   width: 30px;
@@ -183,6 +253,11 @@ div {
   display: flex;
   align-items: center;
 }
+
+.align-right {
+  margin-left: auto;
+}
+
 .user .profile {
   width: 35px;
   height: 35px;
@@ -194,10 +269,10 @@ div {
   font-size: 13px;
   line-height: 19px;
 }
-.user .star-rating {
-  padding-left: 120px;
+.star-rating {
+  /* padding-left: 120px; */
 }
-.user .star-rating .star-icon {
+.star-rating .star-icon {
   width: 15px;
   height: 15px;
 }
@@ -205,6 +280,7 @@ div {
   position: relative;
   height: 0;
   overflow: hidden;
+  padding-top: 56px;
   padding-bottom: 56.25%; /* 이미지 비율에 맞춰 조정 (16:9 비율일 경우) */
 }
 
@@ -225,8 +301,7 @@ div {
   /* padding: 10px 0px; */
   margin: 10px 35px;
   overflow-y: auto;
-  padding-top: 10px;
-  padding-bottom: 130px;
+  padding-bottom: 170px;
 }
 
 .attraction-image {
@@ -318,6 +393,19 @@ div {
   transform: scale(0.9);
 }
 
+.star-rating-more {
+  display: flex;
+  align-items: center;
+}
+.more-icon {
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("@/assets/attraction/more.svg");
+  transform: scale(0.9);
+}
 .logo-icon {
   background-image: url("@/assets/Logo.png");
   transform: scale(0.9);
