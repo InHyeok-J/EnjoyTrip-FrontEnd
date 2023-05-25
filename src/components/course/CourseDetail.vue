@@ -124,8 +124,8 @@ export default {
         .then(response => {
           this.course = response.data.data;
         })
-        .catch(()=>{
-          console.log("데이터 가져오지 못함")
+        .catch(() => {
+          console.log("데이터 가져오지 못함");
         })
     },
     courseShare() {
