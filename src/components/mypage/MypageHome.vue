@@ -27,34 +27,50 @@
       <div class="reviews">
         <button
           class="review-block"
-          :class="{ active: isReviewSelected }"
-          @click="toggleReviewSelection('course')"
+          :class="{ active: isCourseSelected }"
+          @click="toggleReviewSelection('review')"
         >
           <div class="title">내가 작성한 <b>여행 코스</b></div>
-          <div class="count">38</div>
+          <div class="count">{{ myCourses.length }}</div>
         </button>
       </div>
       <div class="reviews">
         <button
           class="course-block"
-          :class="{ active: isCourseSelected }"
-          @click="toggleReviewSelection('review')"
+          :class="{ active: isReviewSelected }"
+          @click="toggleReviewSelection('course')"
         >
           <div class="title">내가 작성한 <b>여행 후기</b></div>
-          <div class="count">5</div>
+          <div class="count">{{ myReviews.length }}</div>
         </button>
       </div>
     </div>
 
     <div class="details">
-      <div class="detail-title">내가 작성한 <b>여행 코스</b></div>
-      <div class="detail-img-table">
-        <div class="detail-frame">
-          <button
-            class="detail-img"
-            v-for="(num, index) in rowSize"
-            :key="index"
-          />
+      <div v-if="isCourseSelected" class="detail-title">내가 작성한 <b>여행 코스</b>
+        <div class="detail-course-table">
+          <div class="detail-course-frame">
+            <div v-for="(course, id) in myCourses" :key="id">
+              <img class="detail-img" :src=course.courseImgUrl @click="moveInCourse(course.id)">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div v-if="isReviewSelected" class="detail-title">내가 작성한 <b>여행 후기</b>
+        <div class="detail-review-table">
+          <div class="detail-review-frame">
+            <div v-for="(review, id) in myReviews" :key="id">
+              <div class="reviews-container" @click="moveInAttraction(review.attractionId)">
+
+                <div class="review-attractionName">{{ review.attractionName }}</div>
+                <div class="review-title"> 제 목 : {{ review.title }}</div>
+                <div class="review-content"> 후 기 : {{ review.content }}</div>
+                <div class="review-createdAt">{{ formatDate(review.createdAt) }}</div>
+                <hr>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -64,7 +80,7 @@
 <script>
 import { getLogout } from "@/api/authApi";
 import userConstant from "@/store/constants/userConstant";
-
+import http from "@/api/axios/index.js"
 export default {
   data() {
     return {
@@ -72,17 +88,42 @@ export default {
       isCourseSelected: true,
       rowSize: 15,
       user: null,
+      myCourses: null,
+      myReviews: null,
     };
   },
   created() {
     this.user = this.$store.state.userStore;
+    this.getCoursesReview();
   },
   methods: {
+    getCoursesReview() {
+      http
+        .get("/courses/my-list")
+        .then(response => {
+          this.myCourses = response.data.data;
+          console.log(this.myCourses);
+
+        })
+        .catch(()=>{
+          console.log("데이터 가져오지 못함")
+        })
+        http
+        .get("/attractions/reviews")
+        .then(response => {
+          this.myReviews = response.data.data;
+          console.log(this.myReviews);
+        })
+        .catch(()=>{
+          console.log("데이터 가져오지 못함")
+        })
+    },
     toggleReviewSelection(reviewType) {
       if (reviewType === "course" && this.isCourseSelected) {
         this.isReviewSelected = !this.isReviewSelected;
         this.isCourseSelected = !this.isCourseSelected;
       } else if (reviewType === "review" && this.isReviewSelected) {
+        
         this.isReviewSelected = !this.isReviewSelected;
         this.isCourseSelected = !this.isCourseSelected;
       }
@@ -96,6 +137,21 @@ export default {
       localStorage.removeItem("trify-user");
       alert("로그아웃 성공");
       this.$router.push("/");
+    },
+    formatDate(date) {
+      const formattedDate = new Date(date);
+      const year = formattedDate.getFullYear().toString().slice(-2);
+      const month = (formattedDate.getMonth() + 1).toString().padStart(2, "0");
+      const day = formattedDate.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    },
+    moveInCourse(id){
+      console.log(id);
+      this.$router.push("/courses/"+id);
+    },
+    moveInAttraction(id){
+      console.log(id);
+      this.$router.push("/attraction-detail/"+id);
     },
   },
 };
@@ -223,7 +279,7 @@ export default {
   line-height: 29px;
   margin: 10px 5px;
 }
-.detail-frame {
+.detail-course-frame {
   justify-content: center;
   display: grid;
   grid-template-columns: repeat(3, 30%);
@@ -233,11 +289,26 @@ export default {
 }
 .detail-img {
   width: 100%;
-  height: auto;
-  /* transform: translate( 8%, 0% ); */
+  height: 100%;
+  
   border-radius: 10px;
-  background-image: url("@/assets/경복궁.jpg");
   background-size: 300%;
   background-position: center;
+}
+.reviews-container{
+  margin: 10px 0px 10px;
+}
+.review-attractionName{
+  font-size: 20px;
+  font-weight: 400px;
+}
+.review-title{
+  padding: 10px 0px;
+}
+.review.content{
+
+}
+.review-createdAt{
+  text-align:right;
 }
 </style>

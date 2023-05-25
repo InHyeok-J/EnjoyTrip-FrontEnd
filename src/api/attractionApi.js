@@ -4,6 +4,10 @@ export const getGuguns = async (sidoCode) => {
   return (await http.get("/attractions/sidos/" + sidoCode)).data;
 };
 
+export const getHotAttraction = async () => {
+  return (await http.get("/attractions/hot/")).data;
+};
+
 export const getDetail = async (attractionId) => {
   return (await http.get("/attractions/" + attractionId)).data;
 };
