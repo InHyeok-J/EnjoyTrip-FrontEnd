@@ -191,7 +191,6 @@ export default {
       const recentKeywords =
         JSON.parse(localStorage.getItem("recentKeywords")) || [];
       this.recentKeywords = recentKeywords;
-      console.log(this.recentKeywords);
     },
     clearRecentKeywords() {
       // localStorage의 최근 검색어 초기화
