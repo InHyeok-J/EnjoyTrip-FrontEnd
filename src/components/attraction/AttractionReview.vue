@@ -35,14 +35,22 @@
         v-model="description"
       ></textarea>
     </div>
+
     <div class="photo-block">
       <div class="info-text">사진</div>
       <div
+        v-if="uploadImageFile == null"
         class="photo-rect"
         @click="photoModify"
         :style="`background-image: url(${uploadImageUrl != null})`"
       >
         <div class="plus-icon"></div>
+      </div>
+      <div v-else class="photo-rect2">
+        <img :src="uploadImageUrl" class="uploaded" />
+        <div class="removeImage" @click="resetImage">
+          <img src="@/assets/deleteIcon.svg" />
+        </div>
       </div>
     </div>
     <div class="button-block">
@@ -53,6 +61,8 @@
 <script>
 import CommonInput from "../common/CommonInput.vue";
 import { postReview } from "@/api/attractionApi";
+
+import userConstant from "@/store/constants/userConstant";
 export default {
   name: "AttractionReview",
   components: { CommonInput },
@@ -71,7 +81,6 @@ export default {
   },
   methods: {
     photoModify() {
-      console.log("사진");
       document.getElementById("file-input").click();
     },
     fileSelect(e) {
@@ -89,21 +98,52 @@ export default {
       this.title = value;
     },
     setScore(value) {
-      console.log(this.score);
       this.score = value;
     },
-    submit() {
-      const data = {
-        title: this.title,
-        content: this.description,
-        attractionId: this.id,
-        score: this.score,
-      };
-      console.log(data);
-      const response = postReview(this.id, data);
-      if (response.data == 1) alert(response.message);
-      this.$router.push({ name: "attraction-detail", params: { id: this.id } });
-      console.log(response);
+    inputvalidate() {
+      if (this.title == null || this.title.length == 0) {
+        alert("제목을 입력해주세요");
+        return true;
+      }
+      if (this.description == null || this.description.length == 0) {
+        alert("설명을 입력해주세요");
+        return true;
+      }
+      return false;
+    },
+    async submit() {
+      if (this.inputvalidate()) {
+        return;
+      }
+      let formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("content", this.content);
+      formData.append("score", this.score);
+      formData.append("attractionId", this.id);
+      formData.append("image", this.uploadImageFile);
+      console.log("Input => " + formData);
+
+      try {
+        await postReview(this.id, formData);
+        alert("리뷰 등록 성공");
+        this.$router.push({
+          name: "attraction-detail",
+          params: { id: this.id },
+        });
+      } catch (e) {
+        console.log(e);
+        if (e.response.data && e.response.status === 401) {
+          alert("로그인이 필요합니다.");
+          this.$store.commit(userConstant.CALL_MU_INIT_USER_INFO);
+          this.$router.push("/login");
+          return;
+        }
+        alert("서버 에러!");
+      }
+    },
+    resetImage() {
+      this.uploadImageFile = null;
+      this.uploadImageUrl = null;
     },
     getStarIcon(index) {
       if (index <= this.score) {
@@ -127,7 +167,7 @@ export default {
   width: 70px;
   height: 70px;
   left: 0px;
-
+  cursor: pointer;
   /* sub */
   background: #e7e7e7;
   border-radius: 4px;
@@ -135,7 +175,37 @@ export default {
   justify-content: center;
   align-items: center;
 }
+.photo-rect2 {
+  width: 100px;
+  height: 100px;
+  left: 0px;
+  cursor: pointer;
+  /* sub */
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.uploaded {
+  width: 70px;
+  height: 70px;
+}
+.removeImage {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
 
+  border-radius: 10px;
+  left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.removeImage > img {
+  width: 20px;
+  height: 20px;
+}
 .plus-icon {
   width: 24px;
   height: 24px;
