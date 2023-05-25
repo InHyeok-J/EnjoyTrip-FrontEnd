@@ -14,7 +14,7 @@ import AttractionSearchView from "../views/attractions/AttractionSearchView.vue"
 import AttractionSearchResultView from "../views/attractions/AttractionSearchResultView.vue";
 import CorseRegisterView from "@/views/CourseRegisterView.vue";
 import AttractionDetailView from "@/views/attractions/AttractionDetailView.vue";
-
+import ReviewPostView from "@/views/attractions/ReviewPostView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -37,6 +37,11 @@ const routes = [
     path: "/attraction-detail/:id",
     name: "attraction-detail",
     component: AttractionDetailView,
+  },
+  {
+    path: "/review/:id",
+    name: "review-post",
+    component: ReviewPostView,
   },
   {
     path: "/login",

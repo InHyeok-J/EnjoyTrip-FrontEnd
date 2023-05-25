@@ -44,7 +44,10 @@
           </div>
         </div>
 
-        <div class="title">다녀온 후기</div>
+        <div class="title" style="font-size: 13px">다녀온 후기</div>
+        <div v-if="reviews.length === 0" class="no-reviews">
+          후기가 없습니다.
+        </div>
         <div class="review" v-for="review in reviews" :key="review.id">
           <div class="user">
             <img
@@ -68,7 +71,7 @@
           <div class="review-content">{{ review.review.content }}</div>
         </div>
       </div>
-      <router-link to="/review" class="floating-button">
+      <router-link :to="`/review/${detail.id}`" class="floating-button">
         <span class="button-icon"></span>
       </router-link>
     </div>
