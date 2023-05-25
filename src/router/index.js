@@ -18,6 +18,7 @@ import ReviewPostView from "@/views/attractions/ReviewPostView.vue";
 import AttractionSearchForCourseView from "../views/attractionsForCourse/AttractionSearchForCourseView.vue";
 import AttractionSearchResultForCourseView from "../views/attractionsForCourse/AttractionSearchResultForCourseView.vue";
 import AttractionDetailForCourseView from "@/views/attractionsForCourse/AttractionDetailForCourseView.vue";
+import CourseRegisterSearchView from "@/views/courses/CourseRegisterSearchView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -110,6 +111,11 @@ const routes = [
     path: "/courses/regist/form",
     name: "course regist",
     component: CorseRegisterView,
+  },
+  {
+    path: "/courses/regist/search",
+    name: "course registe",
+    component: CourseRegisterSearchView,
   },
 ];
 

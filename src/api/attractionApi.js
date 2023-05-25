@@ -37,6 +37,7 @@ export const deleteReview = async (attractionId, reviewId) => {
 };
 
 export const search = async (params) => {
+  console.log(params);
   let url = "/attractions/?";
   if (params.sidoCode) {
     url += `sidoCode=${params.sidoCode}&`;

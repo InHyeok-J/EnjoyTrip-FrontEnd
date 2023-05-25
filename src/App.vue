@@ -25,6 +25,9 @@ body {
   font-family: "Noto Sans KR";
   overflow: auto;
 }
+body::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
 
 button {
   all: unset;
