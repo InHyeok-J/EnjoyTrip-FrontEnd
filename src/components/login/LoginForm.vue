@@ -8,15 +8,19 @@
       @onChange="emailOnChange"
     ></common-input>
     <common-password
-      style="margin-bottom: 30px"
+      style="margin-bottom: 10px"
       placeholder="비밀번호"
       :inputvalue="password"
       :onChangeFun="passwordOnChange"
     ></common-password>
+    <div class="align-right">
+      <span class="find-pwd" @click="login">비밀번호 찾기</span>
+    </div>
+
     <button class="common-btn" @click="login">로그인</button>
     <br />
     <br />
-    <button class="common-btn nomal" @click="login">비밀번호 찾기</button>
+    <!-- <button class="common-btn nomal" @click="login">비밀번호 찾기</button> -->
   </div>
 </template>
 
@@ -76,5 +80,15 @@ export default {
   font-weight: 700;
   font-size: 16px;
   color: rgba(0, 0, 0, 0.5);
+}
+.align-right {
+  justify-content: flex-end;
+  text-align: right;
+  padding-bottom: 20px;
+}
+.find-pwd {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.7);
 }
 </style>

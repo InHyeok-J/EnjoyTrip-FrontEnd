@@ -151,11 +151,15 @@ export default {
 
 .attraction-search {
   margin: 10px 35px;
-  position: relative;
+  position: fixed;
   /* height: 100vh;  */
-  padding: 0px 0px 10px 0px;
+  padding: 10px 0px 10px 0px;
   overflow: hidden; /* Hide the overflow to prevent scrolling */
+  top: 50px;
+  background-color: #ffffff; /* Adjust the background color as desired */
+  z-index: 999; /* Adjust the z-index as needed */
 }
+
 .custom-dropdown {
   background-color: #ffffff;
   border-radius: 10px;
