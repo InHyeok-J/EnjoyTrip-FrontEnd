@@ -331,7 +331,7 @@ export default {
 
   font-family: "Noto Sans KR";
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 27px;
   line-height: 39px;
 

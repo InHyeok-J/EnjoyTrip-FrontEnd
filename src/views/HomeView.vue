@@ -1,20 +1,20 @@
 <template>
   <div class="home">
     <common-header></common-header>
-    <course-by-like></course-by-like>
+    <main-page-vue></main-page-vue>
     <common-tab></common-tab>
   </div>
 </template>
 
 <script>
-import CommonHeader from '@/components/common/CommonHeader.vue';
-import CommonTab from '@/components/common/CommonTab.vue';
-import CourseByLike from "@/components/home/CourseByLike.vue";
+import CommonHeader from "@/components/common/CommonHeader.vue";
+import CommonTab from "@/components/common/CommonTab.vue";
+import MainPageVue from "@/components/home/MainPage.vue";
 
 export default {
-  name: 'HomeView',
+  name: "HomeView",
 
-  components: { CommonHeader, CommonTab, CourseByLike },
+  components: { CommonHeader, CommonTab, MainPageVue },
 };
 </script>
 <style scoped>

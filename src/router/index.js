@@ -18,6 +18,7 @@ import ReviewPostView from "@/views/attractions/ReviewPostView.vue";
 import AttractionSearchForCourseView from "../views/attractionsForCourse/AttractionSearchForCourseView.vue";
 import AttractionSearchResultForCourseView from "../views/attractionsForCourse/AttractionSearchResultForCourseView.vue";
 import AttractionDetailForCourseView from "@/views/attractionsForCourse/AttractionDetailForCourseView.vue";
+
 Vue.use(VueRouter);
 
 const routes = [

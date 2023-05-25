@@ -5,7 +5,12 @@ export const getGuguns = async (sidoCode) => {
 };
 
 export const getHotAttraction = async () => {
-  return (await http.get("/attractions/hot/")).data;
+  const res = (await http.get("/attractions/hot/")).data;
+  return res.data;
+};
+
+export const getRecommend = async () => {
+  return (await http.get("/attractions/recommend")).data;
 };
 
 export const getDetail = async (attractionId) => {

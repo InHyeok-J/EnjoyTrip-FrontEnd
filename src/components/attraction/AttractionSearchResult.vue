@@ -54,7 +54,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("searchStore", ["searchOption"]), // Vuex 스토어의 result 상태를 가져옴
+    ...mapState("searchStore", ["searchOption"]),
   },
   async created() {
     this.fetchData();

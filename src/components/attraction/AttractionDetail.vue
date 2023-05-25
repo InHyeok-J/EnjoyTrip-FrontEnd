@@ -131,10 +131,23 @@ export default {
     saveRecentAttraction(detail) {
       const recentAttractions =
         JSON.parse(localStorage.getItem("recentAttractions")) || [];
-      const updatedAttractions = [detail, ...recentAttractions];
+
+      const existingAttraction = recentAttractions.find(
+        (attraction) => attraction.id === detail.id
+      );
+      if (existingAttraction) {
+        return;
+      }
+      const updatedAttractions = [detail, ...recentAttractions.slice(0, 2)];
+      const updatedAttractionsLength = Math.min(updatedAttractions.length, 3);
+      const trimmedAttractions = updatedAttractions.slice(
+        0,
+        updatedAttractionsLength
+      );
+
       localStorage.setItem(
         "recentAttractions",
-        JSON.stringify(updatedAttractions)
+        JSON.stringify(trimmedAttractions)
       );
     },
     editReview(reviewId) {
