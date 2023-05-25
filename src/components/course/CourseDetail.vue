@@ -33,10 +33,10 @@
             </div>
           </div>
     </div>
-    <!-- <div class="course-map">
-      ss
-    </div> -->
-    <kakao-map></kakao-map>
+    <!-- <kakao-map :plans="course.plans"></kakao-map> -->
+    <div>
+      <div id="map"></div>
+    </div>
     <div class="course-info-container">
       <div class="course-info-explain">
         <div class="explain-title">설명</div>
@@ -94,13 +94,14 @@
           </div>
         </div>
       </div>
+      
     </div>
   </div>
   
 </template>
 
 <script>
-import KakaoMap from "@/components/course/KakaoMap.vue";
+// import KakaoMap from "@/components/course/KakaoMap.vue";
 import http from "@/api/axios/index.js"
 
 export default {
@@ -110,11 +111,23 @@ export default {
       couuseLike: true,
       myComment:'',
       commentAddWindowShow: false,
+      coordinate: [],
+      first: [],
     }
   },
   created(){
     this.getCourse(this.$route.params.id);
-  }, watch: {
+    
+  },
+  mounted() {
+    if (window.kakao && window.kakao.maps) {
+      this.loadMap();
+    } else {
+      this.loadScript();
+    }
+    
+  },
+  watch: {
     
   },
   methods: {
@@ -123,6 +136,17 @@ export default {
         .get("/courses/"+id)
         .then(response => {
           this.course = response.data.data;
+          // console.log(this.course);
+          // console.log(this.course.plans);
+          for (var i = 0; i < this.course.plans.length; i++) {
+            for (var j = 0; j < this.course.plans[i].length; j++) {
+              var latitude = this.course.plans[i][j].latitude;
+              var longitude = this.course.plans[i][j].longitude;
+              this.coordinate.push({ latitude, longitude });
+            }
+          }
+          this.first = this.coordinate[0];
+          console.log(this.first);
         })
         .catch(() => {
           console.log("데이터 가져오지 못함");
@@ -179,9 +203,54 @@ export default {
       const day = formattedDate.getDate().toString().padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
+    loadScript() {
+      const script = document.createElement("script");
+      script.src =
+        "//dapi.kakao.com/v2/maps/sdk.js?appkey=4c5b7b7b6e3f8a6e8eef32d998a17db7&autoload=false"; 
+      script.onload = () => window.kakao.maps.load(this.loadMap); 
+
+      document.head.appendChild(script);
+    },
+    // 맵 출력하기
+    loadMap() {
+      console.log(this.first.latitude);
+      console.log(this.first.longitude);
+      const container = document.getElementById("map"); 
+      const options = {
+        center: new window.kakao.maps.LatLng(this.first.latitude, this.first.longitude), 
+        level: 3
+      };
+
+      this.map = new window.kakao.maps.Map(container, options); 
+      this.loadMaker();
+    },
+    // 지정한 위치에 마커 불러오기
+    loadMaker() {
+      // const markerPosition = new window.kakao.maps.LatLng(
+      //   33.450701,
+      //   126.570667
+      // );
+
+      // const marker = new window.kakao.maps.Marker({
+      //   position: markerPosition,
+      // });
+
+      // marker.setMap(this.map);
+      console.log(this.coordinate);
+      for (var i = 0; i < this.coordinate.length; i++) {
+        const { latitude, longitude } = this.coordinate[i];
+          const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
+
+          const marker = new window.kakao.maps.Marker({
+            position: markerPosition,
+          });
+
+          marker.setMap(this.map);
+      }
+    },
   },
   components: {
-    KakaoMap
+    // KakaoMap
   }
 }
 </script>
@@ -565,5 +634,20 @@ export default {
       width: 200px;
       resize: none; /* 크기 조절을 비활성화합니다. */
     }
+
+    #map {
+    width: 100%;
+    height: 514px;
+    z-index: 0;
+    margin: 10px 0px 0px;
+  }
+  
+  .button-group {
+    margin: 10px 0px;
+  }
+  
+  button {
+    margin: 0 3px;
+  }
    
 </style>
