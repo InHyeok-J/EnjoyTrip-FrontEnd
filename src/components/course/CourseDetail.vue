@@ -1,37 +1,65 @@
 <template>
   <div class="main-container">
-    <div class="main-img"  :style="`background-image:linear-gradient(180deg, rgba(17, 21, 54, 0) 0%, rgba(17, 21, 54, 0.5538) 126.77%), url(${course.course.courseImgUrl}) `" >
-       <div class="course-title">{{ course.course.title }}</div>
-       <div class="course-like-container">
-        <img v-if="course.isLike == true" class="course-titile-like-img" src="@/assets/course-icons/Course_detail_like.svg" @click="changeLike(course.course.id)">
-        <img v-else class="course-titile-like-img" src="@/assets/course-icons/Course_detail_unlike.svg" @click="changeLike(course.course.id)">
-
-       </div>
+    <div
+      class="main-img"
+      :style="`background-image:linear-gradient(180deg, rgba(17, 21, 54, 0) 0%, rgba(17, 21, 54, 0.5538) 126.77%), url(${course.course.courseImgUrl}) `"
+    >
+      <div class="course-title">{{ course.course.title }}</div>
+      <div class="course-like-container">
+        <img
+          v-if="course.isLike == true"
+          class="course-titile-like-img"
+          src="@/assets/course-icons/Course_detail_like.svg"
+          @click="changeLike(course.course.id)"
+        />
+        <img
+          v-else
+          class="course-titile-like-img"
+          src="@/assets/course-icons/Course_detail_unlike.svg"
+          @click="changeLike(course.course.id)"
+        />
+      </div>
     </div>
     <div class="course-writer-container">
-      <img class="course-writer-img" :src=course.profileImg alt='@/assets/defaultUser.svg'>
+      <img
+        class="course-writer-img"
+        :src="course.profileImg"
+        alt="@/assets/defaultUser.svg"
+      />
       <div class="course-writer-info">
-        <div class="course-writer-name"><b>{{ course.nickname }}</b>님의 여행코스</div>
+        <div class="course-writer-name">
+          <b>{{ course.nickname }}</b
+          >님의 여행코스
+        </div>
         <div class="course-writer-createdAt">{{ course.course.createdAt }}</div>
       </div>
       <div class="course-share">
         <button @click="courseShare">
-          <img class="course-share-btn" src="@/assets/course-icons/Course_shareBtn.png">
+          <img
+            class="course-share-btn"
+            src="@/assets/course-icons/Course_shareBtn.png"
+          />
         </button>
       </div>
     </div>
     <div class="course-count-reaction">
-      <div class="course-count">관광지 {{course.attractionCnt}}개</div>
+      <div class="course-count">관광지 {{ course.attractionCnt }}개</div>
       <div class="course-reaction">
-            <div class="course-comment-info">
-              <img class="course-comment-img" src="@/assets/course-icons/Course_comment.png">
-              <div class="course-comment-count">{{course.commentCnt}}</div>
-            </div>
-            <div class="course-like">
-              <img class="course-like-img" src="@/assets/course-icons/Course_like.png">
-              <div class="course-like-count" >{{course.likeCnt}}</div>
-            </div>
-          </div>
+        <div class="course-comment-info">
+          <img
+            class="course-comment-img"
+            src="@/assets/course-icons/Course_comment.png"
+          />
+          <div class="course-comment-count">{{ course.commentCnt }}</div>
+        </div>
+        <div class="course-like">
+          <img
+            class="course-like-img"
+            src="@/assets/course-icons/Course_like.png"
+          />
+          <div class="course-like-count">{{ course.likeCnt }}</div>
+        </div>
+      </div>
     </div>
     <!-- <div class="course-map">
       ss
@@ -42,15 +70,23 @@
         <div class="explain-title">설명</div>
         <div calss="course-comment">{{ course.course.description }}</div>
       </div>
-      <hr>
+      <hr />
       <div class="course-info-detail">
         <div class="total-day">{{ course.days }}</div>
-        <div class="day-container" v-for="(attractions,x) in course.plans" :key="x">
+        <div
+          class="day-container"
+          v-for="(attractions, x) in course.plans"
+          :key="x"
+        >
           <div class="day-info">
-            <div class="day-title">{{ x+1 }}일차</div>
-            <div class="day-date">{{ attractions[0].date}}</div>
+            <div class="day-title">{{ x + 1 }}일차</div>
+            <div class="day-date">{{ attractions[0].date }}</div>
           </div>
-          <div class="attractions" v-for="(attraction,y) in attractions" :key="y">      
+          <div
+            class="attractions"
+            v-for="(attraction, y) in attractions"
+            :key="y"
+          >
             <div class="attraction-name">
               {{ attraction.attractionName }}
             </div>
@@ -58,17 +94,23 @@
               {{ attraction.address }}
             </div>
           </div>
-          <hr>
+          <hr />
         </div>
       </div>
       <div class="course-comments-container">
         <div class="course-comments-head">
           <div class="course-comments-title">댓글</div>
-          <div class="course-comments-add" @click="showCommentWindow()">댓글 작성하기</div>
+          <div class="course-comments-add" @click="showCommentWindow()">
+            댓글 작성하기
+          </div>
         </div>
-        <div class="course-comments-detail-container" v-for="(comment, index) in course.comments" :key="index">
+        <div
+          class="course-comments-detail-container"
+          v-for="(comment, index) in course.comments"
+          :key="index"
+        >
           <div class="course-comments-detail-title">
-            <img class ="course-comment-userimg" :src=comment.profileImgUrl>
+            <img class="course-comment-userimg" :src="comment.profileImgUrl" />
             <div class="course-comment-username">
               {{ comment.nickname }}
             </div>
@@ -79,7 +121,7 @@
           <div class="course-comment-createdAt">
             {{ comment.courseComment.createdAt }}
           </div>
-          <hr>
+          <hr />
         </div>
       </div>
       <div class="modal" v-if="commentAddWindowShow">
@@ -87,7 +129,7 @@
           <div class="modal-msg">
             <textarea class="modal-txt" v-model="myComment" row="4"></textarea>
           </div>
-          
+
           <div class="button-container">
             <button class="cancle-btn" @click="cancel">취소</button>
             <button class="confirm-btn" @click="confirm">확인</button>
@@ -96,51 +138,51 @@
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
 import KakaoMap from "@/components/course/KakaoMap.vue";
-import http from "@/api/axios/index.js"
+import http from "@/api/axios/index.js";
 export default {
   data() {
     return {
       course: [],
       comments: [],
       couuseLike: true,
-      myComment:'',
+      myComment: "",
       commentAddWindowShow: false,
-    }
+    };
   },
-  created(){
+  created() {
     this.getCourse(this.$route.params.id);
   },
   methods: {
     getCourse(id) {
       console.log(id);
       http
-        .get("/courses/"+id)
-        .then(response => {
+        .get("/courses/" + id)
+        .then((response) => {
           this.course = response.data.data;
           console.log(this.course);
         })
-        .catch(()=>{
-          console.log("데이터 가져오지 못함")
-        })
+        .catch(() => {
+          console.log("데이터 가져오지 못함");
+        });
     },
     courseShare() {
       console.log(this.course.id);
     },
     changeDeatilImg() {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+      this.currentImageIndex =
+        (this.currentImageIndex + 1) % this.images.length;
     },
     changeLike(id) {
       http
         .patch("/courses/like", {
-          "courseId": id,
-          "isLike": this.course.isLike
+          courseId: id,
+          isLike: this.course.isLike,
         })
-        .then(response => {
+        .then((response) => {
           this.course.isLike = response.data.data;
           if (this.course.isLike) {
             this.course.likeCnt++;
@@ -148,9 +190,15 @@ export default {
             this.course.likeCnt--;
           }
         })
-        .catch(()=>{
-          console.log("좋아요 변경 실패")
-        })
+        .catch((e) => {
+          console.log("좋아요 변경 실패");
+          if (e.response.data && e.response.status === 403) {
+            alert("로그인이 필요합니다.");
+            this.$router.push("/login");
+            return;
+          }
+          alert("서버 에러!");
+        });
     },
     showCommentWindow() {
       this.commentAddWindowShow = !this.commentAddWindowShow;
@@ -158,406 +206,404 @@ export default {
     confirm() {
       http
         .post("/courses/comment", {
-          "courseId": this.course.course.id,
-          "content": this.myComment
+          courseId: this.course.course.id,
+          content: this.myComment,
         })
-        .then(response => {
+        .then((response) => {
           this.course.comments.push(response.data);
           console.log(response.data);
-        })
+        });
       this.course.commentCnt++;
       this.commentAddWindowShow = false; // 모달 닫기
     },
     cancel() {
-      this.myComment = '';
+      this.myComment = "";
       this.commentAddWindowShow = false; // 모달 닫기
     },
   },
   components: {
-    KakaoMap
-  }
-}
+    KakaoMap,
+  },
+};
 </script>
 
 <style scoped>
-.main-container{
+.main-container {
   margin: 0px;
   padding-bottom: 90px;
 }
 
-.main-img{
+.main-img {
   width: 100%;
   height: 255px;
 
   background-position: center;
   background-size: cover;
-  
+
   display: flex;
   justify-content: space-around;
   align-items: end;
 }
 .course-title {
+  color: aliceblue;
 
-    color: aliceblue;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 39px;
 
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 27px;
-    line-height: 39px;
+  margin-bottom: 19px;
+}
 
-    margin-bottom: 19px;
-  }
+.course-like-container {
+  width: 43px;
+  height: 43px;
+  margin-bottom: 15px;
+}
 
-  .course-like-container{
-      width: 43px;
-      height: 43px;
-      margin-bottom: 15px;
-    }
-    
-    .course-writer-container{
-      height: 86px;
+.course-writer-container {
+  height: 86px;
 
-      display: flex;
-      align-items: center;
-      margin: 0px 30px;
-    }
-    .course-writer-img{
-      width: 55px;
-      height: 50px;
+  display: flex;
+  align-items: center;
+  margin: 0px 30px;
+}
+.course-writer-img {
+  width: 55px;
+  height: 50px;
 
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 17px;
-    }
-    .course-writer-info{
-      width: 70%;
-      height: 38px;
-      margin-right: 11%;
-    }
-    .course-share{
-      height: 50px;
-      display: flex;
-      align-items: flex-start;
-    }
-    .course-share-btn{
-      width: 24px;
-      height: 24px;
-    }
-    .course-count-reaction{
-    height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 17px;
+}
+.course-writer-info {
+  width: 70%;
+  height: 38px;
+  margin-right: 11%;
+}
+.course-share {
+  height: 50px;
+  display: flex;
+  align-items: flex-start;
+}
+.course-share-btn {
+  width: 24px;
+  height: 24px;
+}
+.course-count-reaction {
+  height: 25px;
 
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    margin: 0px 30px;
-  }
-    .course-reaction{
-      width: 117px;
-      height: 30px;
-      display: flex;
-      justify-content: end;
-    }
-    .course-comment-info{
-      width: 32px;
-      height: 21px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-right: 12px;
-      gap: 5px;
-    }
-    .course-comment-img{
-      width: 15px;
-      height: 15px;
-    }
-    .course-comment-count{
-      font-size: 15px;
-      color: #496DEF;
-    }
-    .course-like{
-      width: 35px;
-      display: flex;
-      gap: 5px;
-    }
-    .course-like-img{
-      widows: 15px;
-      height: 15px;
-      
-      margin-top: 3px;
-    }
-    .course-like-count{
-      font-size: 15px;
-      color: #F46F6F;
-    }
-    .course-info-container{
-      margin: 10px 30px;
-    }
+  margin: 0px 30px;
+}
+.course-reaction {
+  width: 117px;
+  height: 30px;
+  display: flex;
+  justify-content: end;
+}
+.course-comment-info {
+  width: 32px;
+  height: 21px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 12px;
+  gap: 5px;
+}
+.course-comment-img {
+  width: 15px;
+  height: 15px;
+}
+.course-comment-count {
+  font-size: 15px;
+  color: #496def;
+}
+.course-like {
+  width: 35px;
+  display: flex;
+  gap: 5px;
+}
+.course-like-img {
+  widows: 15px;
+  height: 15px;
 
-    .course-info-explain{
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 10px 0px 25px;
-      gap: 5px;
+  margin-top: 3px;
+}
+.course-like-count {
+  font-size: 15px;
+  color: #f46f6f;
+}
+.course-info-container {
+  margin: 10px 30px;
+}
 
-      width: 100%;
-      height: 96px;
-    }
+.course-info-explain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 0px 25px;
+  gap: 5px;
 
-    .explain-title{
-      width: 185px;
-      height: 36px;
+  width: 100%;
+  height: 96px;
+}
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 26px;
-    }
+.explain-title {
+  width: 185px;
+  height: 36px;
 
-    .course-comment{
-      width: 100%;
-      height: 53px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+}
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 19px;
-    }
+.course-comment {
+  width: 100%;
+  height: 53px;
 
-    .course-info-detail{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-    }
-     .total-day{
-      width: 100%;
-      height: 36px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19px;
+}
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 26px;
-    }
-    .day-container{
-      width: 100%;
-    }
-    .day-info{
-      display: flex;
-      gap: 16px;
+.course-info-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.total-day {
+  width: 100%;
+  height: 36px;
 
-      width: 100%;
-      height: 39px;
-    }
-    .day-title{
-      width: 75%;
-      height: 29px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+}
+.day-container {
+  width: 100%;
+}
+.day-info {
+  display: flex;
+  gap: 16px;
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 23px;
-    }
+  width: 100%;
+  height: 39px;
+}
+.day-title {
+  width: 75%;
+  height: 29px;
 
-    .day-date{
-      width: 30%;
-      height: 19px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+}
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 300;
-      font-size: 13px;
-      line-height: 19px;
-    }
-    .attractions{
-      justify-content: center;
-      /* align-items: flex-start; */
-      width: 330px;
-      height: 42px;
-    }
-    .attraction-name{
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 19px;
-    }
-    .attraction-address{
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 19px;
-      margin: 3px 0px;
-    }
-    .course-comments-container{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-    }
+.day-date {
+  width: 30%;
+  height: 19px;
 
-    .course-comments-head{
-      display: flex;
-      align-items: center;
-      gap: 50%;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 19px;
+}
+.attractions {
+  justify-content: center;
+  /* align-items: flex-start; */
+  width: 330px;
+  height: 42px;
+}
+.attraction-name {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19px;
+}
+.attraction-address {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19px;
+  margin: 3px 0px;
+}
+.course-comments-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
 
-      width: 100%;
-      height: 37px;
-    }
-    .course-comments-title{
-      width: 35%;
-      height: 26px;
+.course-comments-head {
+  display: flex;
+  align-items: center;
+  gap: 50%;
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 26px;
-    }
+  width: 100%;
+  height: 37px;
+}
+.course-comments-title {
+  width: 35%;
+  height: 26px;
 
-    .course-comments-add{
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 20px;
-      text-align: right;
-      color: #496DEF;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+}
 
-      flex: none;
-      order: 1;
-      flex-grow: 0;
-    }
-    .course-comments-detail-container{
-      width: 100%;
-    }
-    .course-comments-detail-title{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 6px 0px 0px;
+.course-comments-add {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: right;
+  color: #496def;
 
-      width: 100%;
-      height: 41px;
-    }
-    .course-comment-userimg{
-      gap: 10px;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+.course-comments-detail-container {
+  width: 100%;
+}
+.course-comments-detail-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 0px 0px;
 
-      width: 35px;
-      height: 34px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex: none;
-      order: 0;
-      flex-grow: 0;
-    }
-    .course-comment-username{
-      width: 35%px;
-      height: 19px;
+  width: 100%;
+  height: 41px;
+}
+.course-comment-userimg {
+  gap: 10px;
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 300;
-      font-size: 13px;
-      line-height: 19px;
+  width: 35px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+.course-comment-username {
+  width: 35%px;
+  height: 19px;
 
-      margin-left: 10px;
-    }
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 19px;
 
-    .course-comment-comment{
-      gap: 13px;
+  margin-left: 10px;
+}
 
-      width: 100%;
+.course-comment-comment {
+  gap: 13px;
 
-      margin: 5px 0px;
+  width: 100%;
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 13px;
-      line-height: 19px;
-    }
+  margin: 5px 0px;
 
-    .course-comment-createdAt{
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      align-items: flex-start;
-      padding: 0px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19px;
+}
 
-      width: 100%;
-      height: 27px;
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 300;
-      font-size: 12px;
-      line-height: 17px;
-    }
-    .modal {
-      position: fixed;
-      left: calc(50% - 264.88px / 2 + 0.44px);
-      top: calc(50% - 109.34px / 2 + 0.17px);
-      width: 264.88px;
-      height: 150px;
+.course-comment-createdAt {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0px;
 
-      box-shadow: 1.54px 3.08px 7.7px 1.54px rgba(0, 0, 0, 0.2);
-      border-radius: 15.4px;
+  width: 100%;
+  height: 27px;
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 17px;
+}
+.modal {
+  position: fixed;
+  left: calc(50% - 264.88px / 2 + 0.44px);
+  top: calc(50% - 109.34px / 2 + 0.17px);
+  width: 264.88px;
+  height: 150px;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  box-shadow: 1.54px 3.08px 7.7px 1.54px rgba(0, 0, 0, 0.2);
+  border-radius: 15.4px;
 
-    .modal-content {
-      background-color: white;
-      padding: 52px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-msg {
-      font-family: "Noto Sans KR";
-      font-style: normal;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-      height: 60px;
-    }
-    .button-container {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      margin-top: 10px;
-    }
-    .confirm-btn {
-      font-family: "Noto Sans KR";
-      font-style: normal;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 23px;
-      color: #f46f6f;
-    }
-    .cancle-btn {
-      font-family: "Noto Sans KR";
-      font-style: normal;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 23px;
+.modal-content {
+  background-color: white;
+  padding: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-msg {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
 
-      color: #65d4a5;
-    }
+  height: 60px;
+}
+.button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+.confirm-btn {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  color: #f46f6f;
+}
+.cancle-btn {
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
 
-    .modal-txt{
-      width: 200px;
-      resize: none; /* 크기 조절을 비활성화합니다. */
-    }
-   
+  color: #65d4a5;
+}
+
+.modal-txt {
+  width: 200px;
+  resize: none; /* 크기 조절을 비활성화합니다. */
+}
 </style>
