@@ -32,7 +32,7 @@
       <textarea
         placeholder="내용을 입력하세요"
         class="description"
-        v-model="description"
+        v-model="content"
       ></textarea>
     </div>
 
@@ -70,7 +70,7 @@ export default {
     return {
       id: null,
       title: null,
-      description: "",
+      content: "",
       score: 0,
       uploadImageFile: null,
       uploadImageUrl: null,
@@ -105,7 +105,7 @@ export default {
         alert("제목을 입력해주세요");
         return true;
       }
-      if (this.description == null || this.description.length == 0) {
+      if (this.content == null || this.content.length == 0) {
         alert("설명을 입력해주세요");
         return true;
       }
@@ -121,7 +121,6 @@ export default {
       formData.append("score", this.score);
       formData.append("attractionId", this.id);
       formData.append("image", this.uploadImageFile);
-      console.log("Input => " + formData);
 
       try {
         await postReview(this.id, formData);

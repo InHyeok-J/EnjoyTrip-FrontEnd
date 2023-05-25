@@ -13,7 +13,11 @@ export const getReviews = async (attractionId) => {
 };
 
 export const postReview = async (attractionId, payload) => {
-  const url = "/attractions/" + attractionId + "/reviews";
+  const url =
+    process.env.VUE_APP_SERVER_URL +
+    "/attractions/" +
+    attractionId +
+    "/reviews";
   return await axios.post(url, payload, {
     headers: {
       "Content-Type": "multipart/form-data",

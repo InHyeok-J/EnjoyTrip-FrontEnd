@@ -5,7 +5,7 @@
         class="image"
         :style="`background-image : url(${
           user.profileImg == null
-            ? require('@/assets/defaultUser.svg')
+            ? require('@/assets/Logo.png')
             : user.profileImg
         })`"
       ></div>
