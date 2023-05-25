@@ -17,6 +17,12 @@ export const postReview = async (attractionId, payload) => {
     .data;
 };
 
+export const deleteReview = async (attractionId, reviewId) => {
+  return await http.delete(
+    "/attractions/" + attractionId + "/reviews/" + reviewId
+  ).data;
+};
+
 export const search = async (params) => {
   let url = "/attractions/?";
   if (params.sidoCode) {
