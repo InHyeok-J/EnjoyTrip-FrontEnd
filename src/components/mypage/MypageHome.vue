@@ -31,7 +31,7 @@
           @click="toggleReviewSelection('review')"
         >
           <div class="title">내가 작성한 <b>여행 코스</b></div>
-          <div class="count">38</div>
+          <div class="count">{{ myCourses.length }}</div>
         </button>
       </div>
       <div class="reviews">
@@ -41,7 +41,7 @@
           @click="toggleReviewSelection('course')"
         >
           <div class="title">내가 작성한 <b>여행 후기</b></div>
-          <div class="count">5</div>
+          <div class="count">{{ myReviews.length }}</div>
         </button>
       </div>
     </div>
@@ -103,13 +103,11 @@ export default {
         .then(response => {
           this.myCourses = response.data.data;
           console.log(this.myCourses);
+
         })
         .catch(()=>{
           console.log("데이터 가져오지 못함")
         })
-    },
-    toggleReviewSelection(reviewType) {
-      if (reviewType === "course" && this.isCourseSelected) {
         http
         .get("/attractions/reviews")
         .then(response => {
@@ -119,6 +117,9 @@ export default {
         .catch(()=>{
           console.log("데이터 가져오지 못함")
         })
+    },
+    toggleReviewSelection(reviewType) {
+      if (reviewType === "course" && this.isCourseSelected) {
         this.isReviewSelected = !this.isReviewSelected;
         this.isCourseSelected = !this.isCourseSelected;
       } else if (reviewType === "review" && this.isReviewSelected) {
