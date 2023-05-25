@@ -58,7 +58,16 @@
             <div v-if="isToday(review.review.createdAt)" class="review-date">
               &nbsp;&nbsp;{{ formatRelativeDate(review.review.createdAt) }}
             </div>
-            <div class="more-icon align-right"></div>
+            <div
+              class="more-icon align-right"
+              @click="toggleOptions(review.review.reviewId)"
+            ></div>
+            <div class="options" v-show="review.showOptions">
+              <button @click="editReview(review.review.reviewId)">수정</button>
+              &nbsp;<button @click="deleteReview(review.review.reviewId)">
+                삭제
+              </button>
+            </div>
           </div>
 
           <div class="star-rating">
@@ -88,11 +97,12 @@
 </template>
 
 <script>
-import { getDetail, getReviews } from "@/api/attractionApi";
+import { getDetail, getReviews, deleteReview } from "@/api/attractionApi";
 export default {
   name: "AttractionDetail",
   data() {
     return {
+      activeReviewId: null,
       itemId: null,
       detail: null,
       reviews: null,
@@ -108,6 +118,27 @@ export default {
   },
 
   methods: {
+    toggleOptions(reviewId) {
+      const review = this.reviews.find((r) => r.review.reviewId === reviewId);
+
+      if (review) {
+        review.showOptions = !review.showOptions;
+      }
+    },
+
+    editReview(reviewId) {
+      // 편집 기능을 처리합니다.
+      // 편집 페이지로 이동하거나 편집을 위한 모달을 표시할 수 있습니다.
+      console.log(`ID가 ${reviewId}인 리뷰를 수정합니다.`);
+    },
+
+    deleteReview(reviewId) {
+      // 삭제 기능을 처리합니다.
+      // 확인 대화 상자를 표시하거나 리뷰를 직접 삭제할 수 있습니다.
+      alert(`ID가 ${reviewId}인 리뷰를 삭제합니다.`);
+      deleteReview(this.itemId, reviewId);
+      this.loadData();
+    },
     formatRelativeDate(dateString) {
       const date = new Date(dateString);
       const now = new Date();
@@ -148,7 +179,10 @@ export default {
       const resDetail = await getDetail(this.itemId);
       const resReviews = await getReviews(this.itemId);
       this.detail = resDetail.data;
-      this.reviews = resReviews.data;
+      this.reviews = resReviews.data.map((review) => ({
+        ...review,
+        showOptions: false,
+      }));
       console.log("deatil" + JSON.stringify(this.detail));
 
       console.log("review" + JSON.stringify(this.reviews));
