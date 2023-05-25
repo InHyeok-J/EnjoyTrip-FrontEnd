@@ -18,7 +18,7 @@ export const patchUserProfile = async (nickname, image) => {
   return (
     await axios.patch(process.env.VUE_APP_SERVER_URL + "/user", formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        // "Content-Type": "multipart/form-data",
       },
       withCredentials: true,
     })

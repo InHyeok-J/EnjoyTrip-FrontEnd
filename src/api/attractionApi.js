@@ -1,5 +1,5 @@
+import axios from "./axios";
 import http from "./axios";
-
 export const getGuguns = async (sidoCode) => {
   return (await http.get("/attractions/sidos/" + sidoCode)).data;
 };
@@ -22,8 +22,17 @@ export const getReviews = async (attractionId) => {
 };
 
 export const postReview = async (attractionId, payload) => {
-  return (await http.post("/attractions/" + attractionId + "/reviews", payload))
-    .data;
+  const url =
+    process.env.VUE_APP_SERVER_URL +
+    "/attractions/" +
+    attractionId +
+    "/reviews";
+  return await axios.post(url, payload, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    withCredentials: true,
+  });
 };
 
 export const deleteReview = async (attractionId, reviewId) => {
@@ -33,6 +42,7 @@ export const deleteReview = async (attractionId, reviewId) => {
 };
 
 export const search = async (params) => {
+  console.log(params);
   let url = "/attractions/?";
   if (params.sidoCode) {
     url += `sidoCode=${params.sidoCode}&`;

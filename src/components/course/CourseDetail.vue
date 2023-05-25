@@ -153,7 +153,6 @@ export default {
       couuseLike: true,
       myComment: "",
       commentAddWindowShow: false,
-
       coordinate: [],
       first: [],
     };
@@ -168,7 +167,11 @@ export default {
       this.loadScript();
     }
   },
-  watch: {},
+  watch: {
+    first: function () {
+      this.loadMap();
+    },
+  },
   methods: {
     getCourse(id) {
       http
@@ -212,14 +215,8 @@ export default {
             this.course.likeCnt--;
           }
         })
-        .catch((e) => {
+        .catch(() => {
           console.log("좋아요 변경 실패");
-          if (e.response.data && e.response.status === 403) {
-            alert("로그인이 필요합니다.");
-            this.$router.push("/login");
-            return;
-          }
-          alert("서버 에러!");
         });
     },
     showCommentWindow() {
@@ -231,13 +228,11 @@ export default {
           courseId: this.course.course.id,
           content: this.myComment,
         })
-
         .then((response) => {
           this.course.comments.unshift(response.data.data);
           this.course.commentCnt++;
         });
       this.myComment = "";
-
       this.commentAddWindowShow = false; // 모달 닫기
     },
     cancel() {
@@ -261,15 +256,13 @@ export default {
     },
     // 맵 출력하기
     loadMap() {
-      console.log(this.first.latitude);
-      console.log(this.first.longitude);
       const container = document.getElementById("map");
       const options = {
         center: new window.kakao.maps.LatLng(
           this.first.latitude,
           this.first.longitude
         ),
-        level: 3,
+        level: 10,
       };
 
       this.map = new window.kakao.maps.Map(container, options);
@@ -277,17 +270,6 @@ export default {
     },
     // 지정한 위치에 마커 불러오기
     loadMaker() {
-      // const markerPosition = new window.kakao.maps.LatLng(
-      //   33.450701,
-      //   126.570667
-      // );
-
-      // const marker = new window.kakao.maps.Marker({
-      //   position: markerPosition,
-      // });
-
-      // marker.setMap(this.map);
-      console.log(this.coordinate);
       for (var i = 0; i < this.coordinate.length; i++) {
         const { latitude, longitude } = this.coordinate[i];
         const markerPosition = new window.kakao.maps.LatLng(
@@ -300,6 +282,23 @@ export default {
         });
 
         marker.setMap(this.map);
+        if (i > 0) {
+          const prevCoordinate = this.coordinate[i - 1];
+          const prevMarkerPosition = new window.kakao.maps.LatLng(
+            prevCoordinate.latitude,
+            prevCoordinate.longitude
+          );
+
+          const linePath = [prevMarkerPosition, markerPosition];
+          const line = new window.kakao.maps.Polyline({
+            path: linePath,
+            strokeWeight: 2,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.7,
+            strokeStyle: "solid",
+          });
+          line.setMap(this.map);
+        }
       }
     },
   },
@@ -346,6 +345,92 @@ export default {
 
 .course-writer-container {
   height: 86px;
+
+  color: aliceblue;
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 39px;
+
+  margin-bottom: 19px;
+}
+
+.course-like-container {
+  width: 43px;
+  height: 43px;
+  margin-bottom: 15px;
+}
+
+.course-writer-container {
+  height: 86px;
+
+  display: flex;
+  align-items: center;
+  margin: 0px 30px;
+}
+.course-writer-img {
+  width: 55px;
+  height: 50px;
+
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 17px;
+}
+.course-writer-info {
+  width: 70%;
+  height: 38px;
+  margin-right: 11%;
+}
+.course-share {
+  height: 50px;
+  display: flex;
+  align-items: flex-start;
+}
+.course-share-btn {
+  width: 24px;
+  height: 24px;
+}
+.course-count-reaction {
+  height: 25px;
+
+  display: flex;
+  justify-content: space-between;
+
+  margin: 0px 30px;
+}
+.course-reaction {
+  width: 117px;
+  height: 30px;
+  display: flex;
+  justify-content: end;
+}
+.course-comment-info {
+  width: 32px;
+  height: 21px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 12px;
+  gap: 5px;
+}
+.course-comment-img {
+  width: 15px;
+  height: 15px;
+}
+.course-comment-count {
+  font-size: 15px;
+  color: #496def;
+}
+.course-like {
+  width: 35px;
+  display: flex;
+  gap: 5px;
+}
+.course-like-img {
+  widows: 15px;
+  height: 15px;
 
   color: aliceblue;
 

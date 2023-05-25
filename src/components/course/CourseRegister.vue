@@ -18,7 +18,8 @@
           required
           aria-required="true"
           class="day"
-          v-model="startDate"
+          :value="startDate"
+          @change="onChangeStartDate"
         />
       </div>
       <div class="time-block">
@@ -28,7 +29,7 @@
             id="days"
             class="custom-dropdown"
             variant="custom"
-            v-model="selected"
+            :value="selected"
             @change="changeOption"
             :options="options"
           ></b-form-select>
@@ -65,7 +66,8 @@
       <textarea
         placeholder="설명을 입력하세요"
         class="description"
-        v-model="description"
+        :value="description"
+        @change="onChangeDescription"
       ></textarea>
     </div>
 
@@ -79,46 +81,15 @@
 import CommonInput from "@/components/common/CommonInput.vue";
 import CourseItem from "./CourseItem.vue";
 import draggable from "vuedraggable";
-
-let idGlobal = 5;
+import { mapGetters, mapState } from "vuex";
+import userConstant from "@/store/constants/userConstant";
+import http from "@/api/axios";
+// let idGlobal = 5;
 export default {
   name: "CourseRegister",
   components: { CommonInput, CourseItem, draggable },
   data() {
     return {
-      dummy: [
-        {
-          attractionId: 1,
-          name: "우도 땅콩 빵집",
-          address: "제주도 제주시 정자일로 80",
-        },
-        {
-          attractionId: 2,
-          name: "만장굴",
-          address: "제주도 제주시 봉선중앙로 93",
-        },
-        {
-          attractionId: 3,
-          name: "성산일출봉",
-          address: "제주도 제주시 남구 93",
-        },
-        {
-          attractionId: 4,
-          name: "오륙도 (부산 국가지질공원)",
-          address: "경상북도 포항시 북구 송라면 동해대로3218번길",
-        },
-      ],
-      attractions: {
-        day1: [],
-        day2: null,
-        day3: null,
-        day4: null,
-      },
-      description: null,
-      startDate: null,
-      title: null,
-      prevSelect: 1,
-      selected: 1,
       options: [
         { value: 1, text: "당일 치기" },
         { value: 2, text: "1박 2일" },
@@ -128,31 +99,25 @@ export default {
       controlOnStart: true,
     };
   },
-  created() {
-    // this.attractions.day1 = [...this.dummy];
-    this.attractions = this.attraction;
-  },
+  created() {},
   computed: {
+    ...mapState({
+      title: (state) => state.courseStore.title,
+      startDate: (state) => state.courseStore.startDate,
+      description: (state) => state.courseStore.description,
+      selected: (state) => state.courseStore.selected,
+      attractions: (state) => state.courseStore.attractions,
+    }),
     attraction() {
       return this.$store.mutations.installData;
-    }
+    },
+    ...mapGetters({
+      getImageData: "courseStore/getImage",
+    }),
   },
   methods: {
-    changeOption() {
-      if (this.prevSelect === this.selected) return; // 선택한 값이 이전과 같으면 리턴
-
-      if (this.prevSelect < this.selected) {
-        // 선택한 값이 이전보다 크면 배열을 추가로 생성
-        for (let i = this.prevSelect + 1; i <= this.selected; i++) {
-          this.attractions[`day${i}`] = [];
-        }
-      } else {
-        // 선택한 값이 이전보다 작으면 배열을 삭제
-        for (let i = this.prevSelect; i > this.selected; i--) {
-          this.attractions[`day${i}`] = null;
-        }
-      }
-      this.prevSelect = this.selected;
+    changeOption(e) {
+      this.$store.commit("courseStore/changeOption", e);
     },
     clone: ({ name, address, attractionId }) => {
       return { name, address, attractionId };
@@ -164,36 +129,89 @@ export default {
       this.controlOnStart = originalEvent.ctrlKey;
     },
     onChangeTitle(inputValue) {
-      this.title = inputValue;
+      this.$store.commit("courseStore/onChangeTitle", inputValue);
+    },
+    onChangeStartDate(e) {
+      this.$store.commit("courseStore/onChangeStartDate", e.target.value);
+    },
+    onChangeDescription(e) {
+      this.$store.commit("courseStore/onChangeDescription", e.target.value);
     },
     addAttraction(day) {
-      //더미데이터를 넣을 거임
-      const dum = {
-        // attractions: idGlobal++,
-        attractionId: idGlobal++,
-        name: "집집집" + idGlobal,
-        address: "서울특별시 강남구",
-      };
-      this.$router.push("/attractionforcourse");
-      this.attractions[`day${day}`].push(dum);
+      this.$router.push("/courses/regist/search?day=" + day);
     },
     removeAttraction(day, id) {
       const arr = this.attractions[`day${day}`];
       this.attractions[`day${day}`] = arr.filter(
         (atr) => atr.attractionId != id
       );
+
+      this.$store.commit("courseStore/removeAttraction", { day, id });
     },
-    submit() {
+    async submit() {
       //여기서 입력 처리를 하면 된다.
       console.log("작성!");
-      const data = {
-        title: this.title,
-        description: this.description,
-        planDay: this.selected,
-        startDate: this.startDate,
-        attractions: this.attractions, // 나중에 개발할때 타입 변경하시면 돼요 -넵
-      };
-      console.log(data);
+      console.log(this.$store.state.courseStore);
+      try {
+        //배열을 다 돌면서 image가 있는것을 찾아서 넣는다.
+
+        const image = this.getImage(this.attractions);
+        const dataArr = this.getParseData(this.attractions);
+        let data = {
+          title: this.$store.state.courseStore.title,
+          isPublic: true,
+          schedule: this.$store.state.courseStore.selected,
+          description: this.$store.state.courseStore.description,
+          attractions: dataArr,
+          image,
+        };
+        console.log(data);
+        await http.post("/courses", data);
+        alert("등록 성공!");
+        this.$router.push("/courses");
+      } catch (e) {
+        console.log(e);
+        if (e.response.data && e.response.status === 401) {
+          alert("로그인이 필요합니다.");
+          this.$store.commit(userConstant.CALL_MU_INIT_USER_INFO);
+          this.$router.push("/login");
+          return;
+        }
+        alert("코스 등록 실패!");
+      }
+    },
+    getParseData(attractions) {
+      let data = [];
+      const keys = Object.keys(attractions);
+
+      for (let i = 0; i < keys.length; i++) {
+        const dayData = attractions[keys[i]];
+        if (dayData != null) {
+          for (let j = 0; j < dayData.length; j++) {
+            data.push({
+              attractionId: dayData[j].attractionId,
+              day: i + 1,
+              date: new Date(this.$store.state.courseStore.startDate),
+            });
+          }
+        }
+      }
+      return data;
+    },
+    getImage(attractions) {
+      const keys = Object.keys(attractions);
+
+      for (let i = 0; i < keys.length; i++) {
+        const dayData = attractions[keys[i]];
+        if (dayData != null) {
+          for (let j = 0; j < dayData.length; j++) {
+            if (dayData[j].image != null && dayData[j].image.length > 0) {
+              return dayData[j].image;
+            }
+          }
+        }
+      }
+      return null;
     },
   },
 };

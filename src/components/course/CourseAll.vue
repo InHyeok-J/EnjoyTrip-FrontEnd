@@ -56,6 +56,7 @@ export default {
     };
   },
   created() {
+    this.$store.commit("courseStore/init");
     this.selectAll();
   },
   methods: {
@@ -75,6 +76,7 @@ export default {
         });
     },
     addCourse() {
+      this.$store.commit("courseStore/init");
       this.$router.push("/courses/regist/form");
     },
   },

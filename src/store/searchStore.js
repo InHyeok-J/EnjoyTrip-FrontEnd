@@ -1,9 +1,15 @@
 // import attractionApi from "@/api/attractionApi";
 
+const initStore = {
+  category: null,
+  sidoCode: null,
+  gugunCode: null,
+  title: null,
+};
 export default {
   namespaced: true,
   state: {
-    searchOption: null,
+    searchOption: initStore,
   },
   getters: {},
   mutations: {

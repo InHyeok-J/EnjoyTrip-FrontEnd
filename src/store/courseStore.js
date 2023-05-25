@@ -2,54 +2,82 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
+const initStore = {
+  attractions: {
+    day1: [],
+    day2: null,
+    day3: null,
+    day4: null,
+  },
+  description: "",
+  startDate: null,
+  title: null,
+  prevSelect: 1,
+  selected: 1,
+  isPublic: true,
+};
 
-export default new Vuex.Store({
-    state: {
-        dummy: [
-            {
-              attractionId: 1,
-              name: "우도 땅콩 빵집",
-              address: "제주도 제주시 정자일로 80",
-            },
-            {
-              attractionId: 2,
-              name: "만장굴",
-              address: "제주도 제주시 봉선중앙로 93",
-            },
-            {
-              attractionId: 3,
-              name: "성산일출봉",
-              address: "제주도 제주시 남구 93",
-            },
-            {
-              attractionId: 4,
-              name: "오륙도 (부산 국가지질공원)",
-              address: "경상북도 포항시 북구 송라면 동해대로3218번길",
-            },
-          ],
-        title: null, // 코스 제목
-        startDate: null, // 시작 날짜
-        preSelecte : null,
-        selected: null,
-        isPublic: true,
-        options: null,
-        attractions: {
-            day1: [],
-            day2: [],
-            day3: [],
-            day4: []
+const courseStore = {
+  namespaced: true,
+  state: initStore,
+  getters: {},
+  mutations: {
+    initStore: (state) => {
+      // eslint-disable-next-line no-unused-vars
+      state = initStore;
+    },
+    onChangeTitle: (state, payload) => {
+      state.title = payload;
+    },
+    changeOption: (state, payload) => {
+      state.selected = payload;
+      if (state.prevSelect === state.selected) return; // 선택한 값이 이전과 같으면 리턴
+
+      if (state.prevSelect < state.selected) {
+        // 선택한 값이 이전보다 크면 배열을 추가로 생성
+        for (let i = state.prevSelect + 1; i <= state.selected; i++) {
+          state.attractions[`day${i}`] = [];
         }
-  },
-    mutations: {
-      installData(){
-            this.attractions.day1 = [...this.dumy];
+      } else {
+        // 선택한 값이 이전보다 작으면 배열을 삭제
+        for (let i = state.prevSelect; i > state.selected; i--) {
+          state.attractions[`day${i}`] = null;
+        }
       }
+      state.prevSelect = state.selected;
+    },
+    onChangeStartDate: (state, payload) => {
+      state.startDate = payload;
+    },
+    onChangeDescription: (state, payload) => {
+      state.description = payload;
+    },
+    addAttraction: (state, { day, data }) => {
+      console.log(data);
+      state.attractions[`day${day}`].push(data);
+    },
+    removeAttraction: (state, { day, id }) => {
+      const arr = state.attractions[`day${day}`];
+      state.attractions[`day${day}`] = arr.filter(
+        (atr) => atr.attractionId != id
+      );
+    },
+    init: (state) => {
+      console.log("데이터 남기 테스트--------------");
+      // eslint-disable-next-line no-unused-vars
+      state.attractions = {
+        day1: [],
+        day2: null,
+        day3: null,
+        day4: null,
+      };
+      state.description = "";
+      state.startDate = null;
+      state.title = null;
+      state.prevSelect = 1;
+      state.selected = 1;
+    },
   },
-    actions: {
-      //back에 정보요청
-        
-  },
-  modules: {
-  },
-});
+};
 
+export default courseStore;

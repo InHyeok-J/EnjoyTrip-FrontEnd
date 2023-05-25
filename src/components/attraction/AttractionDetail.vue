@@ -51,7 +51,7 @@
         <div class="review" v-for="review in reviews" :key="review.id">
           <div class="user">
             <img
-              :src="review.userImageUrl || require('@/assets/Logo.png')"
+              :src="review.userProfileImg || require('@/assets/Logo.png')"
               class="profile logo"
             />
             <span class="nickname">{{ review.nickname }}&nbsp; - </span>
@@ -207,6 +207,7 @@ export default {
       }));
       console.log("deatil" + JSON.stringify(this.detail));
       console.log("review" + JSON.stringify(this.reviews));
+
       this.imageLoaded = true;
       this.calculateThumbnailHeight();
 
