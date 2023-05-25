@@ -214,12 +214,10 @@ export default {
     },
     // 맵 출력하기
     loadMap() {
-      console.log(this.first.latitude);
-      console.log(this.first.longitude);
       const container = document.getElementById("map"); 
       const options = {
         center: new window.kakao.maps.LatLng(this.first.latitude, this.first.longitude), 
-        level: 3
+        level: 10
       };
 
       this.map = new window.kakao.maps.Map(container, options); 
@@ -227,17 +225,6 @@ export default {
     },
     // 지정한 위치에 마커 불러오기
     loadMaker() {
-      // const markerPosition = new window.kakao.maps.LatLng(
-      //   33.450701,
-      //   126.570667
-      // );
-
-      // const marker = new window.kakao.maps.Marker({
-      //   position: markerPosition,
-      // });
-
-      // marker.setMap(this.map);
-      console.log(this.coordinate);
       for (var i = 0; i < this.coordinate.length; i++) {
         const { latitude, longitude } = this.coordinate[i];
           const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
@@ -247,6 +234,20 @@ export default {
           });
 
           marker.setMap(this.map);
+          if (i > 0) {
+          const prevCoordinate = this.coordinate[i - 1];
+          const prevMarkerPosition = new window.kakao.maps.LatLng(prevCoordinate.latitude, prevCoordinate.longitude);
+
+          const linePath = [prevMarkerPosition, markerPosition];
+          const line = new window.kakao.maps.Polyline({
+            path: linePath,
+            strokeWeight: 2,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.7,
+            strokeStyle: "solid",
+          });
+      line.setMap(this.map);
+    }
       }
     },
   },
