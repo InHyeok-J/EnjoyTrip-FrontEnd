@@ -19,7 +19,7 @@ body {
   right: 0;
   bottom: 0;
   height: auto;
-  min-height: 100%;
+  min-height: 100vh;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
   font-family: "Noto Sans KR";

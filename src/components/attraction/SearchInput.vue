@@ -116,6 +116,17 @@ export default {
 </script>
 
 <style>
+.attraction-search {
+  margin: 10px 35px;
+  position: fixed;
+  /* height: 100vh;  */
+  padding: 10px 0px 10px 0px;
+  overflow: hidden; /* Hide the overflow to prevent scrolling */
+  top: 50px;
+  background-color: #ffffff; /* Adjust the background color as desired */
+  z-index: 999; /* Adjust the z-index as needed */
+}
+
 .view-block {
   float: right;
 }

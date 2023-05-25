@@ -184,7 +184,7 @@ export default {
         description: this.description,
         planDay: this.selected,
         startDate: this.startDate,
-        attractions: this.attractions, // 나중에 개발할때 타입 변경하시면 돼요
+        attractions: this.attractions, // 나중에 개발할때 타입 변경하시면 돼요 -넵
       };
       console.log(data);
     },

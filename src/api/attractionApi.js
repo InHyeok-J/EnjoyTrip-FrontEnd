@@ -12,6 +12,11 @@ export const getReviews = async (attractionId) => {
   return (await http.get("/attractions/" + attractionId + "/reviews")).data;
 };
 
+export const postReview = async (attractionId, payload) => {
+  return (await http.post("/attractions/" + attractionId + "/reviews", payload))
+    .data;
+};
+
 export const search = async (params) => {
   let url = "/attractions/?";
   if (params.sidoCode) {
