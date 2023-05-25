@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="title" style="font-size: 13px">다녀온 후기</div>
+        <div class="title" style="font-size: 16px">다녀온 후기</div>
         <div v-if="reviews.length === 0" class="no-reviews">
           후기가 없습니다.
         </div>
@@ -86,7 +86,7 @@
         </div>
       </div>
       <router-link
-        v-if="!hasUserReviewed"
+        v-if="!hasUserReviewed && this.user"
         :to="`/review/${detail.id}`"
         class="floating-button"
       >
@@ -103,6 +103,7 @@ export default {
   data() {
     return {
       activeReviewId: null,
+      user: null,
       itemId: null,
       detail: null,
       reviews: null,
@@ -190,7 +191,7 @@ export default {
       this.calculateThumbnailHeight();
 
       const currentUserId = JSON.parse(localStorage.getItem("trify-user")).id;
-
+      this.user = currentUserId;
       const currentUserReviews = this.reviews.filter(
         (review) => parseInt(review.userId) === currentUserId
       );

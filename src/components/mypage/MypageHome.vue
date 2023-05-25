@@ -93,6 +93,7 @@ export default {
     async logout() {
       await getLogout();
       this.$store.commit(userConstant.CALL_MU_INIT_USER_INFO);
+      localStorage.removeItem("trify-user");
       alert("로그아웃 성공");
       this.$router.push("/");
     },
