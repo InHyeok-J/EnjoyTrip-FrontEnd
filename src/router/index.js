@@ -9,12 +9,15 @@ import SignUpEmailAuthView from "@/views/SignUpEmailAuthView.vue";
 import SignUpNicknameView from "@/views/SignUpNicknameView.vue";
 import CourseAllView from "@/views/courses/CourseAllView.vue";
 import CourseDetailView from "@/views/courses/CourseDetailView.vue";
+import CorseRegisterView from "@/views/courses/CourseRegisterView.vue";
 import KakaoRedirectView from "@/views/oauthredirect/KakaoRedirectView.vue";
 import AttractionSearchView from "../views/attractions/AttractionSearchView.vue";
 import AttractionSearchResultView from "../views/attractions/AttractionSearchResultView.vue";
-import CorseRegisterView from "@/views/courses/CourseRegisterView.vue";
 import AttractionDetailView from "@/views/attractions/AttractionDetailView.vue";
 import ReviewPostView from "@/views/attractions/ReviewPostView.vue";
+import AttractionSearchForCourseView from "../views/attractionsForCourse/AttractionSearchForCourseView.vue";
+import AttractionSearchResultForCourseView from "../views/attractionsForCourse/AttractionSearchResultForCourseView.vue";
+import AttractionDetailForCourseView from "@/views/attractionsForCourse/AttractionDetailForCourseView.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -37,6 +40,21 @@ const routes = [
     path: "/attraction-detail/:id",
     name: "attraction-detail",
     component: AttractionDetailView,
+  },
+  {
+    path: "/attractionforcourse",
+    name: "attractionforcourse",
+    component: AttractionSearchForCourseView,
+  },
+  {
+    path: "/attractionforcourse-result",
+    name: "attractionforcourse-result",
+    component: AttractionSearchResultForCourseView,
+  },
+  {
+    path: "/attractionforcourse-detail/:id",
+    name: "attractionforcourse-detail",
+    component: AttractionDetailForCourseView,
   },
   {
     path: "/review/:id",
