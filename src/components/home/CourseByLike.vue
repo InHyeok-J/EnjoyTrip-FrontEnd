@@ -60,6 +60,10 @@ export default {
       this.$router.push("/courses/" + id);
     },
     selectByLike() {
+      if (this.$store.state.userStore.id == null) {
+        return;
+      }
+
       http
         .get("/courses/home")
         .then((response) => {

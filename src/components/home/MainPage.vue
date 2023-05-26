@@ -46,6 +46,7 @@
       </div>
 
       <router-link
+        v-if="hotAttraction"
         class="content"
         :key="hotAttraction.id"
         :to="`/attraction-detail/${hotAttraction.id}`"
@@ -83,7 +84,7 @@
     <hr />
     <div class="block">
       <div class="title">최근 본 관광지</div>
-      <div v-if="recentAttractions.length > 1">
+      <div v-if="recentAttractions != null && recentAttractions.length > 1">
         <router-link
           v-for="a in recentAttractions"
           :key="a.id"
@@ -142,7 +143,6 @@ export default {
     try {
       const hotAttraction = await getHotAttraction();
       this.hotAttraction = hotAttraction;
-
       const user = JSON.parse(localStorage.getItem("trify-user"));
       const recentAttractions = JSON.parse(
         localStorage.getItem("recentAttractions")
@@ -151,13 +151,16 @@ export default {
       this.user = user;
       this.recentAttractions = recentAttractions;
 
-      this.getUserAndRecommendation();
+      await this.getUserAndRecommendation();
     } catch (err) {
       console.error(err);
     }
   },
   methods: {
     async getUserAndRecommendation() {
+      if (this.user == null || this.user.id == null) {
+        return;
+      }
       try {
         const recommendAttractions = await getRecommend();
 
@@ -165,7 +168,7 @@ export default {
         console.log(this.recommendAttractions);
       } catch (e) {
         this.recommendAttractions = null;
-        localStorage.removeItem("trify-user");
+        // localStorage.removeItem("trify-user");
         return;
         // console.log(e);
       }
