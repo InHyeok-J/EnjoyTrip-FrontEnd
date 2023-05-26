@@ -311,7 +311,7 @@ export default {
 <style scoped>
 .main-container {
   margin: 0px;
-  padding-bottom: 90px;
+  padding-bottom: 200px;
 }
 
 .main-img {

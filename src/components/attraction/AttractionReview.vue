@@ -158,6 +158,7 @@ export default {
 <style scoped>
 .main-container {
   margin: 0 35px;
+  padding-bottom: 200px;
 }
 .photo-block {
   padding-top: 30px;
@@ -244,7 +245,7 @@ textarea::placeholder {
 
 .button-block {
   margin-top: 50px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .star-block {
   display: flex;

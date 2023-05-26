@@ -119,7 +119,8 @@
     <hr />
     <div class="block">
       <div class="title">다시 가고싶은 여행 코스</div>
-      <CourseByLike></CourseByLike>
+
+      <CourseByLike style="padding-bottom: 200px"></CourseByLike>
     </div>
   </div>
 </template>
@@ -225,7 +226,7 @@ export default {
   margin-bottom: 100px;
 }
 .block {
-  padding: 30px 0px;
+  padding-top: 30px;
 }
 .title {
   font-size: 20px;
