@@ -30,6 +30,7 @@ import CommonPassword from "../common/CommonPassword.vue";
 import { postLogin } from "@/api/authApi";
 import { emailValidator, passwordValidator } from "@/utils/inputValidator";
 import userConstant from "@/store/constants/userConstant";
+import { getUserInfo } from "@/api/userApi";
 export default {
   name: "LoginForm",
   components: { CommonInput, CommonPassword },
@@ -55,7 +56,9 @@ export default {
       try {
         await postLogin(this.email, this.password);
         alert("로그인 성공!");
-        this.$store.dispatch(userConstant.CALL_ACTION_USER_INFO);
+        const response = await getUserInfo();
+        this.$store.commit(userConstant.CALL_MU_USER_INFO, response.data);
+        // this.$store.dispatch(userConstant.CALL_ACTION_USER_INFO);
         this.$router.push("/");
       } catch (e) {
         console.log(e);

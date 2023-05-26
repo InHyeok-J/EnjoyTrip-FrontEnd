@@ -4,15 +4,13 @@
       <div
         class="image"
         :style="`background-image : url(${
-          user.profileImg == null
-            ? require('@/assets/Logo.png')
-            : user.profileImg
+          profileImg == null ? require('@/assets/Logo.png') : profileImg
         })`"
       ></div>
       <div class="user">
-        <div class="name">{{ user.nickname }}</div>
+        <div class="name">{{ nickname }}</div>
         <br />
-        <div class="email">{{ user.email }}</div>
+        <div class="email">{{ email }}</div>
       </div>
       <div class="setting" @click="modifyForm">
         <button class="setting-button" />
@@ -93,20 +91,30 @@
 import { getLogout } from "@/api/authApi";
 import userConstant from "@/store/constants/userConstant";
 import http from "@/api/axios/index.js";
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
       isReviewSelected: false,
       isCourseSelected: true,
       rowSize: 15,
-      user: null,
       myCourses: null,
       myReviews: null,
     };
   },
   created() {
-    this.user = this.$store.state.userStore;
+    // console.log("mypage user =>" + JSON.stringify(this.user));
     this.getCoursesReview();
+  },
+  computed: {
+    ...mapState({
+      email: (state) => state.userStore.email,
+      nickname: (state) => state.userStore.nickname,
+      profileImg: (state) => state.userStore.profileImg,
+      provider: (state) => state.userStore.provider,
+      createdAt: (state) => state.userStore.createdAt,
+    }),
   },
   methods: {
     getCoursesReview() {

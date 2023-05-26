@@ -83,6 +83,7 @@
           </div>
           <div class="review-title">{{ review.review.title }}</div>
           <div class="review-content">{{ review.review.content }}</div>
+          <img :src="review.review.imageUrl" class="review-image" />
         </div>
       </div>
       <router-link
@@ -252,7 +253,13 @@ export default {
 div {
   padding: 3px 0px;
 }
-
+.review-image {
+  max-width: 100px;
+  height: 100px;
+  object-fit: cover; /* 이미지 비율 유지 및 크롭을 위한 object-fit 속성 */
+  border-radius: 10px;
+  margin-top: 10px;
+}
 .floating-button {
   position: fixed;
   bottom: 100px;

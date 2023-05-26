@@ -156,6 +156,12 @@ export default {
 </script>
 
 <style scoped>
+.review-image {
+  max-width: 150px;
+  height: 150px;
+  object-fit: cover; /* 이미지 비율 유지 및 크롭을 위한 object-fit 속성 */
+  border-radius: 10px;
+}
 .main-container {
   margin: 0 35px;
   padding-bottom: 200px;

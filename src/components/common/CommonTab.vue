@@ -36,10 +36,13 @@ export default {
     };
   },
   created() {
-    if (localStorage.getItem("trify-user")) {
-      console.log("user");
+    const isUser = localStorage.getItem("trify-user");
+    if (isUser || isUser.id != null) {
+      console.log("로그인 돼있음");
       // 세션에 사용자 정보가 있는 경우 profile-icon을 클릭하면 "/mypage"로 이동하도록 설정합니다.
       this.tabs[3].route = "mypage";
+    } else {
+      console.log("로그인 x");
     }
   },
 
